@@ -55,34 +55,31 @@
 
     <!-- Baris pertama: Murah & Super -->
     <div class="program-row">
-        <div class="program-item">
-            <h3>Paket Murah Holiday</h3>
-            <ul>
-                <li>Rp 498.000 / 1 minggu</li>
-                <li>Rp 854.000 / 2 minggu</li>
-                <li>Biaya Admin: Rp 125.000</li>
-            </ul>
-        </div>
-        <div class="program-item">
-            <h3>Paket Super</h3>
-            <ul>
-                <li>Rp 1.398.000 / 1 bulan</li>
-                <li>Rp 2.599.000 / 2 bulan</li>
-                <li><strong>Free Biaya Admin</strong></li>
-            </ul>
-        </div>
+    <div class="program-item murah">
+        <h3>Paket Murah Holiday</h3>
+        <ul>
+            <li>Rp 498.000 / 1 minggu</li>
+            <li>Rp 854.000 / 2 minggu</li>
+            <li>Biaya Admin: Rp 125.000</li>
+        </ul>
     </div>
+    <div class="program-item super">
+        <h3>Paket Super</h3>
+        <ul>
+            <li>Rp 1.398.000 / 1 bulan</li>
+            <li>Rp 2.599.000 / 2 bulan</li>
+            <li><strong>Free Biaya Admin</strong></li>
+        </ul>
+    </div>
+    <div class="program-item premium">
+        <h3>Paket Premium</h3>
+        <ul>
+            <li>Rp 3.867.000 / 3 bulan</li>
+            <li>Bonus TOEFL Preparation (2 minggu / 10 pertemuan)</li>
+        </ul>
+    </div>
+</div>
 
-    <!-- Baris kedua: Premium -->
-    <div class="program-row center">
-        <div class="program-item premium">
-            <h3>Paket Premium</h3>
-            <ul>
-                <li>Rp 3.867.000 / 3 bulan</li>
-                <li>Bonus TOEFL Preparation (2 minggu / 10 pertemuan)</li>
-            </ul>
-        </div>
-    </div>
 </section>
 
 

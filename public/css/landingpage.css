@@ -194,10 +194,10 @@ nav {
 
 .program-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     grid-template-areas:
-        "murah super"
-        "premium premium";
+        "murah super premium"
+        
     gap: 2rem;
     max-width: 1000px;
     margin: 0 auto;
@@ -208,7 +208,10 @@ nav {
     max-width: 450px;
 }
 
+/* Ukuran setiap kotak program */
 .program-item {
+    flex: 1 1 300px;
+    max-width: 350px;
     background-color: #fff;
     padding: 1.5rem;
     border-radius: 8px;
@@ -220,19 +223,69 @@ nav {
     transform: translateY(-5px);
 }
 
-.program-item.murah {
-    grid-area: murah;
+/* --- STRUKTUR DASAR SAMA UNTUK SEMUA PAKET --- */
+.program-item.murah,
+.program-item.super {
+    position: relative;
+    max-width: 600px;
+    width: 100%;
+    background-color: #ffffff;
+    background: linear-gradient(135deg, #ffffff, #f0f7ff); /* default gradient */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+    border: 2px solid #ccc; /* nanti diubah per paket */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.program-item.super {
-    grid-area: super;
+/* WARNA & BADGE MURAH */
+.program-item.murah {
+    background: linear-gradient(135deg, #ffffff, #f0f7ff);
+    background-color: #f0f7ff;
+    border-color: #3498db;
 }
+
+.program-item.murah::before {
+    content: "💸 Hemat";
+    position: absolute;
+    top: -12px;
+    left: 16px;
+    background-color: #3498db;
+    color: white;
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* WARNA & BADGE SUPER */
+.program-item.super {
+    background: linear-gradient(135deg, #ffffff, #fff5f0);
+    background-color: #fff5f0;
+    border-color: #e67e22;
+}
+
+.program-item.super::before {
+    content: "🔥 Favorit";
+    position: absolute;
+    top: -12px;
+    left: 16px;
+    background-color: #e67e22;
+    color: white;
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
 
 .program-item.premium {
-    grid-area: premium;
+    position: relative;
+    max-width: 600px;
+    width: 100%;
+    background: linear-gradient(135deg, #ffffff, #f9f6ff);
+    background-color: #fffdf5; /* fallback jika gradient gagal */
+    box-shadow: 0 6px 12px rgba(24, 0, 91, 0.1);
     border: 2px solid var(--secondary);
-    background-color: #fffdf5;
-    justify-self: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* 🔄 DITAMBAHKAN: Styling untuk program-item dengan daftar harga */
@@ -251,10 +304,23 @@ nav {
     font-size: 0.95rem;
 }
 
-/* 🌟 Opsional: Sorotan untuk paket premium */
-.program-item.premium {
-    border: 2px solid var(--secondary);
-    background-color: #fffdf5;
+.program-item.premium:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 10px 18px rgba(24, 0, 91, 0.15);
+}
+
+/* Badge rekomendasi */
+.program-item.premium::before {
+    content: "🌟 Rekomendasi";
+    position: absolute;
+    top: -12px;
+    left: 16px;
+    background-color: var(--accent);
+    color: white;
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 .program-item:hover {
@@ -521,7 +587,6 @@ body {
     display: none;
 }
 
-
 .gallery-container {
     display: flex;
     width: fit-content;
@@ -616,26 +681,16 @@ body {
 /* Layout dua kolom untuk baris pertama */
 .program-row {
     display: flex;
-    justify-content: space-between;
     flex-wrap: wrap;
-    gap: 2rem;
-    max-width: 1000px;
-    margin: 0 auto 2rem;
-}
-
-/* Untuk item program agar punya ukuran seimbang */
-.program-row .program-item {
-    flex: 1;
-    min-width: 280px;
-}
-
-/* Baris kedua (premium) berada di tengah */
-.program-row.center {
     justify-content: center;
+    gap: 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto 2rem;
+    padding: 0 1rem;
 }
 
-/* Pastikan item premium tetap responsif */
-.program-item.premium {
-    max-width: 600px;
-    width: 100%;
+
+.program-row .program-item {
+    flex: 1 1 300px;
+    max-width: 260px;
 }
