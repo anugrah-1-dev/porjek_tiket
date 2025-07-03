@@ -18,7 +18,7 @@ class BankSeeder extends Seeder
                 'name' => 'BNI',
                 'owner' => 'Dayum',
                 'number' => '92125215719',
-                'status' => true,
+                'status' => 'active',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]
