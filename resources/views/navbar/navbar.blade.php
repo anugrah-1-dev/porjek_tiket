@@ -6,15 +6,19 @@
 </script>
 <script src="{{ asset('js/landingpage.js') }}"></script>
 
-
 <nav id="navbar">
     <div class="logo">
-       <img src="{{ asset('asset/img/logo1.png') }}" alt="Logo" style="height: 60px;">
-
-
+        <img src="{{ asset('asset/img/logo1.png') }}" alt="Logo" style="height: 60px;">
     </div>
-    <div class="nav-links">
-        {{-- <a href="{{ url('/landingpage') }}">DASHBOARD</a> --}}
+
+    <!-- Burger Menu -->
+    <div class="burger" onclick="toggleNavbar()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <div class="nav-links" id="navLinks">
         <a href="#tentang">TENTANG KAMI</a>
         <a href="#program">PROGRAM & HARGA</a>
         <a href="#galeri">GALERI</a>

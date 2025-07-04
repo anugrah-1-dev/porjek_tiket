@@ -1,3 +1,5 @@
+// public/js/gallery.js
+
 // ------------------ LIGHTBOX ------------------
 function openLightbox(element) {
     const lightbox = document.getElementById("lightbox");
@@ -15,25 +17,24 @@ function closeLightbox() {
 window.openLightbox = openLightbox;
 window.closeLightbox = closeLightbox;
 
-// ------------------ GALLERY LOOP ------------------
+// ------------------ GALLERY LOOP (FINAL) ------------------
 document.addEventListener("DOMContentLoaded", () => {
     const wrapper = document.getElementById("galleryWrapper");
     const container = document.getElementById("galleryContainer");
 
     if (!wrapper || !container) return;
 
-    // Duplikat isi galeri secara DOM (lebih aman)
     const items = Array.from(container.children);
     items.forEach((item) => {
         const clone = item.cloneNode(true);
         container.appendChild(clone);
     });
 
+    const speed = 1.2;
+
     wrapper.scrollLeft = container.scrollWidth / 2;
 
-    const speed = 1.2;
     let isDragging = false;
-    let isHovering = false;
     let startX = 0;
     let scrollStart = 0;
     let animationFrameId = null;
@@ -44,19 +45,21 @@ document.addEventListener("DOMContentLoaded", () => {
         const halfWidth = totalWidth / 2;
         const visibleWidth = wrapper.offsetWidth;
 
-        if (scrollLeft >= totalWidth - visibleWidth) {
+        // Buffer (speed * 2) memastikan kondisi lompat tetap terpenuhi
+        if (scrollLeft >= totalWidth - visibleWidth - (speed * 2)) {
             wrapper.scrollLeft -= halfWidth;
-        } else if (scrollLeft <= 0) {
+        } 
+        else if (scrollLeft <= 0) {
             wrapper.scrollLeft += halfWidth;
         }
     }
 
     function autoScroll() {
-        animationFrameId = requestAnimationFrame(autoScroll);
-        if (!isDragging && !isHovering) {
+        if (!isDragging) {
             wrapper.scrollLeft += speed;
             loopCheck();
         }
+        animationFrameId = requestAnimationFrame(autoScroll);
     }
 
     function startAutoScroll() {
@@ -70,16 +73,6 @@ document.addEventListener("DOMContentLoaded", () => {
         animationFrameId = null;
     }
 
-    // Hover events
-    wrapper.addEventListener("mouseenter", () => {
-        isHovering = true;
-    });
-
-    wrapper.addEventListener("mouseleave", () => {
-        isHovering = false;
-    });
-
-    // Dragging
     wrapper.addEventListener("mousedown", (e) => {
         isDragging = true;
         startX = e.pageX;
@@ -102,9 +95,6 @@ document.addEventListener("DOMContentLoaded", () => {
         wrapper.scrollLeft = scrollStart - walk;
         loopCheck();
     });
-
-    // Jaga agar tetap looping jika user resize / lag
-    setInterval(loopCheck, 2000);
 
     startAutoScroll();
 });

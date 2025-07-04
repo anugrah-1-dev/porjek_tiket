@@ -278,8 +278,7 @@ nav {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     grid-template-areas:
-        "murah super premium"
-        
+        "murah super premium";
     gap: 2rem;
     max-width: 1000px;
     margin: 0 auto;
@@ -654,10 +653,12 @@ body {
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
-    scroll-behavior: smooth;
+    /* scroll-behavior: smooth; Dihapus atau diubah menjadi auto */
+    scroll-behavior: auto; /* Paling aman diubah menjadi auto */
     -webkit-overflow-scrolling: touch;
     cursor: grab;
 }
+
 
 .gallery-wrapper.dragging {
     cursor: grabbing;
