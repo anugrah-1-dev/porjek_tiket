@@ -340,46 +340,23 @@
         });
     </script>
 
-    <section id="galeri" class="gallery">
-        <h2>GALLERY</h2>
+   <section id="galeri" class="gallery">
+    <h2 class="section-title">GALLERY</h2>
 
-        <div class="gallery-wrapper" id="galleryWrapper">
-            <div class="gallery-container" id="galleryContainer">
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1536104968055-4d61aa56f46a?q=80&w=2574&auto=format&fit=crop"
-                        alt="Galeri 1" onclick="openLightbox(this)">
+    <div class="gallery-wrapper" id="galleryWrapper">
+        <div class="gallery-container" id="galleryContainer">
+            @foreach($galeris as $galeri)
+                <div class="gallery-item text-center">
+                    <h5 style="margin-bottom: 8px;">{{ $galeri->title }}</h5>
+                    <img src="{{ asset('storage/' . $galeri->image_path) }}"
+                         alt="{{ $galeri->title }}"
+                         onclick="openLightbox(this)">
                 </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=2670&auto=format&fit=crop"
-                        alt="Galeri 2" onclick="openLightbox(this)">
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2670&auto=format&fit=crop"
-                        alt="Galeri 3" onclick="openLightbox(this)">
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1550439062-609e1531270e?q=80&w=2670&auto=format&fit=crop"
-                        alt="Galeri 4" onclick="openLightbox(this)">
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2672&auto=format&fit=crop"
-                        alt="Galeri 5" onclick="openLightbox(this)">
-                </div>
-                <div class="gallery-item">
-                    <img src="{{ asset('asset/img/img1.jpg') }}" alt="Galeri 21" onclick="openLightbox(this)">
-                </div>
-                <div class="gallery-item">
-                    <img src="{{ asset('asset/img/img2.jpg') }}" alt="Galeri 18" onclick="openLightbox(this)">
-                </div>
-                <div class="gallery-item">
-                    <img src="{{ asset('asset/img/img3.jpg') }}" alt="Galeri 16" onclick="openLightbox(this)">
-                </div>
-                <div class="gallery-item">
-                    <img src="{{ asset('asset/img/img4.jpg') }}" alt="Galeri 4" onclick="openLightbox(this)">
-                </div>
-            </div>
+            @endforeach
         </div>
-    </section>
+    </div>
+</section>
+
 
     <div class="lightbox" id="lightbox" onclick="closeLightbox()">
         <span class="lightbox-close" onclick="closeLightbox()">x</span>

@@ -13,6 +13,7 @@ use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\Admin\Customer_Service_Controller;
 use App\Http\Controllers\Admin\ProgramOfflineController;
 use App\Http\Controllers\Admin\ProgramOnlineController;
+use App\Http\Controllers\Admin\GaleriController;
 
 
 /*
@@ -39,7 +40,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')  ->name('admin.') ->g
     Route::resource('pamflet_programs', ProgramController::class);
     Route::resource('programs/offline', ProgramOfflineController::class);
     Route::resource('programs/online', ProgramOnlineController::class);
-
+    Route::resource('galeri', GaleriController::class);
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });

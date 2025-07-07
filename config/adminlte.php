@@ -373,6 +373,12 @@ return [
             'icon' => 'fas fa-shuttle-van',
         ],
 
+            [
+            'text' => 'Galeri',
+            'url'  => '/admin/galeri',
+            'icon' => 'fas fa-images',
+        ],
+
         [
             'text' => 'Bank',
             'url'  => '/admin/banks',
