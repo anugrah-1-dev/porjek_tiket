@@ -1266,6 +1266,46 @@ body {
     fill: #060017; /* Warna atas gelombang */
 }
 
+.wave-divider5 {
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
+    line-height: 0;
+    background: #ffffff; /* Bagian bawah putih */
+    margin-top: -1px; /* Hilangkan celah garis putih */
+    margin-bottom: -1px; /* Hilangkan celah garis putih */
+}
+
+.wave-divider5 svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.wave-divider5 .shape-fill5 {
+    fill: #060017; /* Warna atas gelombang */
+}
+
+.wave-divider6 {
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
+    line-height: 0;
+    background: #060017; /* Bagian bawah putih */
+    margin-top: -1px; /* Hilangkan celah garis putih */
+    margin-bottom: -1px; /* Hilangkan celah garis putih */
+}
+
+.wave-divider6 svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.wave-divider6 .shape-fill6 {
+    fill: #ffffff; /* Warna atas gelombang */
+}
+
 /* 2. HANYA tampilkan yang memiliki kelas 'active' */
 .program-detail.active {
     display: grid;
@@ -1382,6 +1422,12 @@ body {
     text-align: center;
 }
 
+.modal-content h3 {
+    color: #ffffff; /* pastikan judul terlihat */
+    margin-top: 0;
+    font-size: 24px;
+}
+
 .modal-slider-wrapper {
     display: flex;
     align-items: center;
@@ -1417,5 +1463,9 @@ body {
     top: 10px;
     font-size: 2rem;
     cursor: pointer;
-    color: #000;
+    color: #ffffff;
+}
+
+.close-btn:hover {
+    color: #ff5c5c;
 }
