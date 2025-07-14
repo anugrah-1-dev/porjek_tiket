@@ -11,30 +11,30 @@
 
 <style>
     /* Atur lebar minimum tiap kolom */
-    #programTable th:nth-child(1), 
+    #programTable th:nth-child(1),
     #programTable td:nth-child(1) { min-width: 40px; }   /* No */
-    
-    #programTable th:nth-child(2), 
+
+    #programTable th:nth-child(2),
     #programTable td:nth-child(2) { min-width: 100px; }  /* Thumbnail */
-    
-    #programTable th:nth-child(3), 
+
+    #programTable th:nth-child(3),
     #programTable td:nth-child(3) { min-width: 180px; }  /* Nama */
-    
-    #programTable th:nth-child(4), 
+
+    #programTable th:nth-child(4),
     #programTable td:nth-child(4) { min-width: 120px; }  /* Slug */
-    
-    #programTable th:nth-child(5), 
+
+    #programTable th:nth-child(5),
     #programTable td:nth-child(5) { min-width: 120px; }  /* Kategori */
-    
-    #programTable th:nth-child(6), 
+
+    #programTable th:nth-child(6),
     #programTable td:nth-child(6) { min-width: 70px; }   /* Stok */
-    
+
     #programTable th:nth-child(n+7):nth-child(-n+15),
-    #programTable td:nth-child(n+7):nth-child(-n+15) { 
+    #programTable td:nth-child(n+7):nth-child(-n+15) {
         min-width: 120px;
         white-space: nowrap;
     } /* Semua kolom harga */
-    
+
     #programTable th:nth-child(16),
     #programTable td:nth-child(16) {
         min-width: 200px;
@@ -246,7 +246,7 @@
     @csrf
     <div class="row">
         <div class="col-md-6">
-            <x-adminlte-input name="nama" label="Nama Program" placeholder="Contoh: Camp Satu" required />
+            <x-adminlte-input name="nama" label="Nama Camp" placeholder="Contoh: Camp Satu" required />
         </div>
         <div class="col-md-6">
             <x-adminlte-input name="slug" label="Slug (URL)" placeholder="contoh-camp-satu" />
@@ -274,7 +274,7 @@
             <x-adminlte-textarea name="fasilitas" label="Fasilitas" rows=4 placeholder="Contoh: Makan 3x, WiFi, Modul,..." />
         </div>
        <div class="form-group col-md-12">
-    <label for="thumbnailCreate">Thumbnail Program (gambar)</label>
+    <label for="thumbnailCreate">Thumbnail Camp (gambar)</label>
     <div class="custom-file">
         <input type="file" class="custom-file-input" id="thumbnailCreate" name="thumbnail" required>
         <label id="labelCreate" class="custom-file-label" for="thumbnailCreate">Pilih file</label>
@@ -309,7 +309,7 @@
     <input type="hidden" name="id" id="editId">
     <div class="row">
         <div class="col-md-6">
-            <x-adminlte-input name="nama" label="Nama Program" id="editNama" required />
+            <x-adminlte-input name="nama" label="Nama Camp" id="editNama" required />
         </div>
         <div class="col-md-6">
             <x-adminlte-input name="slug" label="Slug (URL)" id="editSlug" />
@@ -369,7 +369,7 @@
     function confirmDelete(event) {
     event.preventDefault();
     const form = event.target.closest('form');
-    
+
     Swal.fire({
         title: 'Yakin ingin menghapus data ini?',
         text: "Data akan dihapus secara permanen dari database.",
@@ -495,7 +495,7 @@
         label.textContent = 'Pilih file';
     }
 
-        
+
     }
 
     document.getElementById('thumbnailCreate').addEventListener('change', function () {
@@ -506,7 +506,7 @@
         showThumbnailPreview('thumbnailEdit', 'preview-edit', 'labelEdit');
     });
 
-    
+
 </script>
 
 @endsection

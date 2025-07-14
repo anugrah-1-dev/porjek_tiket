@@ -34,11 +34,16 @@ class LandingPageController extends Controller
         ]);
     }
 
-    // Detail program offline (untuk public)
+    // Detail program offline (untuk public)// Di controller publik (misal: ProgramOfflinePublicController)
     public function showOfflinePublic(ProgramOffline $program)
     {
-        return view('admin.programs.offline.show', compact('program'));
+        if (!$program->is_active) {
+            abort(404); // hanya tampilkan yang aktif
+        }
+
+        return view('programs.offline.show', compact('program'));
     }
+
 
     // Detail program online (untuk public)
     public function showOnlinePublic(ProgramOnline $program)

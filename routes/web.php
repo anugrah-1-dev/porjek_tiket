@@ -16,6 +16,11 @@ use App\Http\Controllers\Admin\ProgramOfflineController;
 use App\Http\Controllers\Admin\ProgramOnlineController;
 use App\Http\Controllers\Admin\GaleriController;
 use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\Admin\PendaftaranOnlineController;
+use App\Http\Controllers\Admin\PendaftaranOfflineController;
+use App\Http\Controllers\ProgramOfflinePublicController;
+use App\Http\Controllers\ProgramOnlinePublicController;
+use App\Http\Controllers\Admin\PeriodsController;
 
 
 /*
@@ -27,11 +32,23 @@ Route::get('/camps', [ProgramCampController::class, 'publicIndex'])->name('camps
 
 // Route untuk menampilkan halaman detail satu camp (INI PERBAIKANNYA)
 Route::get('/camps/{camp:slug}', [ProgramCampController::class, 'publicShow'])->name('camps.show');
-// Detail program offline public
-Route::get('/program-offline/{program:slug}', [LandingPageController::class, 'showOfflinePublic'])->name('program.offline.show');
 
-// Detail program online public
-Route::get('/program-online/{program:slug}', [LandingPageController::class, 'showOnlinePublic'])->name('program.online.show');
+
+// Jika mau tetap pakai LandingPageController untuk tampilan awal bisa begini:
+Route::get('/landing/program-offline/{program:slug}', [LandingPageController::class, 'showOfflinePublic'])->name('landing.program.offline.show');
+Route::get('/landing/program-online/{program:slug}', [LandingPageController::class, 'showOnlinePublic'])->name('landing.program.online.show');
+
+// === PROGRAM OFFLINE ===
+Route::get('/program/offline/{program:slug}', [ProgramOfflinePublicController::class, 'showOfflinePublic'])->name('public.program.offline.show');
+Route::post('/program/offline/{program:slug}/daftar', [ProgramOfflinePublicController::class, 'daftar'])->name('public.program.offline.daftar');
+
+// === PROGRAM ONLINE ===
+Route::get('/program/online/{program:slug}', [ProgramOnlinePublicController::class, 'show'])
+    ->name('public.program.online.show');
+
+Route::post('/program/online/{program:slug}/daftar', [ProgramOnlinePublicController::class, 'daftar'])
+    ->name('public.program.online.daftar');
+
 
 Route::get('/', [LandingPageController::class, 'index'])->name('landing');
 
@@ -80,4 +97,17 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')  ->name('admin.') ->g
     //program camp
     Route::resource('programs/camp', ProgramCampController::class)->names('programs.camp');
     Route::get('/camps/{camp:slug}', [ProgramCampController::class, 'publicShow'])->name('camps.show');
+
+    // Pendaftaran Program Online
+    Route::get('pendaftaran/online', [PendaftaranOnlineController::class, 'index'])->name('pendaftaran.online.index');
+    Route::get('/pendaftaran/program-online', [PendaftaranOnlineController::class, 'create'])->name('pendaftaran.program_online.create');
+    Route::post('/pendaftaran/program-online', [PendaftaranOnlineController::class, 'store'])->name('pendaftaran.program_online.store');
+
+    // Pendaftaran Program Offline
+    Route::get('pendaftaran/offline', [PendaftaranOfflineController::class, 'index'])->name('pendaftaran.offline.index');
+    Route::get('/pendaftaran/program-offline', [PendaftaranOfflineController::class, 'create'])->name('pendaftaran.program_offline.create');
+    Route::post('/pendaftaran/program-offline', [PendaftaranOfflineController::class, 'store'])->name('pendaftaran.program_offline.store');
+
+    //periods
+    Route::resource('periods', PeriodsController::class)->only(['index','store', 'update', 'destroy']);
 });

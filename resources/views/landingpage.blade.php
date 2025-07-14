@@ -124,7 +124,7 @@
                         </p>
                     </div>
                 </div>
-                
+
                 <div class="flow-step">
                     <div class="step-number">4</div>
                     <div class="step-content">
@@ -132,7 +132,7 @@
                         <p>Melakukan daftar ulang secara langsung melalui Admin kami yang berada di  Ruang Office Brilliant English Course.</p>
                     </div>
                 </div>
-      
+
                 <div class="flow-step">
                     <div class="step-number">5</div>
                     <div class="step-content">
@@ -163,18 +163,18 @@
              --}}
             {{-- Wrapper ini akan kita buat bisa di-scroll --}}
             {{-- <div class="program-content-wrapper"> --}}
-                
+
                 {{-- Loop untuk menampilkan semua program yang aktif --}}
                 @foreach ($programs->where('status', 'aktif') as $index => $program)
-                    
+
                     {{-- Logika untuk kelas 'active' dan ID dihapus agar semua tampil --}}
                     <div class="program-detail @if ($index % 2 == 0) layout-left @else layout-right @endif">
-                        
+
                         <div class="program-content-container">
                             <div class="content-text content-structured">
                                 <h3>{{ $program->judul }}</h3>
                                 <p class="description">{{ $program->deskripsi }}</p>
-                                
+
                                 <div class="benefits-container">
                                     <p class="benefits-title"><strong>Keunggulan Program:</strong></p>
                                     <div class="benefits-grid">
@@ -190,7 +190,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="content-image">
                                 <img src="{{ asset('uploads/programs/' . $program->gambar) }}"
                                      alt="{{ $program->judul }}" onclick="openLightbox(this)">
@@ -212,10 +212,10 @@
                     <button class="filter-btn active" data-filter="offline">Program Offline</button>
                     <button class="filter-btn" data-filter="online">Program Online</button>
                 </div>
-        
+
                 {{-- INI BAGIAN PENTING: Container untuk Grid --}}
                 <div class="program-grid">
-                    
+
                     {{-- Loop untuk Program OFFLINE --}}
                     @forelse ($offlinePrograms as $program)
                         <div class="program-item" data-filter="offline">
@@ -223,24 +223,24 @@
                                 <div class="program-card-image-wrapper">
                                     <img src="{{ asset('storage/' . $program->thumbnail) }}" class="program-card-img" alt="{{ $program->nama }}">
                                     @if ($program->is_active)
-                                      
+
                                     @endif
                                 </div>
                                 <div class="program-card-body">
                                     <h5 class="program-card-title">{{ $program->nama }}</h5>
                                     <p class="program-card-info">
-                                        <i class="fas fa-calendar-alt"></i> 
+                                        <i class="fas fa-calendar-alt"></i>
                                         {{ \Carbon\Carbon::parse($program->jadwal_mulai)->format('d M') }} - {{ \Carbon\Carbon::parse($program->jadwal_selesai)->format('d M Y') }}
                                     </p>
                                     <p class="program-card-price">Rp {{ number_format($program->harga, 0, ',', '.') }}</p>
-                                    <a href="{{ route('program.offline.show', $program->slug) }}" class="btn btn-success">Lihat Detail</a>
+                                    <a href="{{ route('public.program.offline.show', $program->slug) }}" class="btn btn-success">Lihat Detail</a>
 
                                 </div>
                             </div>
                         </div>
                     @empty
                     @endforelse
-        
+
                     {{-- Loop untuk Program ONLINE --}}
                     @forelse ($onlinePrograms as $program)
                         <div class="program-item" data-filter="online">
@@ -248,7 +248,7 @@
                                 <div class="program-card-image-wrapper">
                                     <img src="{{ asset('storage/' . $program->thumbnail) }}" class="program-card-img" alt="{{ $program->nama }}">
                                     @if ($program->is_active)
-                                     
+
                                     @endif
                                 </div>
                                 <div class="program-card-body">
@@ -258,13 +258,14 @@
                                         Kategori: {{ $program->kategori ?? '-' }}
                                     </p>
                                     <p class="program-card-price">Rp {{ number_format($program->harga, 0, ',', '.') }}</p>
-                                    <a href="{{ route('program.online.show', $program->slug) }}" class="btn btn-primary">Lihat Detail</a>
+                                    <a href="{{ route('public.program.online.show', $program->slug) }}" class="btn btn-success">Lihat Detail</a>
+
                                 </div>
                             </div>
                         </div>
                     @empty
                     @endforelse
-        
+
                     {{-- Pesan jika tidak ada program yang cocok --}}
                     <div id="no-program-message" class="no-program-notice" style="display: none;">
                         <p>Tidak ada program yang tersedia untuk kategori ini.</p>
@@ -279,8 +280,8 @@
             </path>
         </svg>
     </div>
-            
-          
+
+
             <script>
  document.addEventListener('DOMContentLoaded', function() {
     const filterButtons = document.querySelectorAll('.filter-btn');

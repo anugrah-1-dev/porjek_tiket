@@ -404,7 +404,7 @@ return [
             'icon' => 'fas fa-shuttle-van',
         ],
 
-            [
+        [
             'text' => 'Galleries',
             'url'  => '/admin/galleries',
             'icon' => 'fas fa-images',
@@ -419,6 +419,27 @@ return [
             'text' => 'Customer Service',
             'url'  => '/admin/customer_services',
             'icon' => 'fas fa-headset',
+        ],
+
+        [
+            'text' => 'Periode Program',
+            'url'  => '/admin/periods',
+            'icon' => 'fas fa-calendar-alt',
+        ],
+        
+        ['header' => 'PENDAFTARAN'],
+
+        [
+            'text' => 'Pendaftaran Offline',
+            'route'  => 'admin.pendaftaran.offline.index',
+            'icon'   => 'fas fa-user-friends',
+            'active' => ['admin/pendaftaran/offline*'],
+        ],
+        [
+            'text' => 'Pendaftaran Online',
+            'route'  => 'admin.pendaftaran.online.index',
+            'icon'   => 'fas fa-laptop',
+            'active' => ['admin/pendaftaran/online*'],
         ],
 
 
@@ -537,6 +558,8 @@ return [
                     'asset' => false,
                     'location' => '//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css',
                 ],
+                'Bootstrap' => true,
+                'jQuery' => true,
 
             ],
         ],

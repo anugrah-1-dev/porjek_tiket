@@ -25,4 +25,9 @@ class ProgramOffline extends Model
         'is_active',
         'thumbnail'
     ];
+    
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }
