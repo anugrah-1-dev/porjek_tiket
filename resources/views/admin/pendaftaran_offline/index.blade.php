@@ -49,7 +49,8 @@
                             <th>Program</th>
                             <th>Periode</th>
                             <th>Status</th>
-                            <th width="15%">Aksi</th>
+                            <th>Bukti Pembayaran</th>
+                            <th width="10%">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -61,31 +62,44 @@
                                 <td>{{ $data->email }}</td>
                                 <td>{{ $data->no_hp ?? '-' }}</td>
                                 <td>{{ $data->program->nama ?? '-' }}</td>
-                                <td>{{ $data->period->date ?? '-' }}</td>
+                                {{-- PERUBAHAN FORMAT TANGGAL --}}
+                                <td>{{ optional($data->period->date)->translatedFormat('d F Y') ?? '-' }}</td>
                                 <td>
-                                    <span class="badge badge-{{ $data->status === 'pending' ? 'warning' : ($data->status === 'approved' ? 'success' : 'danger') }}">
-                                        {{ ucfirst($data->status) }}
-                                    </span>
+                                    @php
+                                        $statusClass = 'secondary';
+                                        if ($data->status === 'pending') $statusClass = 'warning';
+                                        if ($data->status === 'approved') $statusClass = 'success';
+                                        if ($data->status === 'rejected') $statusClass = 'danger';
+                                    @endphp
+                                    <span class="badge badge-{{ $statusClass }}">{{ ucfirst($data->status) }}</span>
+                                </td>
+                                <td>
+                                    @if($data->bukti_pembayaran)
+                                        <a href="{{ route('admin.pendaftaran.offline.bukti', $data->id) }}" target="_blank" title="Lihat Bukti">
+                                            <img src="{{ route('admin.pendaftaran.offline.bukti', $data->id) }}" alt="Bukti" style="max-width: 100px; height: auto; border-radius: 4px;">
+                                        </a>
+                                    @else
+                                        <span class="text-muted">Belum ada</span>
+                                    @endif
                                 </td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
-                                        {{-- <a href="{{ route('admin.pendaftaran.offline.show', $data->id) }}"
-                                           class="btn btn-info" title="Detail">
-                                            <i class="fas fa-eye"></i>
-                                        </a> --}}
-                                        {{-- <form action="{{ route('admin.pendaftaran.offline.destroy', $data->id) }}" method="POST" class="d-inline">
-                                            @csrf @method('DELETE')
-                                            <button type="submit" onclick="return confirm('Yakin menghapus data ini?')"
-                                                    class="btn btn-danger" title="Hapus">
+                                        <a href="{{ route('admin.pendaftaran.offline.edit', $data->id) }}" class="btn btn-primary" title="Edit Status">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </a>
+                                        <form action="{{ route('admin.pendaftaran.offline.destroy', $data->id) }}" method="POST" onsubmit="return confirm('Anda yakin ingin menghapus pendaftaran ini secara permanen?');" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger" title="Hapus">
                                                 <i class="fas fa-trash"></i>
                                             </button>
-                                        </form> --}}
+                                        </form>
                                     </div>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="9" class="text-center py-4">Belum ada pendaftar.</td>
+                                <td colspan="10" class="text-center py-4">Belum ada pendaftar.</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -135,7 +149,7 @@
                 info: false,
                 responsive: true,
                 columnDefs: [
-                    { orderable: false, targets: [0, 8] }
+                    { orderable: false, targets: [0, 8, 9] }
                 ],
                 language: {
                     search: "Cari:",

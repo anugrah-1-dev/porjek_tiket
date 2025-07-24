@@ -21,8 +21,6 @@
     </div>
 @stop
 
-<!-- Bagian content dan lainnya tetap sama -->
-
 @section('content')
     @if (session('success'))
         <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
@@ -52,8 +50,8 @@
                             <th>Program</th>
                             <th>Periode</th>
                             <th>Status</th>
-                            <th>Tgl Daftar</th>
-                            <th width="15%">Aksi</th>
+                            <th>Bukti Pembayaran</th>
+                            <th width="10%">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -62,20 +60,42 @@
                                 <td>{{ $pendaftar->firstItem() + $index }}</td>
                                 <td>{{ $data->trx_id }}</td>
                                 <td>{{ $data->nama_lengkap }}</td>
-                                <td>{{ $data->email }}</td>
+                                <td>{{ $data->email ?? '-' }}</td>
                                 <td>{{ $data->no_hp ?? '-' }}</td>
                                 <td>{{ $data->asal_kota ?? '-' }}</td>
                                 <td>{{ $data->program->nama ?? '-' }}</td>
-                                <td>{{ $data->period->date ?? '-' }}</td>
+                                {{-- KODE DIPERBAIKI DI SINI --}}
+                                <td>{{ $data->period ? optional($data->period->date)->translatedFormat('d F Y') : '-' }}</td>
                                 <td>
-                                    <span class="badge badge-{{ $data->status == 'pending' ? 'warning' : ($data->status == 'approved' ? 'success' : 'danger') }}">
-                                        {{ ucfirst($data->status) }}
-                                    </span>
+                                    @php
+                                        $statusClass = 'secondary';
+                                        if ($data->status === 'pending') $statusClass = 'warning';
+                                        if ($data->status === 'approved') $statusClass = 'success';
+                                        if ($data->status === 'rejected') $statusClass = 'danger';
+                                    @endphp
+                                    <span class="badge badge-{{ $statusClass }}">{{ ucfirst($data->status) }}</span>
                                 </td>
-                                <td>{{ $data->created_at->translatedFormat('d M Y H:i') }}</td>
                                 <td>
-                                    <div class="btn-group">
-                                        {{-- Action buttons --}}
+                                    @if($data->bukti_pembayaran)
+                                        <a href="{{ route('admin.pendaftaran.online.bukti', $data->id) }}" target="_blank" title="Lihat Bukti">
+                                            <img src="{{ route('admin.pendaftaran.online.bukti', $data->id) }}" alt="Bukti" style="max-width: 100px; height: auto; border-radius: 4px;">
+                                        </a>
+                                    @else
+                                        <span class="text-muted">Belum ada</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a href="{{ route('admin.pendaftaran.online.edit', $data->id) }}" class="btn btn-primary" title="Edit Status">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </a>
+                                        <form action="{{ route('admin.pendaftaran.online.destroy', $data->id) }}" method="POST" onsubmit="return confirm('Anda yakin ingin menghapus pendaftaran ini?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger" title="Hapus">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
                                     </div>
                                 </td>
                             </tr>
@@ -91,7 +111,7 @@
 
         @if($pendaftar->hasPages())
             <div class="card-footer bg-light">
-                {{ $pendaftar->links('vendor.pagination.bootstrap-5') }}
+                {{ $pendaftar->links('vendor.pagination.bootstrap-4') }}
             </div>
         @endif
     </div>
@@ -128,7 +148,7 @@
                 info: false,
                 responsive: true,
                 columnDefs: [
-                    { orderable: false, targets: [0, 10] }
+                    { orderable: false, targets: [0, 9, 10] }
                 ],
                 language: {
                     search: "Cari:",
