@@ -10,8 +10,8 @@
 
 
 
-        <form action="{{ route('camp.pendaftaran.store') }}" method="POST">
-        @csrf
+        {{-- <form action="{{ route('camp.pendaftaran.store') }}" method="POST">
+        @csrf --}}
 
 
         {{-- === Hidden Input untuk Kamar Terpilih === --}}

@@ -9,6 +9,7 @@ class PendaftaranProgramCamp extends Model
     protected $table = 'pendaftaran_program_camp';
 
     protected $fillable = [
+        'trx_id', // tambahkan ini
         'nama_lengkap',
         'email',
         'no_hp',
@@ -20,7 +21,9 @@ class PendaftaranProgramCamp extends Model
         'bukti_pembayaran',
         'status',
         'bank_id',
+        'room_id', 
     ];
+
 
     // Relasi ke ProgramCamp
     public function programCamp()
@@ -38,5 +41,10 @@ class PendaftaranProgramCamp extends Model
     public function bank()
     {
         return $this->belongsTo(Banks::class);
+    }
+
+    public function room()
+    {
+        return $this->belongsTo(Rooms::class);
     }
 }

@@ -171,8 +171,7 @@
                                     @foreach ($vipPutra->unique('nomor_kamar') as $kamar)
                                         <div class="room-card {{ RD::getStatusClass($kamar) }}"
                                             data-id="{{ $kamar->id }}" data-nama="{{ $kamar->nomor_kamar }}"
-                                            data-kamar="{{ $kamar->nomor_kamar }}"
-                                            data-gender="{{ $kamar->gender }}"
+                                            data-kamar="{{ $kamar->nomor_kamar }}" data-gender="{{ $kamar->gender }}"
                                             data-kategori="{{ $kamar->kategori }}"
                                             data-kapasitas="{{ $kamar->kapasitas }}"
                                             data-penghuni="{{ $kamar->penghuni }}" onclick="openEditModal(this)">
