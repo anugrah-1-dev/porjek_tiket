@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Period;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class PeriodsController extends Controller
 {
@@ -20,16 +21,20 @@ class PeriodsController extends Controller
     {
         $request->validate([
             'date' => 'required|date|unique:periods,date',
+        ], [
+            'date.unique' => 'Tanggal tersebut sudah digunakan.',
         ]);
 
+        $date = Carbon::parse($request->date);
         $isActive = $request->has('is_active');
 
-        if ($isActive) {
-            Period::query()->update(['is_active' => false]);
+        // Nonaktifkan otomatis jika tanggal sudah lewat
+        if ($date->lt(Carbon::today())) {
+            $isActive = false;
         }
 
         Period::create([
-            'date' => $request->date,
+            'date' => $date,
             'is_active' => $isActive,
         ]);
 
@@ -47,15 +52,17 @@ class PeriodsController extends Controller
             'date' => 'required|date|unique:periods,date,' . $id,
         ]);
 
+        $date = Carbon::parse($request->date);
         $isActive = $request->has('is_active');
 
-        if ($isActive) {
-            Period::where('id', '!=', $id)->update(['is_active' => false]);
+        // Nonaktifkan otomatis jika tanggal sudah lewat
+        if ($date->lt(Carbon::today())) {
+            $isActive = false;
         }
 
         $period = Period::findOrFail($id);
         $period->update([
-            'date' => $request->date,
+            'date' => $date,
             'is_active' => $isActive,
         ]);
 
@@ -71,10 +78,7 @@ class PeriodsController extends Controller
     {
         $period = Period::findOrFail($id);
 
-        if ($period->is_active) {
-            // Bisa otomatis aktifkan periode terbaru kalau dibutuhkan
-        }
-
+        // Jika data yang dihapus aktif, kamu bisa pilih aktifkan data terbaru lainnya, kalau ingin
         $period->delete();
 
         return redirect()->back()->with('alert', [
