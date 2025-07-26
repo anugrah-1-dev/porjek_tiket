@@ -126,4 +126,12 @@ class PendaftranCampController extends Controller
 
         return view('camp.pembayaran', compact('pendaftaran', 'banks'));
     }
+
+    public function showPembayaran($id)
+    {
+        $pendaftaran = PendaftaranProgramCamp::with('programCamp')->findOrFail($id);
+        return view('camp.pembayaran', compact('pendaftaran'));
+    }
+
+
 }

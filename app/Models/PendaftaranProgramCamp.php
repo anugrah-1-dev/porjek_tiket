@@ -53,4 +53,8 @@ class PendaftaranProgramCamp extends Model
     {
         return $this->belongsTo(Rooms::class, 'room_id');
     }
+    public function programCamp()
+    {
+        return $this->belongsTo(ProgramCamp::class, 'program_camp_id');
+    }
 }
