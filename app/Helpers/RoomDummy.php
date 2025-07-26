@@ -104,4 +104,27 @@ class RoomDummy
             default => '#ef4444'
         };
     }
+
+
+
+    public static function warnaClass($room)
+    {
+        $penghuni = $room->penghuni ?? 0;
+        $nomor = $room->nomor_kamar;
+
+        if (in_array($nomor, ['A-12A', 'A-35'])) {
+            return match (true) {
+                $penghuni === 0 => 'bg-green',
+                $penghuni === 1 => 'bg-yellow',
+                $penghuni >= 2 => 'bg-red',
+                default => ''
+            };
+        }
+
+        return match ($penghuni) {
+            0 => 'bg-green',
+            1 => 'bg-yellow',
+            default => 'bg-red'
+        };
+    }
 }

@@ -47,6 +47,7 @@ class PendaftranCampController extends Controller
             'asal_kota'      => 'required|string|max:100',
             'period_id'      => 'required|exists:periods,id',
             'durasi_paket'   => 'required|in:perhari,satu_minggu,dua_minggu,satu_bulan,dua_bulan,tiga_bulan',
+            'gender'         => 'required|in:putra,putri', // ← tambah validasi gender
         ]);
 
         $prefix = 'TRXC-' . now()->format('Ymd') . '-';
@@ -59,6 +60,7 @@ class PendaftranCampController extends Controller
             'email'            => $request->email,
             'no_hp'            => $request->no_hp,
             'asal_kota'        => $request->asal_kota,
+            'gender'           => $request->gender, // ← simpan gender
             'program_camp_id'  => $program->id,
             'period_id'        => $request->period_id,
             'durasi_paket'     => $request->durasi_paket,
@@ -72,15 +74,15 @@ class PendaftranCampController extends Controller
 
     public function halamanKamar($trx_id)
     {
-        // Logika untuk menampilkan halaman pilih kamar berdasarkan trx_id
-        $pendaftaran = PendaftaranProgramCamp::where('trx_id', $trx_id)->firstOrFail();
+        $pendaftar = PendaftaranProgramCamp::where('trx_id', $trx_id)->firstOrFail();
+        $rooms = Rooms::where('program_camp_id', $pendaftar->program_camp_id)->get();
 
-        // Misal kamu ingin menampilkan daftar kamar juga
-        $rooms = Rooms::where('program_camp_id', $pendaftaran->program_camp_id)->get();
-
-        return view('camp.room', compact('pendaftaran', 'rooms'));
+        return view('camp.room', [
+            'rooms' => $rooms,
+            'pendaftar' => $pendaftar,
+            'trx_id' => $trx_id,
+        ]);
     }
-
 
 
     public static function filter($rooms, $prefix, $start, $end, $gender = null)
@@ -96,11 +98,32 @@ class PendaftranCampController extends Controller
     /**
      * Menampilkan halaman pembayaran akhir.
      */
+
+    public function proseskamaruser(Request $request)
+    {
+
+        $request->validate([
+            'kamar_id' => 'required|exists:rooms,id',
+        ]);
+
+        $pendaftar = PendaftaranProgramCamp::where('trx_id', $request->trx_id)->firstOrFail();
+
+        $pendaftar->update([
+            'room_id' => $request->kamar_id,
+            'nama_kamar' => $request->nama_kamar, // <- jangan lupa kalau mau simpan juga
+
+        ]);
+
+        return redirect()->route('camp.pembayaran', ['trx_id' => $request->trx_id]);
+    }
+
+
     public function halamanPembayaran($trx_id)
     {
-        $pendaftaran = PendaftaranProgramCamp::with('program')->where('trx_id', $trx_id)->firstOrFail();
-        $banks = Banks::where('status', 'active')->get();
+        $pendaftaran = PendaftaranProgramCamp::where('trx_id', $trx_id)->firstOrFail();
+        $banks = Banks::all(); // Atau bisa disesuaikan
 
-        return view('camp.payment', compact('pendaftaran', 'banks'));
+
+        return view('camp.pembayaran', compact('pendaftaran', 'banks'));
     }
 }

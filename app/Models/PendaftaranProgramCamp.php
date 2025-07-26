@@ -14,6 +14,7 @@ class PendaftaranProgramCamp extends Model
         'email',
         'no_hp',
         'asal_kota',
+        'gender',
         'program_camp_id',
         'period_id',
         'durasi_paket',
@@ -21,14 +22,14 @@ class PendaftaranProgramCamp extends Model
         'bukti_pembayaran',
         'status',
         'bank_id',
-        'room_id', 
+        'room_id',
     ];
 
 
     // Relasi ke ProgramCamp
-    public function programCamp()
+    public function program()
     {
-        return $this->belongsTo(ProgramCamp::class);
+        return $this->belongsTo(ProgramCamp::class, 'program_camp_id');
     }
 
     // Relasi ke Period
@@ -46,5 +47,10 @@ class PendaftaranProgramCamp extends Model
     public function room()
     {
         return $this->belongsTo(Rooms::class);
+    }
+
+    public function kamar()
+    {
+        return $this->belongsTo(Rooms::class, 'room_id');
     }
 }

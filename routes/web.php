@@ -45,6 +45,7 @@ Route::get('/camps', [CampController::class, 'publicIndex'])->name('camps.index'
 // Detail camp (public)
 Route::get('/camps/{camp:slug}', [CampController::class, 'publicShow'])->name('camps.show');
 
+
 // Form pendaftaran awal
 Route::get('/camp/{program}/daftar', [PendaftranCampController::class, 'showForm'])->name('camp.pendaftaran.form');
 Route::post('/camp/{program}/daftar', [PendaftranCampController::class, 'store'])->name('camp.pendaftaran.store');
@@ -52,9 +53,10 @@ Route::post('/camp/{program}/daftar', [PendaftranCampController::class, 'store']
 // Halaman pilih kamar berdasarkan trx_id
 Route::get('/camp/room/{trx_id}', [PendaftranCampController::class, 'halamanKamar'])->name('camp.room');
 
-// Halaman pembayaran berdasarkan id pendaftaran
-Route::get('/camp/pembayaran/{id}', [CampController::class, 'pembayaran'])->name('camp.pembayaran');
-Route::post('/camp/pembayaran/{id}', [CampController::class, 'submitBuktiPembayaran'])->name('camp.submitPembayaran');
+    Route::post('/camp/proses-kamar', [PendaftranCampController::class, 'proseskamaruser'])->name('camp.proseskamaruser');
+    Route::get('/camp/pembayaran/{trx_id}', [PendaftranCampController::class, 'halamanPembayaran'])->name('camp.pembayaran');
+
+
 
 Route::bind('pendaftaran', function ($value) {
     return \App\Models\PendaftaranProgramCamp::where('trx_id', $value)->firstOrFail();
@@ -174,7 +176,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')  ->name('admin.') ->g
     Route::get('/pendaftaran-camp/export', [PendaftaranProgramCampController::class, 'exportCsv'])
         ->name('camp.export');
     // Pembayaran
-    Route::post('/pembayaran', [PembayaranController::class, 'store'])->name('pembayaran.store');
-    Route::post('/upload-bukti', [PembayaranController::class, 'uploadBukti'])->name('bukti.upload');
+    // Route::post('/pembayaran', [PembayaranController::class, 'store'])->name('pembayaran.store');
+    // Route::post('/upload-bukti', [PembayaranController::class, 'uploadBukti'])->name('bukti.upload');
 
 });

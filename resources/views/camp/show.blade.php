@@ -3,110 +3,7 @@
     @section('title', $program->nama)
 
     @section('content')
-        <style>
-            /* Base styles for all devices */
-            .program-card {
-                transition: transform 0.3s ease;
-            }
-
-            .program-card:hover {
-                transform: translateY(-5px);
-            }
-
-            .duration-option {
-                cursor: pointer;
-                transition: all 0.2s ease;
-            }
-
-            .duration-option:hover {
-                background-color: #f8f9fa;
-            }
-
-            .duration-option input[type="radio"]:checked+label {
-                background-color: #e9f7fe;
-                border-color: #0d6efd;
-            }
-
-            /* Mobile-specific styles */
-            @media (max-width: 767.98px) {
-                .display-4 {
-                    font-size: 1.8rem !important;
-                    line-height: 1.3;
-                }
-
-                .lead {
-                    font-size: 1rem !important;
-                }
-
-                .card-header h3 {
-                    font-size: 1.25rem;
-                }
-
-                .btn-lg {
-                    padding: 0.5rem 1rem !important;
-                    font-size: 1rem !important;
-                }
-
-                .form-control-lg,
-                .form-select-lg {
-                    font-size: 1rem !important;
-                    padding: 0.5rem 1rem !important;
-                }
-
-                .table-responsive-mobile {
-                    overflow-x: auto;
-                    -webkit-overflow-scrolling: touch;
-                }
-
-                .table-responsive-mobile table {
-                    width: 100%;
-                    min-width: 500px;
-                }
-
-                .card-img-top {
-                    height: 250px !important;
-                }
-
-                .duration-options-container {
-                    overflow-x: auto;
-                    white-space: nowrap;
-                    display: flex;
-                    padding-bottom: 10px;
-                }
-
-                .duration-option {
-                    min-width: 120px;
-                    display: inline-block;
-                    margin-right: 10px;
-                    white-space: normal;
-                }
-            }
-
-            /* Desktop-specific styles */
-            @media (min-width: 768px) {
-                .card-img-top {
-                    height: 400px !important;
-                }
-
-                .duration-option {
-                    height: 100%;
-                }
-            }
-
-            /* Common styles for both */
-            .facility-item {
-                padding: 0.5rem 0;
-                border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            }
-
-            .facility-item:last-child {
-                border-bottom: none;
-            }
-
-            .border-primary-custom {
-                border-color: #0d6efd !important;
-            }
-        </style>
+        <link rel="stylesheet" href="{{ asset('css/camp.css') }}">
 
         <div class="container my-4 my-lg-5 px-3 px-lg-4">
             <!-- Header Section -->
@@ -177,6 +74,16 @@
                                 <label for="asal_kota" class="form-label fw-semibold">City of Origin</label>
                                 <input type="text" name="asal_kota" class="form-control form-control-lg" required>
                             </div>
+
+                            <div class="col-12 col-md-6">
+                                <label for="gender" class="form-label fw-semibold">Gender</label>
+                                <select name="gender" id="gender" class="form-select form-select-lg" required>
+                                    <option value="">-- Select Gender --</option>
+                                    <option value="putra">Putra</option>
+                                    <option value="putri">Putri</option>
+                                </select>
+                            </div>
+
                             <div class="col-12 col-md-6">
                                 <label for="period_id" class="form-label fw-semibold">Select Period</label>
                                 <select name="period_id" class="form-select form-select-lg" required>
@@ -190,7 +97,7 @@
                                 </select>
                             </div>
 
-                            <div class="col-12 col-md-6">
+                            <div class="col-12">
                                 <label class="form-label fw-semibold d-block mb-2">Package Duration</label>
                                 <div class="duration-options-container">
                                     @php
@@ -223,10 +130,11 @@
                                             <div class="duration-option">
                                                 <input class="form-check-input d-none" type="radio" name="durasi_paket"
                                                     id="{{ $key }}" value="{{ $key }}" required>
-                                                <label class="d-flex flex-column p-3 rounded border w-100 h-100"
+                                                <label
+                                                    class="d-flex flex-column justify-content-center align-items-center p-3 rounded border text-center"
                                                     for="{{ $key }}">
-                                                    <span class="fw-semibold text-center">{{ $option['label'] }}</span>
-                                                    <small class="text-muted text-center">Rp
+                                                    <span class="fw-semibold">{{ $option['label'] }}</span>
+                                                    <small class="text-muted">Rp
                                                         {{ number_format($option['harga']) }}</small>
                                                 </label>
                                             </div>
@@ -244,6 +152,8 @@
                     </form>
                 </div>
             </div>
+
+
 
 
             {{-- <a href="{{ route('camp.room', ['slug' => $program->slug]) }}" class="btn btn-primary mt-3">
