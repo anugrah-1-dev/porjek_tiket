@@ -48,6 +48,8 @@
                         <th>No HP</th>
                         <th>Program</th>
                         <th>Periode</th>
+                        {{-- PERUBAHAN: Menambahkan kolom Bank --}}
+                        <th>Bank</th>
                         <th>Status</th>
                         <th>Bukti Pembayaran</th>
                         <th width="10%">Aksi</th>
@@ -62,8 +64,11 @@
                         <td>{{ $data->email }}</td>
                         <td>{{ $data->no_hp ?? '-' }}</td>
                         <td>{{ $data->program->nama ?? '-' }}</td>
-                        {{-- PERUBAHAN FORMAT TANGGAL --}}
-                        <td>{{ optional($data->period->date)->translatedFormat('d F Y') ?? '-' }}</td>
+                        <td>{{ optional($data->period->date)->translatedFormat('d F Y') ?? (optional($data->period)->tanggal_mulai ? \Carbon\Carbon::parse($data->period->tanggal_mulai)->translatedFormat('d M Y') . ' - ' . \Carbon\Carbon::parse($data->period->tanggal_selesai)->translatedFormat('d M Y') : '-') }}</td>
+                        
+                        {{-- PERUBAHAN: Menampilkan nama bank dari relasi --}}
+                        <td>{{ $data->bank->name ?? '-' }}</td>
+
                         <td>
                             @php
                             $statusClass = 'secondary';
@@ -81,7 +86,6 @@
                             @else
                                 <span class="text-muted" style="font-size: 0.85em;">Belum ada</span>
                             @endif
-
                         </td>
                         <td>
                             <div class="btn-group btn-group-sm">
@@ -100,7 +104,8 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="10" class="text-center py-4">Belum ada pendaftar.</td>
+                        {{-- PERUBAHAN: Menyesuaikan colspan --}}
+                        <td colspan="11" class="text-center py-4">Belum ada pendaftar.</td>
                     </tr>
                     @endforelse
                 </tbody>
@@ -122,20 +127,16 @@
     .dataTables_filter {
         display: none;
     }
-
     .table-responsive {
         max-height: 500px;
     }
-
     .table-responsive::-webkit-scrollbar {
         height: 6px;
     }
-
     .table-responsive::-webkit-scrollbar-thumb {
         background-color: #aaa;
         border-radius: 10px;
     }
-
     .btn-group-sm .btn {
         padding: 0.25rem 0.5rem;
     }
@@ -155,7 +156,8 @@
             responsive: true,
             columnDefs: [{
                 orderable: false,
-                targets: [0, 8, 9]
+                // PERUBAHAN: Menyesuaikan target kolom yang tidak bisa di-sort
+                targets: [0, 9, 10] 
             }],
             language: {
                 search: "Cari:",

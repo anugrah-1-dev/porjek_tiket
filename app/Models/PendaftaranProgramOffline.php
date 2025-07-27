@@ -23,6 +23,7 @@ class PendaftaranProgramOffline extends Model
         'transport_id',
         'bukti_pembayaran',
         'status',
+        'bank_id', // ✅ digunakan untuk relasi bank
     ];
 
     // Relasi ke program offline
@@ -37,9 +38,15 @@ class PendaftaranProgramOffline extends Model
         return $this->belongsTo(Period::class, 'period_id');
     }
 
-    // (Opsional) relasi ke transportasi
+    // Relasi ke transportasi
     public function transport()
     {
         return $this->belongsTo(Transports::class, 'transport_id');
+    }
+
+    // ✅ Relasi ke bank (fix nama model)
+    public function bank()
+    {
+        return $this->belongsTo(\App\Models\Banks::class, 'bank_id');
     }
 }

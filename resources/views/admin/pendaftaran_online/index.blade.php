@@ -49,6 +49,8 @@
                         <th>Kota</th>
                         <th>Program</th>
                         <th>Periode</th>
+                        {{-- PERUBAHAN: Menambahkan kolom Bank --}}
+                        <th>Bank</th>
                         <th>Status</th>
                         <th>Bukti Pembayaran</th>
                         <th width="10%">Aksi</th>
@@ -64,8 +66,11 @@
                         <td>{{ $data->no_hp ?? '-' }}</td>
                         <td>{{ $data->asal_kota ?? '-' }}</td>
                         <td>{{ $data->program->nama ?? '-' }}</td>
-                        {{-- KODE DIPERBAIKI DI SINI --}}
-                        <td>{{ $data->period ? optional($data->period->date)->translatedFormat('d F Y') : '-' }}</td>
+                        <td>{{ $data->period ? (optional($data->period->date)->translatedFormat('d F Y') ?? ($data->period->tanggal_mulai ? \Carbon\Carbon::parse($data->period->tanggal_mulai)->translatedFormat('d M Y') . ' - ' . \Carbon\Carbon::parse($data->period->tanggal_selesai)->translatedFormat('d M Y') : '-')) : '-' }}</td>
+                        
+                        {{-- PERUBAHAN: Menampilkan nama bank dari relasi --}}
+                        <td>{{ $data->bank->name ?? '-' }}</td>
+                        
                         <td>
                             @php
                             $statusClass = 'secondary';
@@ -101,7 +106,8 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="11" class="text-center py-4">Belum ada pendaftar.</td>
+                        {{-- PERUBAHAN: Menyesuaikan colspan --}}
+                        <td colspan="12" class="text-center py-4">Belum ada pendaftar.</td>
                     </tr>
                     @endforelse
                 </tbody>
@@ -152,7 +158,8 @@
             responsive: true,
             columnDefs: [{
                 orderable: false,
-                targets: [0, 9, 10]
+                // PERUBAHAN: Menyesuaikan target kolom yang tidak bisa di-sort
+                targets: [0, 10, 11]
             }],
             language: {
                 search: "Cari:",

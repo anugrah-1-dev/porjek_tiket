@@ -91,88 +91,114 @@
                         <div class="card-header bg-primary text-white">
                             <h5 class="mb-0"><i class="bi bi-pencil-square"></i> Formulir Pendaftaran</h5>
                         </div>
-                          <div class="card-body">
+                            <div class="card-body">
                                     <p class="text-muted mb-3">Silakan lengkapi data diri Anda untuk mendaftar program ini.</p>
-                        <div class="card-body">
-                            @if(session('success'))
-                                <div class="alert alert-success">{{ session('success') }}</div>
-                            @endif
-                            
-                            @php
-                                // Filter untuk mendapatkan semua periode yang aktif
-                                $activePeriods = $periods->where('is_active', 1);
-                            @endphp
-
-                            <form method="POST" action="{{ route('public.program.offline.daftar', $program->slug) }}" enctype="multipart/form-data">
-                                @csrf
-                                <div class="mb-3">
-                                    <label class="form-label"><i class="bi bi-person-fill"></i> Nama Lengkap</label>
-                                    <input type="text" name="nama_lengkap" class="form-control" value="{{ old('nama_lengkap') }}" required>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label"><i class="bi bi-envelope-fill"></i> Email</label>
-                                    <input type="email" name="email" class="form-control" value="{{ old('email') }}" required>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label"><i class="bi bi-telephone-fill"></i> No. HP</label>
-                                    <input type="text" name="no_hp" class="form-control" value="{{ old('no_hp') }}" required>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label"><i class="bi bi-geo-alt-fill"></i> Asal Kota</label>
-                                    <input type="text" name="asal_kota" class="form-control" value="{{ old('asal_kota') }}">
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label"><i class="bi bi-person-lines-fill"></i> No. HP Wali</label>
-                                    <input type="text" name="no_wali" class="form-control" value="{{ old('no_wali') }}">
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label"><i class="bi bi-bus-front-fill"></i> Transportasi</label>
-                                    <select name="transport_id" class="form-select">
-                                        <option value="">Pilih Transportasi</option>
-                                        @foreach($transports as $transport)
-                                            <option value="{{ $transport->id }}">{{ $transport->nama }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                            <div class="card-body">
+                                @if(session('success'))
+                                    <div class="alert alert-success">{{ session('success') }}</div>
+                                @endif
                                 
-                                {{-- LOGIKA YANG DISERDEHANAKAN: SELALU TAMPILKAN DROPDOWN --}}
-                                <div class="mb-3">
-                                    <label class="form-label"><i class="bi bi-calendar-check-fill"></i> Periode</label>
-                                    <select name="period_id" class="form-select" required>
-                                        <option value="">Pilih Periode</option>
-                                        @if($activePeriods->isNotEmpty())
-                                            @foreach($activePeriods as $period)
-                                                @php
-                                                    $startDate = \Carbon\Carbon::parse($period->tanggal_mulai ?? $period->date);
-                                                    $endDate = \Carbon\Carbon::parse($period->tanggal_selesai ?? $period->date);
-                                                    $periodText = $startDate->isSameDay($endDate)
-                                                        ? $startDate->format('d F Y')
-                                                        : $startDate->format('d M Y') . ' - ' . $endDate->format('d M Y');
-                                                @endphp
-                                                <option value="{{ $period->id }}">{{ $periodText }}</option>
-                                            @endforeach
-                                        @endif
-                                    </select>
-                                    @if($activePeriods->isEmpty())
-                                       <div class="form-text text-danger">Tidak ada periode pendaftaran yang aktif saat ini.</div>
-                                    @endif
-                                </div>
+                                @php
+                                    // Filter untuk mendapatkan semua periode yang aktif
+                                    $activePeriods = $periods->where('is_active', 1);
+                                @endphp
 
-                                <button type="submit" class="btn btn-primary w-100" @if($activePeriods->isEmpty()) disabled @endif>
-                                    <i class="bi bi-send-fill"></i> 
-                                    @if($activePeriods->isNotEmpty())
-                                        Daftar Sekarang
-                                    @else
-                                        Pendaftaran Ditutup
-                                    @endif
-                                </button>
-                                <a href="{{ url('/') }}" class="btn btn-outline-secondary w-100 mt-2"><i class="bi bi-arrow-left"></i> Kembali ke Beranda</a>
-                            </form>
+                                <form method="POST" action="{{ route('public.program.offline.daftar', $program->slug) }}" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="mb-3">
+                                        <label class="form-label"><i class="bi bi-person-fill"></i> Nama Lengkap</label>
+                                        <input type="text" name="nama_lengkap" class="form-control" value="{{ old('nama_lengkap') }}" required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label"><i class="bi bi-envelope-fill"></i> Email</label>
+                                        <input type="email" name="email" class="form-control" value="{{ old('email') }}" required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label"><i class="bi bi-telephone-fill"></i> No. HP</label>
+                                        <input type="text" name="no_hp" class="form-control" value="{{ old('no_hp') }}" required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label"><i class="bi bi-geo-alt-fill"></i> Asal Kota</label>
+                                        <input type="text" name="asal_kota" class="form-control" value="{{ old('asal_kota') }}">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label"><i class="bi bi-person-lines-fill"></i> No. HP Wali</label>
+                                        <input type="text" name="no_wali" class="form-control" value="{{ old('no_wali') }}">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label"><i class="bi bi-bus-front-fill"></i> Transportasi</label>
+                                        <select name="transport_id" class="form-select">
+                                            <option value="">Pilih Transportasi</option>
+                                            @foreach($transports as $transport)
+                                                <option value="{{ $transport->id }}">{{ $transport->nama }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    
+                                    {{-- ====================================================== --}}
+                                    {{-- PERUBAHAN DIMULAI: Tambah Pilihan Bank --}}
+                                    {{-- ====================================================== --}}
+                                    <div class="mb-3">
+                                        <label class="form-label"><i class="bi bi-bank"></i> Bank untuk Pembayaran</label>
+                                        <select name="bank_id" class="form-select" required>
+                                            <option value="">Pilih Bank</option>
+                                            {{-- Pastikan Anda mengirimkan variabel $banks dari controller --}}
+                                            {{-- Contoh di Controller: $banks = \App\Models\Bank::where('status', 'active')->get(); --}}
+                                            @if(isset($banks) && $banks->isNotEmpty())
+                                                @foreach($banks as $bank)
+                                                    <option value="{{ $bank->id }}">{{ $bank->name }}</option>
+                                                @endforeach
+                                            @else
+                                                <option value="" disabled>Tidak ada pilihan bank tersedia</option>
+                                            @endif
+                                        </select>
+                                        @if(!isset($banks) || $banks->isEmpty())
+                                            <div class="form-text text-danger">Pilihan bank tidak tersedia. Hubungi admin.</div>
+                                        @endif
+                                    </div>
+                                    {{-- ====================================================== --}}
+                                    {{-- PERUBAHAN SELESAI --}}
+                                    {{-- ====================================================== --}}
+
+                                    {{-- LOGIKA YANG DISERDEHANAKAN: SELALU TAMPILKAN DROPDOWN --}}
+                                    <div class="mb-3">
+                                        <label class="form-label"><i class="bi bi-calendar-check-fill"></i> Periode</label>
+                                        <select name="period_id" class="form-select" required>
+                                            <option value="">Pilih Periode</option>
+                                            @if($activePeriods->isNotEmpty())
+                                                @foreach($activePeriods as $period)
+                                                    @php
+                                                        $startDate = \Carbon\Carbon::parse($period->tanggal_mulai ?? $period->date);
+                                                        $endDate = \Carbon\Carbon::parse($period->tanggal_selesai ?? $period->date);
+                                                        $periodText = $startDate->isSameDay($endDate)
+                                                            ? $startDate->format('d F Y')
+                                                            : $startDate->format('d M Y') . ' - ' . $endDate->format('d M Y');
+                                                    @endphp
+                                                    <option value="{{ $period->id }}">{{ $periodText }}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                        @if($activePeriods->isEmpty())
+                                            <div class="form-text text-danger">Tidak ada periode pendaftaran yang aktif saat ini.</div>
+                                        @endif
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary w-100" @if($activePeriods->isEmpty() || !isset($banks) || $banks->isEmpty()) disabled @endif>
+                                        <i class="bi bi-send-fill"></i> 
+                                        @if($activePeriods->isNotEmpty() && isset($banks) && $banks->isNotEmpty())
+                                            Daftar Sekarang
+                                        @else
+                                            Pendaftaran Ditutup
+                                        @endif
+                                    </button>
+                                    <a href="{{ url('/') }}" class="btn btn-outline-secondary w-100 mt-2"><i class="bi bi-arrow-left"></i> Kembali ke Beranda</a>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
