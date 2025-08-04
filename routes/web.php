@@ -170,6 +170,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     //sosmed
     Route::resource('sosmed', SosmedController::class);
 
+    Route::put('/admin/pendaftaran/camp/update-status/{id}', [PendaftaranProgramCampController::class, 'updateStatus'])->name('pendaftaran.camp.update');
+
+
+
     //CSV Export
     Route::get('/pendaftaran-online/export', [PendaftaranOnlineController::class, 'exportCsv'])
         ->name('pendaftaran.online.export');

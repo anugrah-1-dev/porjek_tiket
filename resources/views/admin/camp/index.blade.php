@@ -96,21 +96,71 @@
                                 </td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
-                                        <a href="{{ route('admin.pendaftaran.camp.edit', $data->id) }}"
-                                            class="btn btn-primary" title="Edit Status">
-                                            <i class="fas fa-pencil-alt"></i>
-                                        </a>
+                                        <!-- Edit Status Button -->
+                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                            data-bs-target="#statusModal{{ $data->id }}" title="Edit Status"
+                                            style="width: 38px; height: 38px;">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+
+                                        <!-- Status Update Modal -->
+                                        <div class="modal fade" id="statusModal{{ $data->id }}" tabindex="-1"
+                                            aria-labelledby="statusModalLabel{{ $data->id }}" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <form method="POST"
+                                                    action="{{ route('admin.pendaftaran.camp.update', $data->id) }}">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title"
+                                                                id="statusModalLabel{{ $data->id }}">Ubah Status
+                                                                Pendaftaran</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="form-group">
+                                                                <label for="status">Status</label>
+                                                                <select name="status" class="form-control" required>
+                                                                    <option value="pending"
+                                                                        {{ $data->status == 'pending' ? 'selected' : '' }}>
+                                                                        Pending</option>
+                                                                    <option value="diterima"
+                                                                        {{ $data->status == 'diterima' ? 'selected' : '' }}>
+                                                                        Diterima</option>
+                                                                    <option value="ditolak"
+                                                                        {{ $data->status == 'ditolak' ? 'selected' : '' }}>
+                                                                        Ditolak</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">Batal</button>
+                                                            <button type="submit" class="btn btn-primary">Simpan</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+
+                                        <!-- Delete Button -->
                                         <form action="{{ route('admin.pendaftaran.camp.destroy', $data->id) }}"
                                             method="POST"
                                             onsubmit="return confirm('Yakin ingin menghapus pendaftaran ini?');">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger" title="Hapus">
+                                            <button type="submit" class="btn btn-danger btn-sm" title="Hapus"
+                                                style="width: 38px; height: 38px;">
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                         </form>
                                     </div>
                                 </td>
+
+                                <!-- Bootstrap JS (should be included in the main layout, not here) -->
+                                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
                             </tr>
                         @empty
                             <tr>
