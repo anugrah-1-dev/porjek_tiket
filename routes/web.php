@@ -136,8 +136,16 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     //program camp
     Route::resource('programs/camp', ProgramCampController::class)->names('programs.camp');
+    Route::post('/programs/camp/sync-stok', [ProgramCampController::class, 'syncAllStokFromRoomsAjax'])->name('programs.camp.syncAllStokFromRoomsAjax');
+
 
     Route::resource('rooms', RoomController::class);
+    Route::get('/rooms/{id}/penghuni', [RoomController::class, 'getPenghuni']);
+    Route::delete('/rooms/penghuni/{trx_id}', [RoomController::class, 'kickPenghuni']);
+    Route::post('/rooms/pindah-peserta', [RoomController::class, 'pindahPeserta']);
+    Route::get('/rooms/list-aktif', [RoomController::class, 'listAktif']);
+    Route::get('/rooms/{id}/peserta-detail', [RoomController::class, 'getPesertaDetail']);
+    Route::post('/peserta/{id}/pindah-kamar', [PendaftaranProgramCampController::class, 'pindahKamar']);
 
 
     // Pendaftaran Program Online
@@ -164,6 +172,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::put('/pendaftaran/camp/{id}', [PendaftaranProgramCampController::class, 'update'])->name('pendaftaran.camp.update');
     Route::delete('/pendaftaran/camp/{id}', [PendaftaranProgramCampController::class, 'destroy'])->name('pendaftaran.camp.destroy');
     Route::get('/pendaftaran/camp/{id}/bukti', [PendaftaranProgramCampController::class, 'showBukti'])->name('pendaftaran.camp.bukti');
+
+
     //periods
     Route::resource('periods', PeriodsController::class)->only(['index', 'store', 'update', 'destroy']);
 

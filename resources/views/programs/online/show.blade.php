@@ -189,47 +189,38 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <label class="form-label"><i class="bi bi-calendar-check-fill"></i>
-                                            Periode</label>
-                                        <select name="period_id" class="form-select" required>
-                                            <option value="">Pilih Periode</option>
-                                            @php
-                                                $today = \Carbon\Carbon::now('Asia/Jakarta');
-                                            @endphp
-                                            @foreach ($activePeriods as $period)
+                                            <label class="form-label"><i class="bi bi-calendar-check-fill"></i>
+                                                Periode</label>
+                                            <select name="period_id" class="form-select" required>
+                                                <option value="">Pilih Periode</option>
+
                                                 @php
-                                                    $startDate = \Carbon\Carbon::parse(
-                                                        $period->tanggal_mulai ?? $period->date,
-                                                    );
-                                                    $endDate = \Carbon\Carbon::parse(
-                                                        $period->tanggal_selesai ?? $period->date,
-                                                    );
-
-                                                    $periodText = $startDate->isSameDay($endDate)
-                                                        ? $startDate->translatedFormat('d F Y')
-                                                        : $startDate->translatedFormat('d M Y') .
-                                                            ' - ' .
-                                                            $endDate->translatedFormat('d M Y');
-
-                                                    $isTodayInRange = $today->between($startDate, $endDate);
-                                                    $isSelected =
-                                                        old('period_id') == $period->id ||
-                                                        (!$errors->any() && $isTodayInRange);
+                                                    $today = \Carbon\Carbon::now('Asia/Jakarta')->toDateString();
                                                 @endphp
-                                                <option value="{{ $period->id }}"
-                                                    {{ $isSelected ? 'selected' : '' }}>
-                                                    {{ $periodText }}
-                                                    {{ $isTodayInRange ? '(Aktif Hari Ini)' : '' }}
-                                                </option>
-                                            @endforeach
-                                        </select>
 
+                                                @forelse ($activePeriods as $period)
+                                                    @php
+                                                        $periodDate = \Carbon\Carbon::parse(
+                                                            $period->date,
+                                                        )->toDateString();
+                                                        $isToday = $periodDate === $today;
+                                                    @endphp
+                                                    <option value="{{ $period->id }}"
+                                                        {{ $isToday ? 'selected' : '' }}>
+                                                        Periode:
+                                                        {{ \Carbon\Carbon::parse($period->date)->translatedFormat('d M Y') }}
+                                                        {{ $isToday ? '(Aktif Hari Ini)' : '' }}
+                                                    </option>
+                                                @empty
+                                                    {{-- Kosong --}}
+                                                @endforelse
+                                            </select>
 
-                                        @if ($activePeriods->isEmpty())
-                                            <div class="form-text text-danger">Tidak ada periode pendaftaran yang aktif
-                                                saat ini.</div>
-                                        @endif
-                                    </div>
+                                            @if ($activePeriods->isEmpty())
+                                                <div class="form-text text-danger">Tidak ada periode pendaftaran yang
+                                                    aktif saat ini.</div>
+                                            @endif
+                                        </div>
 
 
                                     {{-- PERUBAHAN: Tombol pendaftaran dengan kondisi disabled --}}

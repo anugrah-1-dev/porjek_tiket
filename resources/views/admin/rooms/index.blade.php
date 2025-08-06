@@ -32,13 +32,14 @@
             </div>
 
             <div class="card-body">
-                <div class="action-bar">
-
-                    <x-adminlte-input name="search" placeholder="Cari kamar..." class="search-box">
-                        <x-slot name="appendSlot">
-                            <x-adminlte-button theme="outline-primary" icon="fas fa-search" />
-                        </x-slot>
-                    </x-adminlte-input>
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-9 col-lg-6">
+                        <x-adminlte-input name="search" placeholder="Cari kamar..." class="search-box">
+                            <x-slot name="appendSlot">
+                                <x-adminlte-button theme="outline-primary" icon="fas fa-search" />
+                            </x-slot>
+                        </x-adminlte-input>
+                    </div>
                 </div>
 
                 <div class="legend-container">
@@ -54,8 +55,12 @@
                         <div class="legend-color" style="background-color: var(--danger-color);"></div>
                         <span>Penuh</span>
                     </div>
-
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #6c757d;"></div>
+                        <span>Tidak Aktif / Dalam Perbaikan</span>
+                    </div>
                 </div>
+
 
                 {{-- ================= VVIP SECTION ================= --}}
                 <div class="room-section">
@@ -282,6 +287,15 @@
                         </div>
 
                         <div class="mb-3">
+                            <label for="modalRoomStatus" class="form-label">Status Kamar</label>
+                            <select class="form-select" id="modalRoomStatus" name="status">
+                                <option value="aktif">Aktif</option>
+                                <option value="nonaktif">Nonaktif</option>
+                            </select>
+                        </div>
+
+
+                        <div class="mb-3">
                             <label for="modalRoomKapasitas" class="form-label">Kapasitas</label>
                             <input type="number" class="form-control" id="modalRoomKapasitas" name="kapasitas"
                                 min="1">
@@ -292,6 +306,14 @@
                             <input type="number" class="form-control" id="modalRoomPenghuni" name="penghuni"
                                 min="0">
                         </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Penghuni Kamar</label>
+                            <ul id="listPenghuni" class="list-group">
+
+                            </ul>
+                        </div>
+
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -299,9 +321,41 @@
                     <button type="button" class="btn btn-primary" onclick="saveRoomChanges()">Simpan
                         Perubahan</button>
                 </div>
+
             </div>
         </div>
     </div>
+
+    <!-- Modal Pindah Peserta -->
+    <div class="modal fade" id="modalPindahPeserta" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Pindahkan Peserta</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Tutup"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="pesertaListPindah">
+                        <!-- Daftar peserta akan dimuat di sini via JS -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <!-- Jika kamu ternyata pakai Bootstrap 4 -->
+                    <button class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap 5 JS (include Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -331,6 +385,30 @@
             });
         </script>
     @endif
+
+    @if (count($penghuniExpired) > 0)
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            Swal.fire({
+                icon: 'warning',
+                title: 'Ada Penghuni Melebihi Durasi',
+                html: `
+                <ul style="text-align: left;">
+                    @foreach ($penghuniExpired as $p)
+                        <li>
+                            <strong>{{ $p['nama'] }}</strong> - Kamar <strong>{{ $p['nama_kamar'] }}</strong><br>
+                            Durasi: {{ $p['durasi'] }} (Expired: {{ $p['expired_at'] }})<br>
+                            <a href="https://wa.me/{{ preg_replace('/^0/', '62', preg_replace('/\D/', '', $p['no_hp'])) }}" target="_blank">Hubungi via WA</a>
+                        </li><br>
+                    @endforeach
+                </ul>
+            `,
+                confirmButtonText: 'OK',
+                width: 600
+            });
+        </script>
+    @endif
+
 
     {{-- Interaksi JS --}}
     <script>
@@ -381,24 +459,129 @@
     </script>
 
     <script>
+        const durasiToDays = {
+            perhari: 1,
+            satu_minggu: 7,
+            dua_minggu: 14,
+            satu_bulan: 30,
+            dua_bulan: 60,
+            tiga_bulan: 90,
+            enam_bulan: 180,
+            satu_tahun: 365
+        };
+
         function openEditModal(el) {
             const id = el.dataset.id;
-            const nama = el.dataset.nama;
-            const gender = el.dataset.gender;
-            const kategori = el.dataset.kategori;
-            const kapasitas = el.dataset.kapasitas;
-            const penghuni = el.dataset.penghuni;
-            document.getElementById('modalRoomId').value = id;
-            document.getElementById('modalRoomNama').value = nama;
-            document.getElementById('modalRoomGender').value = gender;
-            document.getElementById('modalRoomKategori').value = kategori;
-            document.getElementById('modalRoomKapasitas').value = kapasitas;
-            document.getElementById('modalRoomPenghuni').value = penghuni;
+            $('#modalRoomId').val(id);
+            $('#modalRoomNama').val(el.dataset.nama);
+            $('#modalRoomGender').val(el.dataset.gender);
+            $('#modalRoomKategori').val(el.dataset.kategori);
+            $('#modalRoomKapasitas').val(el.dataset.kapasitas);
+            $('#modalRoomPenghuni').val(el.dataset.penghuni);
+            $('#modalRoomStatus').val(el.dataset.status);
+
+            $('#listPenghuni').html('<li class="list-group-item text-muted">Memuat data...</li>');
+
+            $.get(`/admin/rooms/${id}/penghuni`, function(data) {
+                $('#listPenghuni').empty();
+
+                if (!data || data.length === 0) {
+                    $('#listPenghuni').append('<li class="list-group-item text-muted">Belum ada penghuni.</li>');
+                    return;
+                }
+
+                data.forEach(function(p) {
+                    const durasiHari = durasiToDays[p.durasi_paket] || 0;
+
+                    // Gunakan period.date sebagai tanggal mulai
+                    const startDate = p.period && p.period.date ? new Date(p.period.date) : new Date(p
+                        .updated_at);
+                    const endDate = new Date(startDate);
+                    endDate.setDate(endDate.getDate() + durasiHari);
+
+                    const now = new Date();
+                    const timeDiff = endDate - now;
+
+
+                    let countdownText = '';
+                    let kontakWA = '';
+                    let kickButton = '';
+
+                    if (timeDiff > 0) {
+                        const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+                        const hours = Math.floor((timeDiff / (1000 * 60 * 60)) % 24);
+                        const minutes = Math.floor((timeDiff / (1000 * 60)) % 60);
+                        countdownText =
+                            `<span class="badge bg-success">Sisa: ${days}h ${hours}j ${minutes}m</span>`;
+                    } else {
+                        countdownText = `<span class="badge bg-danger">Sudah berakhir</span>`;
+                        if (p.no_hp) {
+                            const cleanedNoHP = p.no_hp.replace(/^0/, '62').replace(/\D/g, '');
+                            kontakWA =
+                                `<br><a href="https://wa.me/${cleanedNoHP}" target="_blank" class="text-success">Hubungi via WA</a>`;
+                        }
+                        kickButton =
+                            `<br><button class="btn btn-sm btn-outline-danger mt-2" onclick="kickPenghuni('${p.trx_id}')">Keluarkan</button>`;
+                    }
+
+                    const formattedDate = startDate.toLocaleString('id-ID', {
+                        timeZone: 'Asia/Jakarta',
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+
+
+                    $('#listPenghuni').append(`
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong>${$('<div>').text(p.nama_lengkap).html()}</strong><br>
+                        <small class="text-muted">Durasi: ${p.durasi_paket}</small><br>
+                        ${countdownText}
+                        ${kontakWA}
+                        ${kickButton}
+                    </div>
+                    <small class="text-muted">${formattedDate}</small>
+                </li>
+            `);
+                });
+
+            }).fail(function() {
+                $('#listPenghuni').html('<li class="list-group-item text-danger">Gagal memuat data penghuni.</li>');
+            });
 
             const modal = new bootstrap.Modal(document.getElementById('roomModal'));
             modal.show();
+        }
 
+        function kickPenghuni(trx_id) {
+            if (!confirm('Yakin ingin mengeluarkan penghuni ini?')) return;
 
+            $.ajax({
+                url: `/admin/rooms/penghuni/${trx_id}`,
+                type: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    if (response.success) {
+                        alert('Penghuni berhasil dikeluarkan.');
+                        $('#listPenghuni').html('<li class="list-group-item text-muted">Memuat ulang...</li>');
+
+                        setTimeout(() => {
+                            // Reload modal data
+                            openEditModal(document.querySelector(
+                                `[data-id="${$('#modalRoomId').val()}"]`));
+                        }, 500);
+                    } else {
+                        alert('Gagal mengeluarkan: ' + response.message);
+                    }
+                },
+                error: function(xhr) {
+                    alert('Terjadi kesalahan saat mengeluarkan penghuni.');
+                    console.error(xhr);
+                }
+            });
         }
 
         function saveRoomChanges() {
@@ -406,25 +589,145 @@
             const formData = $('#roomEditForm').serialize() + '&_method=PUT';
 
             $.ajax({
-                url: `/admin/rooms/${id}`, // Sesuai route kamu
-                type: 'POST', // tetap POST, Laravel paham lewat _method
+                url: `/admin/rooms/${id}`,
+                type: 'POST',
                 data: formData,
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(data) {
+                    const status = $('#modalRoomStatus').val();
+                    const penghuni = parseInt($('#modalRoomPenghuni').val());
+
+                    if (status === 'nonaktif' && penghuni > 0) {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Kamar masih berisi penghuni!',
+                            text: 'Silakan pindahkan peserta terlebih dahulu.',
+                            confirmButtonText: 'Pindahkan Sekarang'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                bukaModalPindahPeserta(id);
+                            }
+                        });
+                        return;
+                    }
+
                     if (data.success) {
-                        alert('Perubahan berhasil disimpan');
-                        location.reload();
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil',
+                            text: 'Perubahan berhasil disimpan'
+                        }).then(() => location.reload());
                     } else {
-                        alert('Gagal menyimpan perubahan: ' + (data.message || 'Tidak ada pesan error'));
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal menyimpan',
+                            text: data.message || 'Terjadi kesalahan.'
+                        });
                     }
                 },
-                error: function(xhr, status, error) {
-                    console.error('Error:', error);
-                    alert('Terjadi kesalahan saat menyimpan perubahan: ' + error);
+                error: function(xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Terjadi kesalahan saat menyimpan perubahan.'
+                    });
+                }
+            });
+        }
+
+        // 🔄 Buka modal untuk memindahkan peserta
+        function bukaModalPindahPeserta(roomId) {
+            $.ajax({
+                url: `/admin/rooms/${roomId}/peserta-detail`,
+                type: 'GET',
+                success: function(data) {
+                    let html = '';
+
+                    if (data.peserta.length > 0) {
+                        data.peserta.forEach(p => {
+
+                            const rooms = data.filtered_rooms[p.id] || [];
+                            const options = rooms.map(r =>
+                                `<option value="${r.id}">${r.nomor_kamar}</option>`
+                            ).join('');
+
+                            html += `
+                        <div class="d-flex align-items-center justify-content-between border p-2 mb-2">
+                            <div>
+                                <strong>${p.nama_lengkap}</strong><br>
+                                <small>${p.trx_id ?? '-'} | ${p.gender}</small>
+                            </div>
+                            <div>
+                                <select class="form-select d-inline-block w-auto" id="targetRoom_${p.id}">
+                                    <option value="">Pilih kamar tujuan</option>
+                                    ${options}
+                                </select>
+                                <button class="btn btn-sm btn-primary ms-2 pindah-btn" data-id="${p.id}">
+                                    Pindahkan
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                        });
+                    } else {
+                        html = '<p class="text-center">Tidak ada peserta di kamar ini.</p>';
+                    }
+
+                    $('#pesertaListPindah').html(html);
+
+                    // 🧭 Tampilkan modal Bootstrap
+                    const modal = new bootstrap.Modal(document.getElementById('modalPindahPeserta'));
+                    modal.show();
+                },
+                error: function() {
+                    Swal.fire('Error', 'Gagal mengambil data peserta.', 'error');
+                }
+            });
+        }
+
+        // 🔁 Event handler untuk tombol "Pindahkan"
+        $(document).on('click', '.pindah-btn', function() {
+            const pesertaId = $(this).data('id');
+            const targetRoomId = $(`#targetRoom_${pesertaId}`).val();
+
+
+            if (!targetRoomId) {
+                Swal.fire('Peringatan', 'Silakan pilih kamar tujuan.', 'warning');
+                return;
+            }
+
+            pindahPeserta(pesertaId, targetRoomId);
+        });
+
+        // 🔧 Fungsi untuk memindahkan peserta ke kamar baru
+        function pindahPeserta(pesertaId, targetRoomId) {
+            console.log('Memindahkan peserta ID:', pesertaId);
+
+            $.ajax({
+                url: `/admin/peserta/${pesertaId}/pindah-kamar`,
+                type: 'POST',
+                data: {
+                    target_room_id: targetRoomId,
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(data) {
+                    if (data.success) {
+                        Swal.fire('Berhasil', 'Peserta berhasil dipindahkan.', 'success');
+                        $(`#targetRoom_${pesertaId}`).closest('.d-flex').remove();
+                    } else {
+                        Swal.fire('Gagal', data.message || 'Terjadi kesalahan.', 'error');
+                    }
+
+                },
+
+
+                error: function() {
+                    Swal.fire('Error', 'Gagal memproses perpindahan.', 'error');
                 }
             });
         }
     </script>
+
 @stop

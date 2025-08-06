@@ -27,10 +27,10 @@ class PendaftaranProgramCamp extends Model
 
 
     // Relasi ke ProgramCamp
-    public function program()
-    {
-        return $this->belongsTo(ProgramCamp::class, 'program_camp_id');
-    }
+        public function program()
+        {
+            return $this->belongsTo(ProgramCamp::class, 'program_camp_id');
+        }
 
     // Relasi ke Period
     public function period()
@@ -46,8 +46,9 @@ class PendaftaranProgramCamp extends Model
 
     public function room()
     {
-        return $this->belongsTo(Rooms::class);
+        return $this->belongsTo(Rooms::class, 'room_id');
     }
+
 
     public function kamar()
     {

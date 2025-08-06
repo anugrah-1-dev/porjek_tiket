@@ -371,8 +371,6 @@
         }
     </script>
 
-
-
     {{-- CSS PILIHAN --}}
     <style>
         .room-card.selected-room {

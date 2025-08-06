@@ -55,8 +55,12 @@ class RoomDummy
 
     public static function getStatusClass($room)
     {
+        if ($room->status === 'nonaktif') {
+            return 'room-nonaktif'; // Misal ini warna abu-abu di CSS-mu
+        }
+
         $penghuni = $room->penghuni ?? 0;
-        $kapasitas = $room->kapasitas ?? 1; // fallback biar aman
+        $kapasitas = $room->kapasitas ?? 1;
 
         return match (true) {
             $penghuni >= $kapasitas => 'room-full',
@@ -67,6 +71,10 @@ class RoomDummy
 
     public static function getStatusText($room)
     {
+        if ($room->status === 'nonaktif') {
+            return 'Dalam Perbaikan';
+        }
+
         $penghuni = $room->penghuni ?? 0;
         $kapasitas = $room->kapasitas ?? 1;
 
@@ -76,6 +84,7 @@ class RoomDummy
             default => 'Kosong'
         };
     }
+
 
 
 

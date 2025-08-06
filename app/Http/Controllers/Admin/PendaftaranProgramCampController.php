@@ -10,6 +10,7 @@ use App\Models\Bank;
 use Illuminate\Http\Request;
 use App\Exports\PendaftaranCampExport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\Rooms;
 
 class PendaftaranProgramCampController extends Controller
 {
@@ -79,5 +80,36 @@ class PendaftaranProgramCampController extends Controller
         $data->save();
 
         return redirect()->back()->with('success', 'Status berhasil diperbarui.');
+    }
+
+    public function pindahKamar(Request $request, $id)
+    {
+        $peserta = PendaftaranProgramCamp::findOrFail($id);
+
+        $newRoomId = $request->input('target_room_id');
+
+        $newRoom = Rooms::findOrFail($newRoomId);
+
+        // Validasi jika kamar masih tersedia
+        if ($newRoom->penghuni >= $newRoom->kapasitas) {
+            return response()->json(['success' => false, 'message' => 'Kamar tujuan penuh.']);
+        }
+
+        // Update room lama: -1 penghuni
+        $oldRoom = Rooms::find($peserta->room_id);
+        if ($oldRoom) {
+            $oldRoom->penghuni -= 1;
+            $oldRoom->save();
+        }
+
+        // Pindahkan peserta
+        $peserta->room_id = $newRoomId;
+        $peserta->save();
+
+        // Update room baru: +1 penghuni
+        $newRoom->penghuni += 1;
+        $newRoom->save();
+
+        return response()->json(['success' => true]);
     }
 }

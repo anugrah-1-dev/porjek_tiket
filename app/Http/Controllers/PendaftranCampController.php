@@ -115,20 +115,37 @@ class PendaftranCampController extends Controller
 
     public function proseskamaruser(Request $request)
     {
-
         $request->validate([
             'kamar_id' => 'required|exists:rooms,id',
         ]);
 
         $pendaftar = PendaftaranProgramCamp::where('trx_id', $request->trx_id)->firstOrFail();
+        $room = Rooms::findOrFail($request->kamar_id);
 
+        // Cek apakah kamar sudah penuh
+        if ($room->penghuni >= $room->kapasitas) {
+            return redirect()->back()->with('error', 'Kamar sudah penuh!');
+        }
+
+        // Update data pendaftaran dengan kamar terpilih
         $pendaftar->update([
-            'room_id' => $request->kamar_id,
-            'nama_kamar' => $request->nama_kamar, // <- jangan lupa kalau mau simpan juga
-
+            'room_id'    => $room->id,
+            'nama_kamar' => $room->nomor_kamar,
         ]);
 
-        return redirect()->route('camp.pembayaran', ['trx_id' => $request->trx_id]);
+        // Tambah jumlah penghuni kamar
+        $room->increment('penghuni');
+
+        // Jika penghuni == kapasitas, kurangi stok program_camp
+        if ($room->penghuni >= $room->kapasitas) {
+            $program = ProgramCamp::findOrFail($room->program_camp_id);
+            if ($program->stok > 0) {
+                $program->decrement('stok');
+            }
+        }
+
+        return redirect()->route('camp.pembayaran', ['trx_id' => $request->trx_id])
+            ->with('success', 'Kamar berhasil dipilih!');
     }
 
 

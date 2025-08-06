@@ -18,6 +18,7 @@ class rooms extends Model
         'kategori',
         'kapasitas',
         'penghuni',
+        'status'
     ];
 
     /**

@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File; // Gunakan File facade untuk operasi file
 use Illuminate\Support\Facades\Storage;
+use App\Models\Rooms;
+use Illuminate\Support\Facades\DB;
 
 class ProgramCampController extends Controller
 {
@@ -117,6 +119,29 @@ class ProgramCampController extends Controller
             'title' => 'Berhasil!', 'text' => 'Program berhasil dihapus.', 'icon' => 'success',
         ]);
     }
+
+    public function show($id)
+    {
+        $program = ProgramCamp::findOrFail($id);
+        return view('admin.programs.camp.show', compact('program'));
+    }
+    public function syncAllStokFromRoomsAjax()
+    {
+        $stokData = DB::table('rooms')
+            ->select('program_camp_id', DB::raw('SUM(kapasitas) as total_stok'))
+            ->groupBy('program_camp_id')
+            ->pluck('total_stok', 'program_camp_id');
+
+        foreach ($stokData as $programCampId => $totalStok) {
+            ProgramCamp::where('id', $programCampId)->update(['stok' => $totalStok]);
+        }
+
+        // Return updated stok ke frontend
+        $programs = ProgramCamp::select(['id', 'stok'])->get();
+
+        return response()->json(['success' => true, 'programs' => $programs]);
+    }
+
 
 
 

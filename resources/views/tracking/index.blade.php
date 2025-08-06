@@ -53,8 +53,10 @@
                                     </span>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <h5 class="text-muted">Program ID</h5>
-                                    <p class="fs-5">{{ $camp->program_camp_id }}</p>
+                                    <h5 class="text-muted">Nama Program</h5>
+                                     @if ($camp)
+                                        <p class="fs-5">{{ $camp->program->nama ?? '-' }}</p>
+                                        @endif
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <h5 class="text-muted">Kamar</h5>
@@ -95,7 +97,9 @@
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <h5 class="text-muted">Program ID</h5>
-                                    <p class="fs-5">{{ $offline->program_id }}</p>
+                                    @if ($offline)
+                                        <p class="fs-5">{{ $offline->program->nama ?? '-' }}</p>
+                                    @endif
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <h5 class="text-muted">Transportasi</h5>
@@ -136,9 +140,13 @@
                                     </span>
                                 </div>
                                 <div class="col-md-12 mb-3">
-                                    <h5 class="text-muted">Program ID</h5>
-                                    <p class="fs-5">{{ $online->program_id }}</p>
+                                    <h5 class="text-muted">Program</h5>
+                                    @if ($online)
+                                        <p class="fs-5">{{ $online->program->nama ?? '-' }}</p>
+                                    @endif
+
                                 </div>
+
                             </div>
                             @if ($online->bukti_pembayaran)
                                 <div class="col-md-12 mb-3">
