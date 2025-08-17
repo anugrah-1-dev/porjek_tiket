@@ -15,8 +15,8 @@ class DatabaseSeeder extends Seeder
         $this->call(AdminUserSeeder::class);
         $this->call(RolePermissionSeeder::class);
         $this->call(BankSeeder::class);
-        $this->call(ProgramOnlineSeeder::class);
-        $this->call(ProgramOfflineSeeder::class);
+        // $this->call(ProgramOnlineSeeder::class);
+        // $this->call(ProgramOfflineSeeder::class);
         $this->call(PendaftaranProgramOnlineSeeder::class);
         $this->call(ProgramCampSeeder::class);
         $this->call(RoomSeeder::class);
