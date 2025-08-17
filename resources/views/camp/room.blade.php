@@ -126,17 +126,22 @@
             <input type="hidden" name="kamar_id" id="inputKamarId">
 
 
-
             <div id="selectedRoomInfo" class="alert alert-info d-none text-center mt-3">
-                Kamar dipilih: <strong id="selectedRoomName"></strong>
+                @if (auth()->check() && auth()->user()->role === 'admin')
+                    Kamar dipilih: <strong id="selectedRoomName"></strong>
+                @else
+                    Kamar telah dipilih
+                    {{-- tetap sisipkan span hidden supaya JS bisa update kalau perlu --}}
+                    <strong id="selectedRoomName" class="d-none"></strong>
+                @endif
             </div>
+
             <div class="text-center"> <!-- Tambahkan wrapper center -->
                 <button type="submit" class="btn btn-primary mt-3" id="submitBtn" disabled>
                     Lanjut ke Pembayaran
                 </button>
             </div>
         </form>
-
 
 
 
@@ -153,6 +158,7 @@
         <div class="room-layout-wrapper">
             <h4 class="text-center mb-4">Layout Kamar VVIP - {{ ucfirst($pendaftar->gender) }}</h4>
             <div class="row">
+
                 @if ($pendaftar->gender === 'putri')
                     {{-- Kolom Putri --}}
                     <div class="col-md-12">
@@ -175,14 +181,19 @@
                                             @unless ($isFull || $isInactive) onclick="selectRoom(this)" role="button" @endunless
                                             style="{{ $isFull || $isInactive ? 'cursor: not-allowed; opacity: 0.6;' : '' }}">
 
-                                            <span class="room-number">{{ $kamar->nomor_kamar }}</span>
-                                            <span class="room-number">{{ $kamar->nomor_kamar }}</span>
+                                            {{-- hanya admin yang bisa lihat nomor kamar --}}
+                                            @if (auth()->check() && auth()->user()->role === 'admin')
+                                                <span class="room-number">{{ $kamar->nomor_kamar }}</span>
+                                            @else
+                                                {{-- user/guest tetap ada nomor kamar tapi disembunyikan --}}
+                                                <span class="room-number d-none">{{ $kamar->nomor_kamar }}</span>
+                                            @endif
+
                                             <span
                                                 class="room-status">{{ RD::getStatusText($kamar, $penghuniAktif) }}</span>
                                             <span class="room-capacity">
                                                 {{ $kamar->kapasitas }}/{{ $penghuniAktif }}
                                             </span>
-
                                         </div>
                                     @endif
                                 @endforeach
@@ -212,13 +223,19 @@
                                             @unless ($isFull || $isInactive) onclick="selectRoom(this)" role="button" @endunless
                                             style="{{ $isFull || $isInactive ? 'cursor: not-allowed; opacity: 0.6;' : '' }}">
 
-                                            <span class="room-number">{{ $kamar->nomor_kamar }}</span>
+                                            {{-- hanya admin yang bisa lihat nomor kamar --}}
+                                            @if (auth()->check() && auth()->user()->role === 'admin')
+                                                <span class="room-number">{{ $kamar->nomor_kamar }}</span>
+                                            @else
+                                                {{-- user/guest tetap ada nomor kamar tapi disembunyikan --}}
+                                                <span class="room-number d-none">{{ $kamar->nomor_kamar }}</span>
+                                            @endif
+
                                             <span
                                                 class="room-status">{{ RD::getStatusText($kamar, $penghuniAktif) }}</span>
                                             <span class="room-capacity">
                                                 {{ $kamar->kapasitas }}/{{ $penghuniAktif }}
                                             </span>
-
                                         </div>
                                     @endif
                                 @endforeach
@@ -285,7 +302,14 @@
                                     style="{{ $isFull || $isInactive ? 'cursor: not-allowed; opacity: 0.6;' : '' }}">
 
 
-                                    <span class="room-number">{{ $kamar->nomor_kamar }}</span>
+                                    {{-- hanya admin yang bisa lihat nomor kamar --}}
+                                    @if (auth()->check() && auth()->user()->role === 'admin')
+                                        <span class="room-number">{{ $kamar->nomor_kamar }}</span>
+                                    @else
+                                        {{-- user/guest tetap ada nomor kamar tapi disembunyikan --}}
+                                        <span class="room-number d-none">{{ $kamar->nomor_kamar }}</span>
+                                    @endif
+
                                     <span class="room-status">{{ RD::getStatusText($kamar, $penghuniAktif) }}</span>
                                     <span class="room-capacity">
                                         {{ $kamar->kapasitas }}/{{ $penghuniAktif }}
@@ -328,8 +352,14 @@
                                         data-penghuni="{{ $kamar->penghuni }}"
                                         @unless ($isFull || $isInactive) onclick="selectRoom(this)" role="button" @endunless
                                         style="{{ $isFull || $isInactive ? 'cursor: not-allowed; opacity: 0.6;' : '' }}">
+                                        {{-- hanya admin yang bisa lihat nomor kamar --}}
+                                        @if (auth()->check() && auth()->user()->role === 'admin')
+                                            <span class="room-number">{{ $kamar->nomor_kamar }}</span>
+                                        @else
+                                            {{-- user/guest tetap ada nomor kamar tapi disembunyikan --}}
+                                            <span class="room-number d-none">{{ $kamar->nomor_kamar }}</span>
+                                        @endif
 
-                                        <span class="room-number">{{ $kamar->nomor_kamar }}</span>
                                         <span class="room-status">{{ RD::getStatusText($kamar, $penghuniAktif) }}</span>
                                         <span class="room-capacity">
                                             {{ $kamar->kapasitas }}/{{ $penghuniAktif }}
@@ -367,7 +397,14 @@
                                         @unless ($isFull || $isInactive) onclick="selectRoom(this)" role="button" @endunless
                                         style="{{ $isFull || $isInactive ? 'cursor: not-allowed; opacity: 0.6;' : '' }}">
 
-                                        <span class="room-number">{{ $kamar->nomor_kamar }}</span>
+                                        {{-- hanya admin yang bisa lihat nomor kamar --}}
+                                        @if (auth()->check() && auth()->user()->role === 'admin')
+                                            <span class="room-number">{{ $kamar->nomor_kamar }}</span>
+                                        @else
+                                            {{-- user/guest tetap ada nomor kamar tapi disembunyikan --}}
+                                            <span class="room-number d-none">{{ $kamar->nomor_kamar }}</span>
+                                        @endif
+
                                         <span class="room-status">{{ RD::getStatusText($kamar, $penghuniAktif) }}</span>
                                         <span class="room-capacity">
                                             {{ $kamar->kapasitas }}/{{ $penghuniAktif }}

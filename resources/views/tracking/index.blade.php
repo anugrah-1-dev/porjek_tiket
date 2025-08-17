@@ -54,13 +54,18 @@
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <h5 class="text-muted">Nama Program</h5>
-                                     @if ($camp)
+                                    @if ($camp)
                                         <p class="fs-5">{{ $camp->program->nama ?? '-' }}</p>
-                                        @endif
+                                    @endif
                                 </div>
+
                                 <div class="col-md-6 mb-3">
                                     <h5 class="text-muted">Kamar</h5>
-                                    <p class="fs-5">{{ $camp->nama_kamar }}</p>
+                                    @if ($camp->status === 'diterima')
+                                        <p class="fs-5">{{ $camp->nama_kamar }}</p>
+                                    @else
+                                        <p class="fs-5 text-muted"><em>Kamar sedang diproses oleh admin</em></p>
+                                    @endif
                                 </div>
                                 @if ($camp->bukti_pembayaran)
                                     <div class="col-md-12 mb-3">

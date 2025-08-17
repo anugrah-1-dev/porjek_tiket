@@ -12,7 +12,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
-           <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         @if (session('success'))
             <script>
@@ -85,38 +85,38 @@
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8 col-lg-6">
 
-                   <!-- SweetAlert untuk pesan sukses/error -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                    <!-- SweetAlert untuk pesan sukses/error -->
+                    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-{{-- SCRIPT BARU UNTUK MENAMPILKAN POP-UP SUKSES DENGAN TOMBOL SALIN --}}
-@if (session('success_message') && session('trx_id'))
-    <script>
-        // Fungsi ini khusus untuk tombol salin di dalam SweetAlert
-        function copySwalId(text, buttonElement) {
-            const textArea = document.createElement('textarea');
-            textArea.value = text;
-            document.body.appendChild(textArea);
-            textArea.select();
-            try {
-                document.execCommand('copy');
-                const copyTextSpan = buttonElement.querySelector('span');
-                const icon = buttonElement.querySelector('i');
+                    {{-- SCRIPT BARU UNTUK MENAMPILKAN POP-UP SUKSES DENGAN TOMBOL SALIN --}}
+                    @if (session('success_message') && session('trx_id'))
+                        <script>
+                            // Fungsi ini khusus untuk tombol salin di dalam SweetAlert
+                            function copySwalId(text, buttonElement) {
+                                const textArea = document.createElement('textarea');
+                                textArea.value = text;
+                                document.body.appendChild(textArea);
+                                textArea.select();
+                                try {
+                                    document.execCommand('copy');
+                                    const copyTextSpan = buttonElement.querySelector('span');
+                                    const icon = buttonElement.querySelector('i');
 
-                if (copyTextSpan) copyTextSpan.textContent = ' Tersalin!';
-                icon.classList.remove('bi-clipboard');
-                icon.classList.add('bi-check-lg');
-                buttonElement.disabled = true; // Nonaktifkan tombol setelah disalin
-            } catch (err) {
-                console.error('Gagal menyalin teks: ', err);
-            }
-            document.body.removeChild(textArea);
-        }
+                                    if (copyTextSpan) copyTextSpan.textContent = ' Tersalin!';
+                                    icon.classList.remove('bi-clipboard');
+                                    icon.classList.add('bi-check-lg');
+                                    buttonElement.disabled = true; // Nonaktifkan tombol setelah disalin
+                                } catch (err) {
+                                    console.error('Gagal menyalin teks: ', err);
+                                }
+                                document.body.removeChild(textArea);
+                            }
 
-        const trxId = "{{ session('trx_id') }}";
-        const successMessage = "{{ session('success_message') }}";
+                            const trxId = "{{ session('trx_id') }}";
+                            const successMessage = "{{ session('success_message') }}";
 
-        // Membuat konten HTML untuk SweetAlert
-        const alertHtml = `
+                            // Membuat konten HTML untuk SweetAlert
+                            const alertHtml = `
             <div class="text-start">
                 <p>${successMessage}</p>
                 <div class="mt-3">
@@ -133,16 +133,16 @@
             </div>
         `;
 
-        // Menampilkan SweetAlert
-        Swal.fire({
-            icon: 'success',
-            title: 'Berhasil!',
-            html: alertHtml,
-            showConfirmButton: true,
-            confirmButtonText: 'Tutup'
-        });
-    </script>
-@endif
+                            // Menampilkan SweetAlert
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil!',
+                                html: alertHtml,
+                                showConfirmButton: true,
+                                confirmButtonText: 'Tutup'
+                            });
+                        </script>
+                    @endif
 
 
                     <div class="card shadow-sm payment-card">
@@ -173,9 +173,21 @@
                                     </div>
                                     <div class="col-6 text-end">
                                         <p class="mb-1"><strong>Kamar Dipilih:</strong></p>
-                                        {{-- Diasumsikan ada relasi ke kamar --}}
-                                        <p class="lead">{{ $pendaftaran->kamar->nomor_kamar }}</p>
+
+                                        @auth
+                                            @if (auth()->user()->role == 'admin')
+                                          
+                                                <p class="lead">{{ $pendaftaran->kamar->nomor_kamar ?? '-' }}</p>
+                                            @else
+
+                                                <p class="lead">[Tersembunyi]</p>
+                                            @endif
+                                        @else
+
+                                           <p class="lead">[Hubungi whatsapp untuk informasi lebih lanjut]</p>
+                                        @endauth
                                     </div>
+
                                 </div>
                                 <div class="total-pembayaran">
                                     <strong>Total Pembayaran:</strong>
@@ -292,10 +304,15 @@
                                     {{-- PERUBAHAN: Mengambil nomor dari koleksi $contactServices --}}
                                     @php
                                         // Ambil kontak pertama dari koleksi, atau gunakan nomor cadangan jika tidak ada
-                                        $waNumber = $contactServices->isNotEmpty() ? $contactServices->first()->nomor : '6281234567890';
+                                        $waNumber = $contactServices->isNotEmpty()
+                                            ? $contactServices->first()->nomor
+                                            : '6281234567890';
                                     @endphp
-                                    <a href="https://wa.me/{{ $waNumber }}?text={{ urlencode('Halo, saya ingin konfirmasi pembayaran untuk ID Transaksi: ' . $pendaftaran->trx_id . ' dengan total Rp ' . number_format($pendaftaran->program->harga, 0, ',', '.')) }}" class="btn btn-success mb-2" target="_blank"><i class="bi bi-whatsapp"></i> Konfirmasi via WhatsApp</a>
-                                    <a href="{{ url('/') }}" class="btn btn-outline-secondary mb-2"><i class="bi bi-house-door-fill"></i> Kembali ke Beranda</a>
+                                    <a href="https://wa.me/{{ $waNumber }}?text={{ urlencode('Halo, saya ingin konfirmasi pembayaran untuk ID Transaksi: ' . $pendaftaran->trx_id . ' dengan total Rp ' . number_format($pendaftaran->program->harga, 0, ',', '.')) }}"
+                                        class="btn btn-success mb-2" target="_blank"><i class="bi bi-whatsapp"></i>
+                                        Konfirmasi via WhatsApp</a>
+                                    <a href="{{ url('/') }}" class="btn btn-outline-secondary mb-2"><i
+                                            class="bi bi-house-door-fill"></i> Kembali ke Beranda</a>
                                 </div>
                             </div>
                         </div>
@@ -307,7 +324,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
         <script>
             function copyToClipboard(text, buttonElement) {
-                navigator.clipboard.writeText(text).then(function () {
+                navigator.clipboard.writeText(text).then(function() {
                     // Sukses menyalin
                     const originalIcon = buttonElement.innerHTML;
                     buttonElement.innerHTML = '<i class="bi bi-check-lg"></i>';
@@ -319,7 +336,7 @@
                         buttonElement.classList.remove('btn-success');
                         buttonElement.classList.add('btn-outline-secondary');
                     }, 1500); // Kembalikan ke ikon semula setelah 1.5 detik
-                }, function (err) {
+                }, function(err) {
                     // Gagal menyalin
                     alert('Gagal menyalin nomor rekening.');
                 });

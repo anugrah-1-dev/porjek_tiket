@@ -100,10 +100,21 @@
                                         {{-- Diasumsikan ada relasi ke program --}}
                                         <p class="lead">{{ $pendaftaran->program->nama }}</p>
                                     </div>
-                                    <div class="col-6 text-end">
+                                     <div class="col-6 text-end">
                                         <p class="mb-1"><strong>Kamar Dipilih:</strong></p>
-                                        {{-- Diasumsikan ada relasi ke kamar --}}
-                                        <p class="lead">{{ $pendaftaran->kamar->nomor_kamar }}</p>
+
+                                        @auth
+                                            @if (auth()->user()->role == 'admin')
+
+                                                <p class="lead">{{ $pendaftaran->kamar->nomor_kamar ?? '-' }}</p>
+                                            @else
+
+                                                <p class="lead">[Tersembunyi]</p>
+                                            @endif
+                                        @else
+
+                                            <p class="lead">[Hubungi whatsapp untuk informasi lebih lanjut]</p>
+                                        @endauth
                                     </div>
                                 </div>
                                 <div class="total-pembayaran">

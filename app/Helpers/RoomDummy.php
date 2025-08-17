@@ -195,7 +195,7 @@ class RoomDummy
         return match (true) {
             $penghuni >= $kapasitas => 'Penuh',
             $penghuni > 0 => 'Sebagian Terisi',
-            default => 'Kosong'
+            default => 'Tersedia'
         };
     }
 
