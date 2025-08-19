@@ -25,7 +25,7 @@
                     <img src="{{ asset('asset/img/jerman.jpg') }}" alt="Belajar Bahasa Jerman di Berlin">
                 </div>
                 <div class="slide">
-                    {{-- <img src="{{ asset('asset/img/jerman1.jpg') }}" alt="Kelas Bahasa Jerman yang Interaktif"> --}}
+                    <img src="{{ asset('asset/img/jerman1.jpg') }}" alt="Kelas Bahasa Jerman yang Interaktif">
                 </div>
                 <div class="slide">
                     <img src="{{ asset('asset/img/jerman2.jpg') }}" alt="Pemandangan Kastil Jerman">

@@ -80,6 +80,8 @@ class ProgramOnlineController extends Controller
             'harga',
             'features_program',
             'is_active',
+            'thumbnail',
+            'program_bahasa',
         ]);
 
         $data['slug'] = Str::slug($data['nama']);

@@ -123,7 +123,7 @@
     <div class="container text-center" data-aos="fade-up">
         <h2 class="mb-4">Why Choose Us?</h2>
         <p class="mb-5">
-            At <strong>Brilliant Mandarin Course</strong>, we believe that learning Mandarin is an exciting
+            At <strong>Brilliant English Course</strong>, we believe that learning Mandarin is an exciting
             adventure. We combine the <span class="highlight">best teaching methods</span> with an interactive
             approach to create an effective and unforgettable learning experience.
         </p>
@@ -215,7 +215,6 @@
             overflow: hidden;
             line-height: 0;
         }
-
         .wave-line svg {
             width: 200%;
             /* dibuat lebar supaya bisa digeser */
@@ -233,18 +232,15 @@
             }
         }
 
+
         .footer {
-            background: linear-gradient(135deg, #0b2470, #3c1361);
-
-
-
-
+            background: linear-gradient(105deg, #0b2470, #3c1361);
             /* coklat tua → coklat sedang → coklat pasir */
             color: #f1f1f1;
-            font-size: 20px;
-            font-weight: 600;
+            font-size: 12px;
+            font-weight: 100;
             text-align: center;
-            padding: 50px 0;
+            padding: 20px 0;
             margin-top: -1px;
         }
 

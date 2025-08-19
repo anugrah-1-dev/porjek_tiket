@@ -153,7 +153,7 @@
         <div class="container text-center" data-aos="fade-up">
             <h2 class="mb-4">Mengapa Memilih Kami?</h2>
             <p class="mb-5">
-                Di <strong>Brilliant English Course</strong>, kami percaya bahwa belajar Bahasa Mandarin adalah
+                Di <strong>Brilliant Mandarin Course</strong>, kami percaya bahwa belajar Bahasa Mandarin adalah
                 sebuah petualangan seru. Kami menggabungkan metode pengajaran <span class="highlight">terbaik</span>
                 dengan pendekatan interaktif untuk menciptakan pengalaman belajar yang efektif dan tak terlupakan.
             </p>

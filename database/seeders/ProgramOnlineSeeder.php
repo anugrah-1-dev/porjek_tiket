@@ -18,7 +18,7 @@ class ProgramOnlineSeeder extends Seeder
     public function run(): void
     {
         // Array contoh untuk program bahasa
-        $languages = ['Inggris', 'Jerman', 'Mandarin', 'Jepang', 'Korea'];
+        $languages = ['Inggris', 'Jerman', 'Mandarin', 'Arab'];
 
         for ($i = 1; $i <= 10; $i++) {
             $namaProgram = 'Program Online ' . $i;

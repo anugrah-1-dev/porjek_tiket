@@ -39,6 +39,7 @@ class ProgramOfflineController extends Controller
             'program_bahasa'   => 'required|in:inggris,jerman,mandarin,arab', 
         ]);
 
+        
         // Convert features_program ke string jika bentuknya array (misalnya dari checkbox atau textarea multiline)
         if (is_array($request->features_program)) {
             $validated['features_program'] = implode(', ', $request->features_program);
@@ -92,7 +93,8 @@ class ProgramOfflineController extends Controller
             'jadwal_mulai',
             'jadwal_selesai',
             'kuota',
-            'is_active'
+            'is_active',
+            'program_bahasa',
         ]);
 
         // Fitur diformat sebagai array
