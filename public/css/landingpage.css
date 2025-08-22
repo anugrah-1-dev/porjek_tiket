@@ -41,9 +41,12 @@ nav {
 .carousel {
     position: relative;
     overflow: hidden;
-    height: 555px;
+    width: 100%;
+    height: 100vh; /* ganti dari 555px ke layar penuh */
     background-color: #000;
+        
 }
+
 
 .carousel-container {
     position: relative;
@@ -67,6 +70,13 @@ nav {
     opacity: 0;
     transition: opacity 1s ease;
 }
+
+.slide img {
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+}
+
 
 .slide.active {
     opacity: 1;
