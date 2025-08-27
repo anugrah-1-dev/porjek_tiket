@@ -330,6 +330,18 @@ $(document).ready(function(){
             });
         });
     </script>
+    <script>
+document.addEventListener("DOMContentLoaded", function() {
+    Swal.fire({
+        icon: 'warning',
+        title: 'PERHATIAN',
+        html: 'Formulir pendaftaran ini <b>dikhususkan untuk pendaftaran PROGRAM</b>.<br>Apabila ingin mendaftar camp, maka <b>kembalilah ke HALAMAN UTAMA</b>.',
+        confirmButtonText: 'Mengerti',
+        confirmButtonColor: '#d33'
+    });
+});
+</script>
+
 
 </body>
 

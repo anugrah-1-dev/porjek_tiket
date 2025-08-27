@@ -240,7 +240,58 @@ body {
 /* TENTANG KAMI */
 
 /* Alur Section */
-/* Alur Section */
+/* Mobile Responsive untuk Section Alur */
+@media (max-width: 768px) {
+    .alur {
+        padding: 60px 15px;
+        text-align: left; /* biar lebih natural di mobile */
+    }
+
+    .alur h2 {
+        font-size: 2rem;
+        text-align: center; /* judul tetap center */
+    }
+
+    .alur p {
+        font-size: 1rem;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .alur-timeline {
+        display: flex;
+        flex-direction: column; /* susun kebawah */
+        align-items: center;
+        gap: 30px;
+        position: relative;
+    }
+
+    .alur-timeline::before {
+        display: none; /* hilangkan garis horizontal */
+    }
+
+    .step {
+        max-width: 100%; /* full lebar */
+        margin: 0;
+        text-align: center; /* biar rapi di tengah */
+    }
+
+    .circle {
+        width: 60px;
+        height: 60px;
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+
+    .step h3 {
+        font-size: 1rem;
+    }
+
+    .step p {
+        font-size: 0.9rem;
+    }
+}
+
 .alur {
     padding: 90px 20px;
     background: #0f5132; /* hijau tua */

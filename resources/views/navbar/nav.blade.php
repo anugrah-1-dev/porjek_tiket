@@ -13,9 +13,14 @@
 
     <div class="logo">
         <a href="{{ route('landing') }}">
-            <img src="{{ asset('asset/img/b2.png') }}" alt="Logo" style="height: 75px;">
+            @if (request()->routeIs('program.arab'))
+                <img src="{{ asset('asset/img/alsaeid logo.png') }}" alt="Logo Arab" style="height: 100px;">
+            @else
+                <img src="{{ asset('asset/img/b2.png') }}" alt="Logo Default" style="height: 75px;">
+            @endif
         </a>
     </div>
+
 
 
     <div class="burger" onclick="toggleNavbar()">
@@ -37,6 +42,7 @@
                 <a href="{{ route('program.jerman') }}">Bahasa Jerman</a>
                 <a href="{{ route('program.mandarin') }}">Bahasa Mandarin</a>
                 <a href="{{ route('program.arab') }}">Bahasa Arab</a>
+                <a href="{{ url('/program/coming-soon') }}">NHC</a>
             </div>
         </div>
 
@@ -50,7 +56,7 @@
 
 <script>
     // Navbar scroll effect
-    window.addEventListener('scroll', function() {
+    window.addEventListener('scroll', function () {
         const navbar = document.getElementById('navbar');
         if (window.scrollY > 50) {
             navbar.classList.add('scrolled');
@@ -60,12 +66,12 @@
     });
 
     // Dropdown functionality
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const dropbtn = document.querySelector('.dropbtn');
         const dropdown = document.getElementById('programDropdown');
 
         if (dropbtn) {
-            dropbtn.addEventListener('click', function(e) {
+            dropbtn.addEventListener('click', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 dropdown.classList.toggle('active');
@@ -73,7 +79,7 @@
         }
 
         // Close dropdown when clicking outside
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', function (e) {
             if (!dropdown.contains(e.target)) {
                 dropdown.classList.remove('active');
             }
@@ -81,7 +87,7 @@
 
         // Close dropdown when item is selected
         document.querySelectorAll('.dropdown-content a').forEach(item => {
-            item.addEventListener('click', function() {
+            item.addEventListener('click', function () {
                 dropdown.classList.remove('active');
             });
         });

@@ -36,21 +36,21 @@
 
             // Membuat konten HTML untuk SweetAlert
             const alertHtml = `
-                                <div class="text-start">
-                                    <p>${successMessage}</p>
-                                    <div class="mt-3">
-                                        <strong>ID Transaksi Anda:</strong>
-                                        <div class="input-group mt-1">
-                                            <input type="text" class="form-control bg-light" value="${trxId}" readonly>
-                                            <button class="btn btn-outline-secondary" onclick="copySwalId('${trxId}', this)">
-                                                <i class="bi bi-clipboard"></i>
-                                                <span class="copy-text"> Salin</span>
-                                            </button>
-                                        </div>
-                                        <small class="form-text text-muted">Silakan simpan ID ini untuk referensi Anda.</small>
-                                    </div>
-                                </div>
-                            `;
+                                                        <div class="text-start">
+                                                            <p>${successMessage}</p>
+                                                            <div class="mt-3">
+                                                                <strong>ID Transaksi Anda:</strong>
+                                                                <div class="input-group mt-1">
+                                                                    <input type="text" class="form-control bg-light" value="${trxId}" readonly>
+                                                                    <button class="btn btn-outline-secondary" onclick="copySwalId('${trxId}', this)">
+                                                                        <i class="bi bi-clipboard"></i>
+                                                                        <span class="copy-text"> Salin</span>
+                                                                    </button>
+                                                                </div>
+                                                                <small class="form-text text-muted">Silakan simpan ID ini untuk referensi Anda.</small>
+                                                            </div>
+                                                        </div>
+                                                    `;
 
             // Menampilkan SweetAlert
             Swal.fire({
@@ -125,29 +125,29 @@
         <div class="container">
             <!-- Gambar / Carousel di atas -->
             @php
-                // Mengelompokkan thumbnail menjadi grup 3
-
                 $thumbnails = $program->thumbnail_urls->toArray();
-                $chunks = array_chunk($thumbnails, 3);
+
+                // Desktop: 3 per slide, Mobile: 1 per slide (pakai conditional chunk)
+                if (request()->header('User-Agent') && preg_match('/Mobile|Android|iP(hone|od|ad)/i', request()->header('User-Agent'))) {
+                    $chunks = array_chunk($thumbnails, 1); // Mobile → 1 per slide
+                } else {
+                    $chunks = array_chunk($thumbnails, 3); // Desktop → 3 per slide
+                }
             @endphp
-
-
 
             <div class="rounded-3 overflow-hidden shadow-sm mb-4" style="padding: 8px;">
                 @if (count($program->thumbnail_urls) > 1)
                     <div id="campCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000"
                         data-bs-wrap="true">
 
-
                         {{-- Gambar --}}
                         <div class="carousel-inner">
                             @foreach ($chunks as $index => $group)
                                 <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
-                                    <div class="d-flex gap-3 justify-content-center">
+                                    <div class="d-flex gap-3 justify-content-center flex-wrap">
                                         @foreach ($group as $url)
-                                            <div style="width: 350px; height: 350px; overflow: hidden; border-radius: 8px;">
-                                                <img src="{{ $url }}"
-                                                    style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                                            <div class="thumb-wrapper">
+                                                <img src="{{ $url }}" class="img-fluid thumb-img" alt="thumbnail">
                                             </div>
                                         @endforeach
                                     </div>
@@ -155,11 +155,11 @@
                             @endforeach
                         </div>
 
+                        {{-- Indikator --}}
                         <div class="carousel-indicators mt-3 d-flex justify-content-center gap-2">
                             @foreach ($chunks as $index => $group)
                                 <button type="button" data-bs-target="#campCarousel" data-bs-slide-to="{{ $index }}"
-                                    class="{{ $index === 0 ? 'active' : '' }}"
-                                    aria-current="{{ $index === 0 ? 'true' : 'false' }}"
+                                    class="{{ $index === 0 ? 'active' : '' }}" aria-current="{{ $index === 0 ? 'true' : 'false' }}"
                                     aria-label="Slide {{ $index + 1 }}">
                                 </button>
                             @endforeach
@@ -168,10 +168,30 @@
                     </div>
 
                     <style>
-                        /* Override default Bootstrap */
+                        /* Default desktop */
+                        /* Default desktop */
+                        .thumb-wrapper {
+                            flex: 1 1 calc(33.333% - 20px);
+                            /* 3 gambar per baris, ada jarak */
+                            max-width: 400px;
+                            /* batas maksimal */
+                            aspect-ratio: 1 / 1;
+                            /* supaya tetap kotak */
+                            overflow: hidden;
+                            border-radius: 8px;
+                        }
+
+
+                        .thumb-img {
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                            display: block;
+                        }
+
+                        /* Indikator */
                         #campCarousel .carousel-indicators {
                             position: static !important;
-                            /* biar ikut flow dokumen */
                             margin-top: 20px;
                         }
 
@@ -191,12 +211,30 @@
                         #campCarousel .carousel-indicators button:hover {
                             background-color: #ffb347 !important;
                         }
+
+                        /* Mobile responsive */
+                        @media (max-width: 768px) {
+                            .thumb-wrapper {
+                                width: 100%;
+                                height: 300px;
+                                /* fixed height agar semua slide rapi */
+                            }
+
+                            .thumb-img {
+                                width: 100%;
+                                height: 100%;
+                                object-fit: cover;
+                                /* pastikan gambar penuh tanpa distorsi */
+                            }
+                        }
                     </style>
                 @else
-                    <img src="{{ $program->thumbnail_url }}" class="img-fluid w-100 card-img-top"
-                        alt="{{ $program->nama }}" style="object-fit: cover; height: 350px;" loading="lazy">
+                    <img src="{{ $program->thumbnail_url }}" class="img-fluid w-100 card-img-top" alt="{{ $program->nama }}"
+                        style="object-fit: cover; height: 350px;" loading="lazy">
                 @endif
             </div>
+
+
 
 
 
@@ -330,11 +368,11 @@
 
 
         <script>
-            document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('DOMContentLoaded', function () {
                 const btn = document.getElementById('showMoreBtn');
                 if (btn) {
-                    btn.addEventListener('click', function() {
-                        document.querySelectorAll('.extra-facility').forEach(function(el) {
+                    btn.addEventListener('click', function () {
+                        document.querySelectorAll('.extra-facility').forEach(function (el) {
                             el.classList.remove('d-none');
                         });
                         btn.style.display = 'none';
@@ -345,11 +383,11 @@
 
 
         <script>
-            document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('DOMContentLoaded', function () {
                 const btn = document.getElementById('showMoreBtn');
                 if (btn) {
-                    btn.addEventListener('click', function() {
-                        document.querySelectorAll('.extra-facility').forEach(function(el) {
+                    btn.addEventListener('click', function () {
+                        document.querySelectorAll('.extra-facility').forEach(function (el) {
                             el.classList.remove('d-none');
                         });
                         btn.style.display = 'none';
@@ -425,8 +463,7 @@
 
                                     {{-- hanya tampilkan period yang >= hari ini --}}
                                     @if ($periodDate >= $today)
-                                        <option value="{{ $period->id }}"
-                                            {{ $periodDate == $today ? 'selected' : '' }}>
+                                        <option value="{{ $period->id }}" {{ $periodDate == $today ? 'selected' : '' }}>
                                             Periode:
                                             {{ \Carbon\Carbon::parse($period->date)->translatedFormat('d M Y') }}
                                             {{ $periodDate == $today ? '(Aktif Hari Ini)' : '' }}
@@ -443,8 +480,7 @@
                             <div class="col-12 col-md-6 mt-3">
                                 <label for="payment_type" class="form-label fw-semibold">Jenis
                                     Pembayaran</label>
-                                <select name="payment_type" id="payment_type" class="form-select form-select-lg"
-                                    required>
+                                <select name="payment_type" id="payment_type" class="form-select form-select-lg" required>
                                     <option value="">-- Pilih Jenis Pembayaran --</option>
                                     <option value="tunai" {{ old('payment_type') == 'tunai' ? 'selected' : '' }}>
                                         Tunai</option>
@@ -459,8 +495,7 @@
                                 <select name="bank_id" id="bank_id" class="form-select form-select-lg">
                                     <option value="">-- Pilih Bank --</option>
                                     @foreach ($banks as $bank)
-                                        <option value="{{ $bank->id }}"
-                                            {{ old('bank_id') == $bank->id ? 'selected' : '' }}>
+                                        <option value="{{ $bank->id }}" {{ old('bank_id') == $bank->id ? 'selected' : '' }}>
                                             {{ $bank->name }}
                                         </option>
                                     @endforeach
@@ -475,7 +510,7 @@
                             </div>
 
                             <script>
-                                document.getElementById('payment_type').addEventListener('change', function() {
+                                document.getElementById('payment_type').addEventListener('change', function () {
                                     const bankForm = document.getElementById('bankForm');
                                     if (this.value === 'nontunai') {
                                         bankForm.style.display = 'block';
@@ -487,7 +522,7 @@
                                     }
                                 });
 
-                                document.addEventListener('DOMContentLoaded', function() {
+                                document.addEventListener('DOMContentLoaded', function () {
                                     document.getElementById('payment_type').dispatchEvent(new Event('change'));
                                 });
                             </script>
@@ -565,8 +600,8 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     <script>
-        $(function() {
-            $.getJSON('/indonesia-indonesian.json', function(data) {
+        $(function () {
+            $.getJSON('/indonesia-indonesian.json', function (data) {
                 let kotaList = [];
 
                 // Gabungkan semua kota/kab dari semua provinsi jadi satu array

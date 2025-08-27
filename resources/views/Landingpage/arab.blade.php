@@ -29,8 +29,7 @@
         </div>
 
         <div class="hero-text">
-            <h1>BRILLIANT ENGLISH COURSE</h1>
-            <h2>(Kursus Bahasa Arab)</h2>
+            <h1>BRILLIANT ALSAEID ARABIC</h1>
             <p>Kuasai bahasa Arab dengan metode interaktif dan pengajar berpengalaman.</p>
 
         </div>
@@ -41,7 +40,7 @@
         <div class="container">
             <div class="text-center mb-5" data-aos="fade-up">
                 <h2>ARAB PROGRAM CHOICES</h2>
-                <p class="lead text-muted">Temukan program yang sesuai dengan tujuan Anda.</p>
+                <p class="lead text-muted">Program terkait belum termasuk dengan Camp</p>
             </div>
 
             <div class="filter-buttons-wrapper text-center mb-4" data-aos="fade-up" data-aos-delay="100">
@@ -234,32 +233,32 @@
 
     <section class="about" id="tentang">
         <div class="container">
-            <h2>Informasi </h2>
-            <p><strong>Brilliant English Course</strong> menghadirkan program khusus <span class="highlight">Bahasa
-                    Arab</span>
-                yang dirancang untuk semua kalangan. Dengan metode pembelajaran yang interaktif, pengajar berpengalaman,
-                serta suasana belajar yang menyenangkan, kami berkomitmen membantu Anda menguasai bahasa Arab dengan
-                mudah dan efektif.</p>
+            <h2>Kenapa Memilih Kami?</h2>
+            <p><strong>Brilliant Alsaeid Arabic</strong> adalah pilihan tepat untuk Anda yang ingin benar-benar
+                menguasai
+                <span class="highlight">Bahasa Arab</span>. Kami berkomitmen memberikan pengalaman belajar terbaik
+                dengan
+                metode yang sesuai kebutuhan.
+            </p>
 
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor,
-                dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam.</p>
+            <p>Kami percaya bahwa setiap peserta berhak mendapatkan cara belajar yang menyenangkan, efektif, dan praktis
+                agar hasil yang diperoleh lebih maksimal.</p>
 
             <div class="about-grid">
                 <div class="about-card">
-                    <h3>Metode Modern</h3>
-                    <p>Pembelajaran dengan pendekatan interaktif dan sesuai kebutuhan peserta.</p>
+                    <h3>Metode Efektif</h3>
+                    <p>Belajar dengan pendekatan modern dan interaktif sehingga lebih mudah dipahami.</p>
                 </div>
                 <div class="about-card">
-                    <h3>Pengajar Berpengalaman</h3>
-                    <p>Instruktur yang fasih dan memiliki pengalaman mengajar bertahun-tahun.</p>
+                    <h3>Pengajar Profesional</h3>
+                    <p>Dibimbing langsung oleh pengajar berpengalaman yang siap mendampingi Anda.</p>
                 </div>
                 <div class="about-card">
-                    <h3>Lingkungan Nyaman</h3>
-                    <p>Belajar dengan suasana kondusif, mendukung perkembangan bahasa secara alami.</p>
+                    <h3>Lingkungan Mendukung</h3>
+                    <p>Suasana belajar yang nyaman, kondusif, dan memotivasi setiap peserta.</p>
                 </div>
             </div>
         </div>
-
     </section>
 
     </section>

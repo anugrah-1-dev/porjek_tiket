@@ -474,3 +474,58 @@ body {
     color: #ffd700; /* kuning emas untuk teks */
     padding: 60px 20px;
 }
+/* ============================= */
+/* 📱 Responsive untuk Mobile */
+/* ============================= */
+@media (max-width: 768px) {
+    .alur-mandarin {
+        padding: 50px 15px; /* lebih ringkas */
+    }
+
+    .alur-mandarin h2 {
+        font-size: 1.8rem; /* lebih kecil */
+    }
+
+    .alur-mandarin p {
+        font-size: 1rem;
+        margin-bottom: 40px;
+    }
+
+    /* Timeline ubah jadi vertikal */
+    .alur-timeline-mandarin {
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+    }
+
+    /* ❌ Hilangkan garis vertikal di mobile */
+    .alur-timeline-mandarin::before {
+        display: none;
+        content: none;
+    }
+
+    .step-mandarin {
+        flex: none;
+        width: 100%;
+        max-width: 300px;
+        margin: 30px 0;
+        text-align: center;
+    }
+
+    .circle-mandarin {
+        width: 60px;
+        height: 60px;
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+        z-index: 1;
+    }
+
+    .step-mandarin h3 {
+        font-size: 1rem;
+    }
+
+    .step-mandarin p {
+        font-size: 0.9rem;
+        padding: 0 10px;
+    }
+}

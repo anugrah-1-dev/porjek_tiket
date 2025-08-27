@@ -1,92 +1,105 @@
-/* Section: Kontak Kami */
+/* === Kontak Section === */
 .kontak-section {
     background-color: #ffffff;
-    padding: 100px 0;
-    border-top: 1px solid var(--card-border);
-    color: var(--text-title);
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: #ffffff;
+    padding: 80px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
 }
 
-.kontak-section .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 40px;
-}
-
-/* Title */
+/* Judul Section */
 .kontak-section .section-title {
-    font-size: 2.8rem;
-    font-weight: 800;
-    text-align: center;
-    margin-bottom: 1rem;
+    font-size: 2.8rem; /* atau 3rem kalau ingin lebih mencolok */
+    font-weight: 800; /* dari 700 ke 800 */
+    color: #003366; /* biru tua */
+    margin-bottom: 15px;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 2px;
+    position: relative;
+    display: inline-block;
 }
 
-/* Subtitle */
-.kontak-subtitle {
-    text-align: center;
-    font-size: 1.2rem;
-    color: var(--text-muted);
-    margin-bottom: 60px;
-    max-width: 700px;
+/* garis dekoratif di bawah judul */
+.kontak-section .section-title::after {
+    content: "";
+    display: block;
+    width: 70px;
+    height: 3px;
+    background-color: #003366; /* biru tua */
+    margin: 12px auto 0;
+    border-radius: 2px;
+}
+
+/* Subjudul */
+.kontak-section .kontak-subtitle {
+    font-size: 1.1rem;
+    color: black;
+    margin-bottom: 40px;
+    line-height: 1.6;
+    max-width: 650px;
     margin-left: auto;
     margin-right: auto;
-    line-height: 1.6;
 }
 
 /* Info Kontak */
-.kontak-info {
-    display: flex;
-    justify-content: center;
-    gap: 80px;
-    margin-bottom: 60px;
+.kontak-section .kontak-info {
+    margin-bottom: 40px;
 }
 
-.kontak-info .kontak-item {
-    text-align: left;
+.kontak-section .kontak-info p {
+    margin: 12px 0;
+    font-size: 1.15rem;
 }
 
-.kontak-info h4 {
-    font-size: 1.2rem;
-    font-weight: 700;
-    margin-bottom: 10px;
+.kontak-section .kontak-info strong {
+    color: #003366; /* biru tua */
 }
 
-.kontak-info p,
-.kontak-info a {
-    font-size: 1rem;
-    color: var(--text-muted);
+/* Link */
+.kontak-section .kontak-info a {
+    color: #003366; /* biru tua */
     text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
 }
 
-.kontak-info a:hover {
-    color: var(--btn-primary);
-    text-decoration: underline;
+.kontak-section .kontak-info a:hover {
+    color: #003366; /* tetap biru tua */
+    text-shadow: 0 0 6px rgba(0, 51, 102, 0.7); /* biru tua glow */
 }
 
 /* Maps */
-.kontak-maps {
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-.kontak-maps iframe {
+.kontak-section .kontak-maps {
+    margin: 30px auto 0;
+    max-width: 800px;
     width: 100%;
-    height: 320px;
-    border: none;
-    border-radius: 16px;
-    box-shadow: var(--shadow-default);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.kontak-section .kontak-maps iframe {
+    width: 100%;
+    height: 350px;
+    border: 0;
+}
+
+.kontak-section .kontak-maps:hover {
+    transform: scale(1.02);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6);
+}
+
+/* Divider Wave */
 .wave-dividerkontak {
     width: 100%;
     height: 150px;
     overflow: hidden;
     line-height: 0;
-    background: #d0e0e3; /* Bagian bawah putih */
-    margin-top: -1px; /* Hilangkan celah garis putih */
-    margin-bottom: -1px; /* Hilangkan celah garis putih */
+    background: #d0e0e3;
+    margin-top: -1px;
+    margin-bottom: -1px;
 }
 
 .wave-dividerkontak svg {
@@ -96,5 +109,5 @@
 }
 
 .wave-dividerkontak .shape-fillkontak {
-    fill: #ffffff; /* Warna atas gelombang */
+    fill: #ffffff;
 }

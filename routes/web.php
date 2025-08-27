@@ -98,11 +98,15 @@ Route::get('/pendaftaran/online/sukses-tunai/{trx_id}', [ProgramOnlinePublicCont
 Route::get('/program/bahasa/inggris', [ProgramInggrisController::class, 'showInggris'])
     ->name('program.inggris');
 
- Route::get('/program/bahasa/jerman', [ProgramJermanController::class, 'showJerman'])->name('program.jerman');
+Route::get('/program/bahasa/jerman', [ProgramJermanController::class, 'showJerman'])->name('program.jerman');
 
 
 Route::get('/program/bahasa/arab', [ProgramArabController::class, 'showArab'])->name('program.arab');
 Route::get('/program/bahasa/mandarin', [ProgramMandarinController::class, 'showMandarin'])->name('program.mandarin');
+Route::get('/program/coming-soon', function () {
+    abort(500, 'Ini sengaja route 500');
+});
+
 
 
 // ===== ROUTE UNTUK UPLOAD BUKTI PEMBAYARAN =====
