@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kursus Bahasa Mandarin</title>
+    <title>Mandarin Center Pare</title>
     <link rel="stylesheet" href="{{ asset('css/mandarinlandingpage.css') }}">
 </head>
 
@@ -39,7 +39,7 @@
         </div>
 
         <div class="hero-text">
-            <h1>BRILLIANT MANDARIN COURSE</h1>
+            <h1>MANDAARIN CENTER PARE</h1>
             <h2>(Kursus Bahasa Mandarin)</h2>
             <p>Kuasai bahasa Mandarin dengan metode interaktif dan pengajar berpengalaman.</p>
         </div>
@@ -198,43 +198,42 @@
 
 
     <!-- Registration Flow Mandarin -->
-
     <section class="alur-mandarin" id="alur-mandarin">
 
         <div class="container">
-            <h2>报名流程</h2>
-            <p>请按照以下步骤在 <strong>Brilliant Mandarin Course</strong> 完成报名：</p>
-
+            <h2>Alur Pendaftaran</h2>
+            <p>Silakan ikuti langkah-langkah berikut untuk menyelesaikan pendaftaran di <strong>Mandarin Center Pare</strong>:</p>
+    
             <div class="alur-timeline-mandarin">
                 <div class="step-mandarin">
                     <div class="circle-mandarin">1</div>
-                    <h3>填写报名表</h3>
-                    <p>通过我们网站提供的在线表格填写完整的个人信息。</p>
+                    <h3>Mengisi Formulir Pendaftaran</h3>
+                    <p>Isi data diri Anda secara lengkap melalui formulir online yang tersedia di website kami.</p>
                 </div>
                 <div class="step-mandarin">
                     <div class="circle-mandarin">2</div>
-                    <h3>验证与确认</h3>
-                    <p>我们的团队将联系您进行验证并提供进一步的信息。</p>
+                    <h3>Verifikasi dan Konfirmasi</h3>
+                    <p>Tim kami akan menghubungi Anda untuk melakukan verifikasi dan memberikan informasi lebih lanjut.</p>
                 </div>
                 <div class="step-mandarin">
                     <div class="circle-mandarin">3</div>
-                    <h3>支付与上传凭证</h3>
-                    <p>根据指示完成付款，然后在确认页面上传转账凭证。</p>
+                    <h3>Pembayaran dan Upload Bukti</h3>
+                    <p>Lakukan pembayaran sesuai instruksi, kemudian unggah bukti transfer pada halaman konfirmasi.</p>
                 </div>
                 <div class="step-mandarin">
                     <div class="circle-mandarin">4</div>
-                    <h3>现场确认</h3>
-                    <p>通过我们 Brilliant Mandarin Course 办公室的管理员完成现场确认。</p>
+                    <h3>Konfirmasi di Tempat</h3>
+                    <p>Selesaikan konfirmasi secara langsung dengan admin di kantor Brilliant Mandarin Course.</p>
                 </div>
                 <div class="step-mandarin">
                     <div class="circle-mandarin">5</div>
-                    <h3>准备学习！</h3>
-                    <p>恭喜！您已成功注册并准备好参加课程。</p>
+                    <h3>Siap Belajar!</h3>
+                    <p>Selamat! Anda telah berhasil mendaftar dan siap mengikuti kursus.</p>
                 </div>
             </div>
         </div>
     </section>
-
+    
 
     {{-- JS for Carousel --}}
     <script>

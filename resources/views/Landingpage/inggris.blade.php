@@ -64,11 +64,12 @@
                             </div>
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title program-card-title">{{ $program->nama }}</h5>
-                                <p class="card-text text-muted small mb-2">
+                                {{-- <p class="card-text text-muted small mb-2">
                                     <i class="fas fa-calendar-alt me-1"></i>
                                     {{ \Carbon\Carbon::parse($program->jadwal_mulai)->format('M d') }} -
                                     {{ \Carbon\Carbon::parse($program->jadwal_selesai)->format('M d, Y') }}
-                                </p>
+                                </p> --}}
+                                
                                 <p class="card-text program-card-price mb-3">
                                     Rp {{ number_format($program->harga, 0, ',', '.') }}
                                 </p>

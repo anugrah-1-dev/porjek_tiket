@@ -15,11 +15,14 @@
         <a href="{{ route('landing') }}">
             @if (request()->routeIs('program.arab'))
                 <img src="{{ asset('asset/img/alsaeid logo.png') }}" alt="Logo Arab" style="height: 100px;">
+            @elseif (request()->routeIs('program.mandarin'))
+                <img src="{{ asset('asset/img/Mandarin logo.jpg') }}" alt="Logo Mandarin" style="height: 70px;">
             @else
                 <img src="{{ asset('asset/img/b2.png') }}" alt="Logo Default" style="height: 75px;">
             @endif
         </a>
     </div>
+    
 
 
 
