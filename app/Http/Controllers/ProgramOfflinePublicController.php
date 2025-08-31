@@ -45,7 +45,7 @@ class ProgramOfflinePublicController extends Controller
             'no_wali' => 'nullable|string|max:20',
             'period_id' => 'required|exists:periods,id',
             'transport_id' => 'nullable|exists:transports,id',
-            'payment_type' => 'required|in:tunai,transfer',
+            'payment_type' => 'required|in:tunai,transfer,qris',
             'bank_id' => 'required_if:payment_type,transfer|nullable|exists:banks,id',
             'akomodasi' => 'nullable|string', // <-- validasi akomodasi
         ]);
@@ -122,6 +122,8 @@ class ProgramOfflinePublicController extends Controller
         // Redirect
         if ($pendaftaran->payment_type === 'tunai') {
             return redirect()->route('public.pendaftaran.offline.sukses.tunai', ['trx_id' => $pendaftaran->trx_id]);
+        } elseif ($pendaftaran->payment_type === 'qris') {
+            return redirect()->route('public.pendaftaran.offline.sukses.qris', ['trx_id' => $pendaftaran->trx_id]);
         } else {
             return redirect()->route('public.pendaftaran.offline.pembayaran', ['trx_id' => $newTrxId])
                 ->with('success_message', 'Pendaftaran awal berhasil! Silakan lanjutkan ke tahap pembayaran.');
@@ -159,5 +161,37 @@ class ProgramOfflinePublicController extends Controller
 
         // Tampilkan view baru untuk sukses tunai
         return view('pembayaran.sukses_tunai', compact('pendaftaran'));
+    }
+
+    public function halamanqris($trx_id)
+    {
+        $pendaftaran = PendaftaranProgramOffline::where('trx_id', $trx_id)->firstOrFail();
+
+        // batas waktu = created_at + 10 menit
+        $expiresAt = $pendaftaran->created_at->copy()->addMinutes(10);
+
+        // cek expired
+        if (now()->greaterThan($expiresAt) || $pendaftaran->status === 'expired') {
+            if ($pendaftaran->status !== 'expired') {
+                $pendaftaran->update(['status' => 'expired']);
+            }
+
+            return redirect()
+                ->route('public.program.offline.show', $pendaftaran->program->slug)
+                ->with('error', 'Batas waktu pembayaran habis, silakan daftar lagi.');
+        }
+
+        $qrisImage   = asset('asset/qris/madarin_qris.jpg');
+        $expiresAtTs = $expiresAt->getTimestampMs();
+        $nowTs       = now()->getTimestampMs();
+        $sudahUpload = !empty($pendaftaran->bukti_pembayaran);
+
+        return view('pembayaran.qris', compact(
+            'pendaftaran',
+            'qrisImage',
+            'expiresAtTs',
+            'nowTs',
+            'sudahUpload'
+        ));
     }
 }

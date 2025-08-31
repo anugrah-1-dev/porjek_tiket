@@ -174,7 +174,7 @@
                                                 value="{{ old('no_wali') }}">
                                         </div>
 
-                                        <div class="mb-3">
+                                        {{-- <div class="mb-3">
                                             <label class="form-label">
                                                 <i class="bi bi-house-fill"></i> Akomodasi (Camp Reguler) - Optional
                                             </label>
@@ -182,12 +182,28 @@
                                                 <option value="" data-harga="0">Pilih Akomodasi (Opsional)
                                                 </option>
 
-                                                {{-- Static Reguler --}}
                                                 <option value="reguler" data-harga="180000">Reguler (Rp 180.000)
                                                 </option>
+                                                   </select>
+                                        </div> --}}
 
-                                                {{-- Camp VIP dari database --}}
-                                                {{-- @foreach ($camps as $camp)
+                                        @if (strtolower($program->program_bahasa) === 'arab')
+                                            <div class="mb-3">
+                                                <label class="form-label">
+                                                    <i class="bi bi-house-fill"></i> Akomodasi (Camp Reguler) - Optional
+                                                </label>
+                                                <select name="akomodasi" class="form-select" id="campSelect">
+                                                    <option value="" data-harga="0">Pilih Akomodasi (Opsional)
+                                                    </option>
+                                                    <option value="reguler" data-harga="180000">Reguler (Rp 180.000)
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        @endif
+
+
+                                        {{-- Camp VIP dari database --}}
+                                        {{-- @foreach ($camps as $camp)
                                                     @if ($camp->kategori === 'VIP')
                                                         <option value="camp-{{ $camp->id }}"
                                                             data-harga="{{ $camp->harga }}">
@@ -196,8 +212,7 @@
                                                         </option>
                                                     @endif
                                                 @endforeach --}}
-                                            </select>
-                                        </div>
+
 
                                         {{-- Tempat tampil harga
                                         <div id="akomodasi-harga" class="mt-2 fw-bold text-success"></div>
@@ -323,10 +338,13 @@
                                                             <span>Transportasi</span>
                                                             <span id="hargaTransport">Rp0</span>
                                                         </div>
-                                                        <div class="d-flex justify-content-between mb-2">
-                                                            <span>Akomodasi Camp (Reguler)</span>
-                                                            <span id="hargaCamp">Rp0</span>
-                                                        </div>
+                                                        @if (strtolower($program->program_bahasa) === 'arab')
+                                                            <div class="d-flex justify-content-between mb-2">
+                                                                <span>Akomodasi Camp (Reguler)</span>
+                                                                <span id="hargaCamp">Rp0</span>
+                                                            </div>
+                                                        @endif
+
 
                                                         {{-- <div class="d-flex justify-content-between mb-2">
                                                             <span>Camp (VIP/Reguler)</span>
@@ -404,9 +422,12 @@
                                         <!-- Tambahkan sebelum </body> -->
                                         {{-- Metode Pembayaran --}}
                                         <div class="mb-3">
-                                            <label class="form-label fw-bold"><i class="bi bi-wallet2"></i> Metode
-                                                Pembayaran</label>
+                                            <label class="form-label fw-bold">
+                                                <i class="bi bi-wallet2"></i> Metode Pembayaran
+                                            </label>
                                             <div class="d-flex flex-wrap gap-3">
+
+                                                {{-- Tunai --}}
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio"
                                                         name="payment_type" id="pay_tunai" value="tunai"
@@ -414,6 +435,8 @@
                                                     <label class="form-check-label" for="pay_tunai">Bayar Tunai
                                                         (Cash)</label>
                                                 </div>
+
+                                                {{-- Transfer --}}
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio"
                                                         name="payment_type" id="pay_transfer" value="transfer"
@@ -422,8 +445,20 @@
                                                     <label class="form-check-label" for="pay_transfer">Transfer
                                                         Bank</label>
                                                 </div>
+
+                                                {{-- Qris muncul hanya jika bahasa == mandarin --}}
+                                                @if (strtolower($program->program_bahasa) === 'mandarin')
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="payment_type" id="pay_qris" value="qris"
+                                                            {{ old('payment_type') == 'qris' ? 'checked' : '' }}
+                                                            required>
+                                                        <label class="form-check-label" for="pay_qris">QRIS</label>
+                                                    </div>
+                                                @endif
                                             </div>
                                         </div>
+
 
                                         <div class="mb-3" id="bankDropdown" style="display: none;">
                                             <label class="form-label fw-bold"><i class="bi bi-bank"></i> Pilih Bank

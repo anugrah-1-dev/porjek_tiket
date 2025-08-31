@@ -82,6 +82,7 @@
                         <th>Periode</th>
                         <th>Tipe Pembayaran</th> {{-- KOLOM BARU --}}
                         <th>Bank Tujuan</th> {{-- KOLOM BARU --}}
+                        <th>Subtotal</th>
                         <th>Status</th>
                         <th>Bukti Pembayaran</th>
                         <th width="10%">Aksi</th>
@@ -134,6 +135,13 @@
                                 @endif
                             </td>
 
+                            <td>
+                                    @if ($data->subtotal)
+                                        Rp.{{ number_format($data->subtotal, 0, ',', '.') }}
+                                    @else
+                                        -
+                                    @endif
+                                </td>
                             <td>
                                 @php
                                     $statusClass = 'secondary';

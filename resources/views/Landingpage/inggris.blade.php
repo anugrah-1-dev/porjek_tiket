@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kursus Bahasa Inggris</title>
     <link rel="stylesheet" href="{{ asset('css/inggrislandingpage.css') }}">
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap 5.3 JS Bundle (termasuk Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </head>
 
 <body>
@@ -59,7 +65,8 @@
                                 <img src="{{ asset('storage/' . $program->thumbnail) }}" class="program-card-img"
                                     alt="{{ $program->nama }}">
                                 @if ($program->is_active)
-                                    <span class="badge bg-success program-badge">Available</span>
+                            <span class="badge bg-success program-badge">Available</span>
+
                                 @endif
                             </div>
                             <div class="card-body d-flex flex-column">
@@ -69,7 +76,7 @@
                                     {{ \Carbon\Carbon::parse($program->jadwal_mulai)->format('M d') }} -
                                     {{ \Carbon\Carbon::parse($program->jadwal_selesai)->format('M d, Y') }}
                                 </p> --}}
-                                
+
                                 <p class="card-text program-card-price mb-3">
                                     Rp {{ number_format($program->harga, 0, ',', '.') }}
                                 </p>
@@ -119,34 +126,35 @@
         </div>
     </section>
 
- {{-- About Section --}}
-<section class="about py-5" id="about">
-    <div class="container text-center" data-aos="fade-up">
-        <h2 class="mb-4">Why Choose Us?</h2>
-        <p class="mb-5">
-            At <strong>Brilliant English Course</strong>, we believe that learning Mandarin is an exciting
-            adventure. We combine the <span class="highlight">best teaching methods</span> with an interactive
-            approach to create an effective and unforgettable learning experience.
-        </p>
-        <div class="about-grid">
-            <div class="about-card" data-aos="fade-up" data-aos-delay="100">
-                <div class="icon-wrapper"><i class="fas fa-rocket"></i></div>
-                <h3>Structured Curriculum</h3>
-                <p>Our lessons are designed according to international standards (HSK) to ensure measurable progress.</p>
-            </div>
-            <div class="about-card" data-aos="fade-up" data-aos-delay="200">
-                <div class="icon-wrapper"><i class="fas fa-user-tie"></i></div>
-                <h3>Professional Instructors</h3>
-                <p>Learn from experienced Laoshi, both certified native speakers and local professionals.</p>
-            </div>
-            <div class="about-card" data-aos="fade-up" data-aos-delay="300">
-                <div class="icon-wrapper"><i class="fas fa-users"></i></div>
-                <h3>Active Community</h3>
-                <p>Join a supportive community to practice conversations and explore culture together.</p>
+    {{-- About Section --}}
+    <section class="about py-5" id="about">
+        <div class="container text-center" data-aos="fade-up">
+            <h2 class="mb-4">Why Choose Us?</h2>
+            <p class="mb-5">
+                At <strong>Brilliant English Course</strong>, we believe that learning Mandarin is an exciting
+                adventure. We combine the <span class="highlight">best teaching methods</span> with an interactive
+                approach to create an effective and unforgettable learning experience.
+            </p>
+            <div class="about-grid">
+                <div class="about-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="icon-wrapper"><i class="fas fa-rocket"></i></div>
+                    <h3>Structured Curriculum</h3>
+                    <p>Our lessons are designed according to international standards (HSK) to ensure measurable
+                        progress.</p>
+                </div>
+                <div class="about-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="icon-wrapper"><i class="fas fa-user-tie"></i></div>
+                    <h3>Professional Instructors</h3>
+                    <p>Learn from experienced Laoshi, both certified native speakers and local professionals.</p>
+                </div>
+                <div class="about-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="icon-wrapper"><i class="fas fa-users"></i></div>
+                    <h3>Active Community</h3>
+                    <p>Join a supportive community to practice conversations and explore culture together.</p>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
 
     <section class="alur-container">
@@ -216,6 +224,7 @@
             overflow: hidden;
             line-height: 0;
         }
+
         .wave-line svg {
             width: 250%;
             /* dibuat lebar supaya bisa digeser */

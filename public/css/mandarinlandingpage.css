@@ -339,20 +339,42 @@ body {
     display: inline-block;
     margin: 10px 0 20px;
     padding: 8px 16px;
-    background: #ffd700;
-    color: #c8102e;
+    background: #ffd700;      /* kuning emas */
+    color: #c8102e;           /* merah tua */
     font-weight: bold;
     border-radius: 6px;
     text-decoration: none;
-    transition: all 0.3s;
+    text-align: center;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);  /* bayangan */
+    cursor: pointer;
 }
 
+/* Hover → sedikit naik */
 .program-btn:hover {
     background: #c8102e;
     color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0,0,0,0.15);
 }
 
+/* Aktif (ditekan) → turun sedikit */
+.program-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+}
+
+/* Versi kecil */
+.program-btn.sm {
+    padding: 4px 10px;
+    font-size: 0.85rem;
+    border-radius: 4px;
+    margin: 5px 0 10px;
+}
+
+
 /* Filter */
+
 .filter-buttons-wrapper {
     display: flex;
     justify-content: center;

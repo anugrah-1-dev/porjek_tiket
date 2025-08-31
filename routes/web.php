@@ -82,6 +82,8 @@ Route::get('/pendaftaran/offline/pembayaran/{trx_id}', [ProgramOfflinePublicCont
 // ROUTE BARU: Halaman sukses untuk pembayaran tunai
 Route::get('/pendaftaran/offline/sukses-tunai/{trx_id}', [ProgramOfflinePublicController::class, 'halamanSuksesTunai'])->name('public.pendaftaran.offline.sukses.tunai');
 
+Route::get('/pendaftaran/offline/qris/{trx_id}', [ProgramOfflinePublicController::class, 'halamanqris'])->name('public.pendaftaran.offline.sukses.qris');
+
 
 // === PROGRAM ONLINE ===
 Route::get('/program/online/{program:slug}', [ProgramOnlinePublicController::class, 'show'])
@@ -92,6 +94,8 @@ Route::post('/program/online/{program:slug}/daftar', [ProgramOnlinePublicControl
 Route::get('/pendaftaran/online/pembayaran/{trx_id}', [ProgramOnlinePublicController::class, 'halamanPembayaran'])->name('public.pendaftaran.online.pembayaran');
 // ROUTE BARU: Halaman sukses untuk pembayaran tunai
 Route::get('/pendaftaran/online/sukses-tunai/{trx_id}', [ProgramOnlinePublicController::class, 'halamanSuksesTunai'])->name('public.pendaftaran.online.sukses.tunai');
+Route::get('/pendaftaran/online/qris/{trx_id}', [ProgramOnlinePublicController::class, 'halamanqris'])->name('public.pendaftaran.online.sukses.qris');
+
 
 
 

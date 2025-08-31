@@ -98,8 +98,9 @@ class ProgramOnlineController extends Controller
             $data['thumbnail'] = $path;
         }
 
-        // Format fitur sebagai array
-        $data['features_program'] = array_filter(array_map('trim', explode("\n", $request->input('features_program', ''))));
+    
+        $features = array_filter(array_map('trim', explode("\n", $request->input('features_program', ''))));
+        $data['features_program'] = json_encode($features);
 
         $online->update($data);
 

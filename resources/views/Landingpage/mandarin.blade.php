@@ -82,7 +82,8 @@
                                     Rp {{ number_format($program->harga, 0, ',', '.') }}
                                 </p>
                                 <a href="{{ route('public.program.offline.show', $program->slug) }}"
-                                    class="btn btn-primary mt-auto">Lihat Detail</a>
+                                    class="program-btn sm mt-auto">Lihat Detail</a>
+
                             </div>
                         </div>
                     </div>
@@ -113,8 +114,9 @@
                                 <p class="card-text program-card-price mb-3">
                                     Rp {{ number_format($program->harga, 0, ',', '.') }}
                                 </p>
-                                <a href="{{ route('public.program.online.show', $program->slug) }}"
-                                    class="btn btn-danger mt-auto">Lihat Detail</a>
+                                <a href="{{ route('public.program.offline.show', $program->slug) }}"
+                                    class="program-btn sm mt-auto">Lihat Detail</a>
+
                             </div>
                         </div>
                     </div>
@@ -129,7 +131,7 @@
 
     {{-- JS filter program sama seperti versi Inggris --}}
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const filterButtons = document.querySelectorAll('.filter-btn');
             const programItems = document.querySelectorAll('.program-item');
 
@@ -140,7 +142,7 @@
             });
 
             filterButtons.forEach(button => {
-                button.addEventListener('click', function () {
+                button.addEventListener('click', function() {
                     const filterValue = this.getAttribute('data-filter');
                     filterButtons.forEach(btn => btn.classList.remove('active'));
                     this.classList.add('active');
@@ -202,7 +204,8 @@
 
         <div class="container">
             <h2>Alur Pendaftaran</h2>
-            <p>Silakan ikuti langkah-langkah berikut untuk menyelesaikan pendaftaran di <strong>Mandarin Center Pare</strong>:</p>
+            <p>Silakan ikuti langkah-langkah berikut untuk menyelesaikan pendaftaran di <strong>Mandarin Center
+                    Pare</strong>:</p>
 
             <div class="alur-timeline-mandarin">
                 <div class="step-mandarin">
@@ -213,7 +216,8 @@
                 <div class="step-mandarin">
                     <div class="circle-mandarin">2</div>
                     <h3>Verifikasi dan Konfirmasi</h3>
-                    <p>Tim kami akan menghubungi Anda untuk melakukan verifikasi dan memberikan informasi lebih lanjut.</p>
+                    <p>Tim kami akan menghubungi Anda untuk melakukan verifikasi dan memberikan informasi lebih lanjut.
+                    </p>
                 </div>
                 <div class="step-mandarin">
                     <div class="circle-mandarin">3</div>

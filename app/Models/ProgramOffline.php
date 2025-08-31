@@ -19,7 +19,7 @@ class ProgramOffline extends Model
         'harga',
         'features_program',
         'lokasi',
-        'jadwal_mula    i',
+        'jadwal_mulai',
         'jadwal_selesai',
         'kuota',
         'is_active',

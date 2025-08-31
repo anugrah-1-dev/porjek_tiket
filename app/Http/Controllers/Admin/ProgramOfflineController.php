@@ -97,8 +97,9 @@ class ProgramOfflineController extends Controller
             'program_bahasa',
         ]);
 
-        // Fitur diformat sebagai array
-        $data['features_program'] = array_filter(array_map('trim', explode("\n", $request->input('features_program', ''))));
+        // Simpan fitur sebagai JSON array
+        $features = array_filter(array_map('trim', explode("\n", $request->input('features_program', ''))));
+        $data['features_program'] = json_encode($features);
 
         // Thumbnail logic
         if ($request->has('hapus_thumbnail')) {
@@ -107,7 +108,7 @@ class ProgramOfflineController extends Controller
             }
             $data['thumbnail'] = null;
         }
-        
+
 
         if ($request->hasFile('thumbnail')) {
             if ($offline->thumbnail && Storage::disk('public')->exists($offline->thumbnail)) {

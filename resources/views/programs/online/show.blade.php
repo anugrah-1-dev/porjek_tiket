@@ -203,84 +203,90 @@
                                     </div>
 
                                     {{-- Modal struk --}}
-<div class="modal fade" id="modalTotal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content shadow-sm">
-            <div class="modal-header">
-                <h5 class="modal-title">Rincian Pembayaran</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <div class="d-flex justify-content-between mb-2">
-                    <span>Harga Program</span>
-                    <span id="hargaProgram">
-                        Rp{{ number_format($program->harga, 0, ',', '.') }}
-                    </span>
-                </div>
-               
-                <div class="d-flex justify-content-between mb-2">
-                    <span>Akomodasi Camp</span>
-                    <span id="hargaCamp">Rp0</span>
-                </div>
+                                    <div class="modal fade" id="modalTotal" tabindex="-1" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content shadow-sm">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Rincian Pembayaran</h5>
+                                                    <button type="button" class="btn-close"
+                                                        data-bs-dismiss="modal"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="d-flex justify-content-between mb-2">
+                                                        <span>Harga Program</span>
+                                                        <span id="hargaProgram">
+                                                            Rp{{ number_format($program->harga, 0, ',', '.') }}
+                                                        </span>
+                                                    </div>
 
-                <hr>
-                <div class="d-flex justify-content-between fw-bold fs-5">
-                    <span>Total</span>
-                    <span id="totalModal">
-                        Rp{{ number_format($program->harga, 0, ',', '.') }}
-                    </span>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+                                                    @if (strtolower($program->program_bahasa) === 'arab')
+                                                        <div class="d-flex justify-content-between mb-2">
+                                                            <span>Akomodasi Camp (Reguler)</span>
+                                                            <span id="hargaCamp">Rp0</span>
+                                                        </div>
+                                                    @endif
 
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    let basePrice = {{ $program->harga }};
-    let selectCamp = document.getElementById("campSelect");
-    let btnLihatTotal = document.getElementById("btnLihatTotal");
+                                                    <hr>
+                                                    <div class="d-flex justify-content-between fw-bold fs-5">
+                                                        <span>Total</span>
+                                                        <span id="totalModal">
+                                                            Rp{{ number_format($program->harga, 0, ',', '.') }}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
-    let hargaProgram = document.getElementById("hargaProgram");
-    let hargaCamp = document.getElementById("hargaCamp");
-    let totalPreview = document.getElementById("totalPreview");
-    let totalModal = document.getElementById("totalModal");
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function() {
+                                            let basePrice = {{ $program->harga }};
+                                            let selectCamp = document.getElementById("campSelect");
+                                            let btnLihatTotal = document.getElementById("btnLihatTotal");
 
-    function updateTotal() {
-        let campPrice = selectCamp?.selectedOptions[0]?.dataset.harga
-            ? parseInt(selectCamp.selectedOptions[0].dataset.harga)
-            : 0;
+                                            let hargaProgram = document.getElementById("hargaProgram");
+                                            let hargaCamp = document.getElementById("hargaCamp");
+                                            let totalPreview = document.getElementById("totalPreview");
+                                            let totalModal = document.getElementById("totalModal");
 
-        let total = basePrice + campPrice;
+                                            function updateTotal() {
+                                                let campPrice = selectCamp?.selectedOptions[0]?.dataset.harga ?
+                                                    parseInt(selectCamp.selectedOptions[0].dataset.harga) :
+                                                    0;
 
-        // update preview total
-        if (totalPreview) totalPreview.textContent = "Rp" + total.toLocaleString('id-ID');
+                                                let total = basePrice + campPrice;
 
-        // update detail modal
-        hargaProgram.textContent = "Rp" + basePrice.toLocaleString('id-ID');
-        hargaCamp.textContent = "Rp" + campPrice.toLocaleString('id-ID');
-        totalModal.textContent = "Rp" + total.toLocaleString('id-ID');
-    }
+                                                // update preview total
+                                                if (totalPreview) totalPreview.textContent = "Rp" + total.toLocaleString('id-ID');
 
-    if (selectCamp) selectCamp.addEventListener("change", updateTotal);
+                                                // update detail modal
+                                                hargaProgram.textContent = "Rp" + basePrice.toLocaleString('id-ID');
+                                                hargaCamp.textContent = "Rp" + campPrice.toLocaleString('id-ID');
+                                                totalModal.textContent = "Rp" + total.toLocaleString('id-ID');
+                                            }
 
-    if (btnLihatTotal) {
-        btnLihatTotal.addEventListener("click", function() {
-            updateTotal();
-            new bootstrap.Modal(document.getElementById('modalTotal')).show();
-        });
-    }
-});
-</script>
+                                            if (selectCamp) selectCamp.addEventListener("change", updateTotal);
+
+                                            if (btnLihatTotal) {
+                                                btnLihatTotal.addEventListener("click", function() {
+                                                    updateTotal();
+                                                    new bootstrap.Modal(document.getElementById('modalTotal')).show();
+                                                });
+                                            }
+                                        });
+                                    </script>
 
                                     <br>
 
 
                                     {{-- Metode Pembayaran --}}
                                     <div class="mb-3">
-                                        <label class="form-label fw-bold"><i class="bi bi-wallet2"></i> Metode
-                                            Pembayaran</label>
+                                        <label class="form-label fw-bold">
+                                            <i class="bi bi-wallet2"></i> Metode Pembayaran
+                                        </label>
                                         <div class="d-flex flex-wrap gap-3">
+
+                                            {{-- Tunai --}}
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="payment_type"
                                                     id="pay_tunai" value="tunai"
@@ -288,6 +294,8 @@ document.addEventListener("DOMContentLoaded", function() {
                                                 <label class="form-check-label" for="pay_tunai">Bayar Tunai
                                                     (Cash)</label>
                                             </div>
+
+                                            {{-- Transfer --}}
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="payment_type"
                                                     id="pay_transfer" value="transfer"
@@ -295,8 +303,20 @@ document.addEventListener("DOMContentLoaded", function() {
                                                 <label class="form-check-label" for="pay_transfer">Transfer
                                                     Bank</label>
                                             </div>
+
+                                            {{-- Qris kalau bahasa Mandarin --}}
+                                            @if (strtolower($program->program_bahasa) === 'mandarin')
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio"
+                                                        name="payment_type" id="pay_qris" value="qris"
+                                                        {{ old('payment_type') == 'qris' ? 'checked' : '' }} required>
+                                                    <label class="form-check-label" for="pay_qris">QRIS</label>
+                                                </div>
+                                            @endif
+
                                         </div>
                                     </div>
+
 
                                     <div class="mb-3">
                                         <label class="form-label"><i class="bi bi-bank"></i> Bank untuk

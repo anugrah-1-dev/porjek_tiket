@@ -8,8 +8,11 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-10">
-            <x-adminlte-card theme="lightblue" title="Form Edit Program Online">
+        <div class="col-12">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Form Edit Program Online</h3>
+                </div>
 
                 @if ($errors->any())
                     <div class="alert alert-danger">
@@ -26,61 +29,152 @@
                     @csrf
                     @method('PUT')
 
-                    <x-adminlte-input name="nama" label="Nama Program" placeholder="Contoh: Kelas Online Intensif"
-                        value="{{ old('nama', $online->nama) }}" required />
-
-                        <x-adminlte-select name="program_bahasa" label="Program Bahasa" required>
-                            <option value="" disabled selected>-- Pilih Bahasa --</option>
-                            <option value="inggris" {{ old('program_bahasa') == 'inggris' ? 'selected' : '' }}>Bahasa Inggris</option>
-                            <option value="jerman" {{ old('program_bahasa') == 'jerman' ? 'selected' : '' }}>Bahasa Jerman</option>
-                            <option value="mandarin" {{ old('program_bahasa') == 'mandarin' ? 'selected' : '' }}>Bahasa Mandarin</option>
-                            <option value="arab" {{ old('program_bahasa') == 'arab' ? 'selected' : '' }}>Bahasa Arab</option>
-                        </x-adminlte-select>
-
-                    <x-adminlte-input name="slug" label="Slug" placeholder="contoh-program-online"
-                        value="{{ old('slug', $online->slug) }}" required />
-
-                    <x-adminlte-input name="lama_program" label="Durasi Program" placeholder="Contoh: 4 minggu"
-                        value="{{ old('lama_program', $online->lama_program) }}" required />
-
-                    <x-adminlte-input name="kategori" label="Kategori Program" placeholder="Contoh: Webinar / Intensif"
-                        value="{{ old('kategori', $online->kategori) }}" required />
-
-                    <x-adminlte-input name="harga" label="Harga (Rp)" type="number" placeholder="Contoh: 1000000"
-                        value="{{ old('harga', $online->harga) }}" required />
-
-                    <x-adminlte-textarea name="features_program" label="Fitur Program (Pisahkan dengan Enter)"
-                        rows="4" placeholder="Contoh:\n✅ Live Zoom\n✅ Grup Telegram\n✅ Sertifikat"
-                        required>{{ old('features_program', is_array($online->features_program) ? implode("\n", $online->features_program) : $online->features_program) }}</x-adminlte-textarea>
-
-                    <x-adminlte-select name="is_active" label="Status Program" required>
-                        <option value="1" {{ old('is_active', $online->is_active) == '1' ? 'selected' : '' }}>Aktif</option>
-                        <option value="0" {{ old('is_active', $online->is_active) == '0' ? 'selected' : '' }}>Nonaktif</option>
-                    </x-adminlte-select>
-
-                    <x-adminlte-input name="thumbnail" label="Thumbnail Program (Gambar)" type="file"
-                        accept="image/*" />
-
-                    @if ($online->thumbnail)
-                        <div class="mt-2">
-                            <p>Thumbnail Saat Ini:</p>
-                            <img src="{{ asset('uploads/thumbnails/' . $online->thumbnail) }}" class="img-thumbnail" width="200">
-                            <div class="form-check mt-2">
-                                <input type="checkbox" name="hapus_thumbnail" id="hapus_thumbnail" class="form-check-input">
-                                <label for="hapus_thumbnail" class="form-check-label">Hapus thumbnail saat disimpan</label>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="nama">Nama Program</label>
+                                    <input type="text" class="form-control" id="nama" name="nama"
+                                        placeholder="Contoh: Kelas Online Intensif" value="{{ old('nama', $online->nama) }}"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="program_bahasa">Program Bahasa</label>
+                                    <select class="form-control" id="program_bahasa" name="program_bahasa" required>
+                                        <option value="" disabled selected>-- Pilih Bahasa --</option>
+                                        <option value="inggris"
+                                            {{ old('program_bahasa', $online->program_bahasa) == 'inggris' ? 'selected' : '' }}>
+                                            Bahasa Inggris</option>
+                                        <option value="jerman"
+                                            {{ old('program_bahasa', $online->program_bahasa) == 'jerman' ? 'selected' : '' }}>
+                                            Bahasa Jerman</option>
+                                        <option value="mandarin"
+                                            {{ old('program_bahasa', $online->program_bahasa) == 'mandarin' ? 'selected' : '' }}>
+                                            Bahasa Mandarin</option>
+                                        <option value="arab"
+                                            {{ old('program_bahasa', $online->program_bahasa) == 'arab' ? 'selected' : '' }}>
+                                            Bahasa Arab</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    @endif
 
-                    <div class="mt-3">
-                        <x-adminlte-button type="submit" theme="primary" icon="fas fa-save" label="Perbarui Program" />
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="slug">Slug</label>
+                                    <input type="text" class="form-control" id="slug" name="slug"
+                                        placeholder="contoh-program-online" value="{{ old('slug', $online->slug) }}"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="lama_program">Durasi Program</label>
+                                    <input type="text" class="form-control" id="lama_program" name="lama_program"
+                                        placeholder="Contoh: 4 minggu"
+                                        value="{{ old('lama_program', $online->lama_program) }}" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="kategori">Kategori Program</label>
+                                    <input type="text" class="form-control" id="kategori" name="kategori"
+                                        placeholder="Contoh: Webinar / Intensif"
+                                        value="{{ old('kategori', $online->kategori) }}" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="harga">Harga (Rp)</label>
+                                    <input type="number" class="form-control" id="harga" name="harga"
+                                        placeholder="Contoh: 1000000" value="{{ old('harga', $online->harga) }}" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="is_active">Status Program</label>
+                                    <select class="form-control" id="is_active" name="is_active" required>
+                                        <option value="1"
+                                            {{ old('is_active', $online->is_active) == '1' ? 'selected' : '' }}>Aktif
+                                        </option>
+                                        <option value="0"
+                                            {{ old('is_active', $online->is_active) == '0' ? 'selected' : '' }}>Nonaktif
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="features_program">Fitur Program (Pisahkan dengan Enter)</label>
+                                    <textarea class="form-control @error('features_program') is-invalid @enderror" id="features_program"
+                                        name="features_program" rows="4">{{ old('features_program', is_array(json_decode($online->features_program)) ? implode("\n", json_decode($online->features_program)) : $online->features_program) }}</textarea>
+
+                                    <small class="form-text text-muted">
+                                        Gunakan emoji ✅ untuk menandai fitur. Setiap fitur pada baris baru.
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="thumbnail">Thumbnail Program (Gambar)</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="thumbnail" name="thumbnail"
+                                            accept="image/*">
+                                        <label class="custom-file-label" for="thumbnail">Pilih file</label>
+                                    </div>
+                                    <small class="form-text text-muted">
+                                        Format: JPG, PNG, GIF. Maksimal 2MB.
+                                    </small>
+                                </div>
+
+                                @if ($online->thumbnail)
+                                    <div class="form-check mt-2">
+                                        <input type="checkbox" name="hapus_thumbnail" id="hapus_thumbnail"
+                                            class="form-check-input">
+                                        <label for="hapus_thumbnail" class="form-check-label">Hapus thumbnail saat
+                                            disimpan</label>
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="col-md-6">
+                                @if ($online->thumbnail)
+                                    <div class="thumbnail-preview-container">
+                                        <p class="font-weight-bold">Thumbnail Saat Ini:</p>
+                                        <img src="{{ asset('storage/' . $offline->thumbnail) }}" class="img-thumbnail"
+                                            id="currentThumbnail" width="200">
+                                    </div>
+                                @endif
+                                <div id="newThumbnailPreview" class="mt-2" style="display:none;">
+                                    <p class="font-weight-bold">Pratinjau Thumbnail Baru:</p>
+                                    <img id="previewImage" class="img-thumbnail" src="#"
+                                        alt="Pratinjau thumbnail" width="200">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Perbarui Program
+                        </button>
                         <a href="{{ route('admin.online.index') }}" class="btn btn-secondary ml-2">
                             <i class="fas fa-arrow-left"></i> Batal
                         </a>
                     </div>
                 </form>
-
-            </x-adminlte-card>
+            </div>
         </div>
     </div>
 @stop
@@ -91,31 +185,67 @@
             max-height: 200px;
             object-fit: cover;
         }
+
+        .custom-file-label::after {
+            content: "Browse";
+        }
     </style>
 @stop
 
-   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@section('js')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // Preview uploaded image
+        document.getElementById('thumbnail').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('previewImage').src = e.target.result;
+                    document.getElementById('newThumbnailPreview').style.display = 'block';
+                }
+                reader.readAsDataURL(file);
 
-        @if (session('success'))
-            <script>
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Berhasil!',
-                    text: '{{ session('success') }}',
-                    timer: 3000,
-                    showConfirmButton: false
-                });
-            </script>
-        @endif
+                // Update custom file label
+                const fileName = file.name;
+                const label = document.querySelector('.custom-file-label');
+                label.textContent = fileName;
+            }
+        });
 
-        @if (session('error'))
-            <script>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Gagal!',
-                    text: '{{ session('error') }}',
-                    timer: 3000,
-                    showConfirmButton: false
-                });
-            </script>
-        @endif
+        // Auto generate slug from nama
+        document.getElementById('nama').addEventListener('input', function() {
+            const nama = this.value;
+            const slug = nama.toLowerCase()
+                .replace(/[^a-z0-9 -]/g, '') // Remove invalid chars
+                .replace(/\s+/g, '-') // Replace spaces with -
+                .replace(/-+/g, '-'); // Replace multiple - with single -
+
+            document.getElementById('slug').value = slug;
+        });
+    </script>
+
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: '{{ session('success') }}',
+                timer: 3000,
+                showConfirmButton: false
+            });
+        </script>
+    @endif
+
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal!',
+                text: '{{ session('error') }}',
+                timer: 3000,
+                showConfirmButton: false
+            });
+        </script>
+    @endif
+@stop
