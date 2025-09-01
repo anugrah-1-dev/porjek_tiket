@@ -11,8 +11,12 @@ body {
 /* Hero Section */
 .hero {
     position: relative;
-    width: 100%;
-    height: 100vh;
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--white);
     overflow: hidden;
 }
 
@@ -27,7 +31,7 @@ body {
     height: 100%;
     width: 100%;
     display: flex;
-    transition: transform 0.5s ease-in-out;
+    transition: opacity 1s ease-in-out;
 }
 
 .slide {
@@ -53,7 +57,7 @@ body {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(200, 16, 46, 0.6); /* Merah transparan */
+    background: rgba(3, 189, 77, 0.6); /* Merah transparan */
     color: #fff;
     border: none;
     font-size: 2rem;
@@ -65,7 +69,7 @@ body {
 
 .prev:hover,
 .next:hover {
-    background: rgba(200, 16, 46, 0.8);
+    background: rgba(71, 171, 8, 0.8);
 }
 
 .prev {
@@ -82,7 +86,7 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
-    color: #fff;
+    color:#09740f;     
 }
 
 .hero-text h1 {
@@ -108,8 +112,8 @@ body {
 /* CTA Button */
 .cta-button {
     display: inline-block;       /* biar bisa diposisikan fleksibel */
-    background: #c8102e;         /* Merah bendera China */
-    color: #ffd700;              /* Emas */
+    background: #09740f;         /* Merah bendera China */
+    color:  #09740f;                 /* Emas */
     padding: 12px 30px;          /* Ruang dalam */
     border: none;                /* Hilangkan border default */
     border-radius: 30px;         /* Membulat */
@@ -122,7 +126,7 @@ body {
 }
 
 .cta-button:hover {
-    background: #a00c24;         /* Warna lebih gelap saat hover */
+    background: #09740f;         /* Warna lebih gelap saat hover */
     color: #fff;                 /* Teks jadi putih */
     transform: translateY(-2px); /* Efek angkat sedikit */
 }
@@ -146,7 +150,7 @@ body {
 .about h2 {
     font-size: 2.7rem;
     margin-bottom: 20px;
-    color: #c8102e;
+    color: #09740f;      
     font-weight: 700;
 }
 
@@ -168,7 +172,7 @@ body {
 }
 
 .about .highlight {
-    color: #c8102e;
+    color:#09740f;      
     font-weight: bold;
 }
 
@@ -196,7 +200,7 @@ body {
 
 .about-card h3 {
     font-size: 1.4rem;
-    color: #c8102e;
+    color: #09740f;      
     margin-bottom: 12px;
     font-weight: 600;
 }
@@ -209,7 +213,7 @@ body {
 /* Alur Section */
 .alur {
     padding: 90px 20px;
-    background: #c8102e;
+    background: #09740f;       
     color: #fff;
     text-align: center;
 }
@@ -258,7 +262,7 @@ body {
     margin: 0 auto 15px;
     border-radius: 50%;
     background: #ffd700;
-    color: #c8102e;
+    color: #09740f;      
     font-weight: 700;
     display: flex;
     align-items: center;
@@ -284,7 +288,7 @@ body {
 }
 
 .wave-divider .shape-fill {
-    fill: #c8102e; /* Warna gelombang biru tua */
+    fill: #09740f;      
 }
 
 /* Program Section */
@@ -297,7 +301,7 @@ body {
 .section-title {
     font-size: 2rem;
     font-weight: bold;
-    color: #c8102e;
+    color: #09740f;      
     margin-bottom: 10px;
 }
 
@@ -310,7 +314,7 @@ body {
 /* ==         1. VARIABLES (VARIABEL)         == */
 /* ============================================= */
 :root {
-    --color-primary: #c8102e;      /* Merah Tua */
+    --color-primary: #09740f;          /* Merah Tua */
     --color-secondary: #ffd700;   /* Kuning Emas */
     --color-background: #fff;
     --color-bg-alt: #fff4f4;       
@@ -365,7 +369,7 @@ body {
     border-radius: 25px;
     box-shadow: var(--shadow-light);
    
-    border: 3px solid #c8102e;
+    border: 3px solid #09740f;      
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -382,7 +386,7 @@ body {
   margin: 10px; 
   height: calc(180px - 20px); /* 180px dikurangi 10px margin atas + 10px margin bawah */
   border-radius: 20px; 
-  border: 1px solid #bc808a;
+  border: 1px solid #09740f;  
 
 }
 
@@ -511,7 +515,7 @@ body {
 /* ALUR - Mandarin Style */
 .alur-mandarin {
     padding: 90px 20px;
-    background: #c8102e; /* Merah khas Tiongkok */
+    background:#09740f;        /* Merah khas Tiongkok */
     color: #fff;
     text-align: center;
 }
@@ -570,7 +574,7 @@ body {
     margin: 0 auto 15px;
     border-radius: 50%;
     background: #ffd700; /* Lingkaran kuning emas */
-    color: #c8102e; /* Angka merah */
+    color: #09740f;      
     display: flex;
     align-items: center;
     justify-content: center;
@@ -595,7 +599,7 @@ body {
 
 /* Section Mandarin */
 .alur-mandarin {
-    background-color: #c8102e; /* merah solid */
+    background-color:#09740f;       
     color: #ffd700; /* kuning emas untuk teks */
     padding: 60px 20px;
 }
@@ -666,7 +670,7 @@ body {
     }
     .btn-danger {
         display: inline-block;
-        background: #c8102e;       /* Merah bendera China */
+        background: #09740f;           /* Merah bendera China */
         color: #ffd700;            /* Emas */
         padding: 12px 30px;
         border: none;
@@ -680,7 +684,7 @@ body {
     }
     
     .btn-danger:hover {
-        background: #a00c24;       /* Merah lebih gelap */
+        background: #0a5b02;       /* Merah lebih gelap */
         color: #fff;
         transform: translateY(-2px);
     }
@@ -688,4 +692,95 @@ body {
     .btn-danger:active {
         transform: translateY(0);
     }
+    /* --- New Section: Gallery & Contact --- */
+.gallery-contact {
+    background-color: #f7f9fc;
+    color: #333;
+}
+
+.gallery-contact h2,
+.gallery-contact p {
+    margin-bottom: 2rem;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    padding: 0 1rem;
+}
+
+.gallery-item {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 200px; /* Sesuaikan tinggi foto */
+    object-fit: cover;
+    display: block;
+}
+
+/* --- Contact Card Styling --- */
+.contact-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.contact-card h3 {
+    color: #054707;
+    margin-bottom: 1rem;
+}
+
+.contact-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.contact-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background-color: #25D366; /* WhatsApp Green */
+    color: white;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.contact-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    color: white;
+}
+
+.contact-link i {
+    font-size: 1.2rem;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+    .contact-links {
+        flex-direction: column;
+        align-items: center;
+    }
+}
 }

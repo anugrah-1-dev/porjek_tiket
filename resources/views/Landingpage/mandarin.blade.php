@@ -17,13 +17,16 @@
         <div class="carousel">
             <div class="slides">
                 <div class="slide active">
-                    <img src={{ asset('asset/img/brilliant1.jpg') }} alt="Belajar Bahasa Mandarin 1">
+                    <img src={{ asset('asset/img/mandarin1.jpg') }} alt="Belajar Bahasa Mandarin 1">
                 </div>
                 <div class="slide">
-                    <img src={{ asset('asset/img/brilliant2.jpg') }} alt="Belajar Bahasa Mandarin 2">
+                    <img src={{ asset('asset/img/mandarin1.jpg') }} alt="Belajar Bahasa Mandarin 2">
                 </div>
                 <div class="slide">
-                    <img src={{ asset('asset/img/brilliant3.jpg') }} alt="Belajar Bahasa Mandarin 3">
+                    <img src={{ asset('asset/img/brilliant2.jpg') }} alt="Belajar Bahasa Mandarin 3">
+                </div>
+                <div class="slide">
+                    <img src={{ asset('asset/img/brilliant3.jpg') }} alt="Belajar Bahasa Mandarin 4">
                     <img src={{ asset('asset/img/brilliantclass4.jpg') }} alt="Belajar Bahasa Mandarin 1">
                 </div>
                 <div class="slide">
@@ -230,8 +233,76 @@
                     <p>Selamat! Anda telah berhasil mendaftar dan siap mengikuti kursus.</p>
                 </div>
             </div>
+            <div class="contact-card mt-5" data-aos="fade-up" data-aos-delay="600">
+                <h3>Hubungi Kami</h3>
+                <p>Tim kami siap membantu Anda.</p>
+                <div class="contact-links">
+                    <a href="https://wa.me/6282143120833?text=Halo%2C%20saya%20tertarik%20dengan%20kursus%20Mandarin%20di%20Pare." class="contact-link"  >
+                        <i class="fab fa-whatsapp"></i> WhatsApp CS 1
+                    </a>
+                    <a href="https://wa.me/6282143120833?text=Halo%2C%20saya%20tertarik%20dengan%20kursus%20Mandarin%20di%20Pare." class="contact-link" >
+                        <i class="fab fa-whatsapp"></i> WhatsApp CS 2
+                    </a>
+                </div>
+            </div>
         </div>
     </section>
+    <style>
+            /* --- Contact Card Styling --- */
+        .contact-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-card h3 {
+            color: #054707;
+            margin-bottom: 1rem;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background-color: #25D366; /* WhatsApp Green */
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .contact-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            color: white;
+        }
+
+        .contact-link i {
+            font-size: 1.2rem;
+        }
+
+        /* --- Responsive Adjustments --- */
+        @media (max-width: 768px) {
+            .contact-links {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
 
     {{-- JS for Carousel --}}
     <script>
@@ -308,13 +379,15 @@
             duration: 800, // Durasi animasi
         });
     </script>
+     
+
 
     <footer class="footer text-center">
         <p>© 2025 Mandarin Center Pare | Program Bahasa Mandarin</p>
     </footer>
     <style>
     .footer {
-        background-color: orange;
+        background-color: #054707;     
         color: white;
         padding: 15px 0;
         bottom: 0;
