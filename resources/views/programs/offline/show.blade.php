@@ -155,6 +155,35 @@
                                         </div>
 
                                         <div class="mb-3">
+                                            <label class="form-label"><i class="bi bi-geo-alt-fill"></i> Tempat &
+                                                Tanggal Lahir</label>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <input type="text" name="tempat_lahir" class="form-control"
+                                                        value="{{ old('tempat_lahir') }}" placeholder="" required>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input type="date" name="tanggal_lahir" class="form-control"
+                                                        value="{{ old('tanggal_lahir') }}" required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="mb-3">
+                                            <label class="form-label"><i class="bi bi-gender-ambiguous"></i>
+                                                Gender</label>
+                                            <select name="gender" class="form-select" required>
+                                                <option value="" disabled selected>-- Pilih Gender --</option>
+                                                <option value="Laki-laki"
+                                                    {{ old('gender') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki
+                                                </option>
+                                                <option value="Perempuan"
+                                                    {{ old('gender') == 'Perempuan' ? 'selected' : '' }}>Perempuan
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
                                             <label class="form-label"><i class="bi bi-telephone-fill"></i> No.
                                                 HP</label>
                                             <input type="text" name="no_hp" class="form-control"
@@ -177,10 +206,10 @@
 
                                         {{-- ====================================================== --}}
                                         {{-- PERUBAHAN DIMULAI: Tambah Ukuran Seragam --}}
-                                        @if (strtolower($program->program_bahasa) === 'nhc')
+                                        @if (in_array(strtolower($program->program_bahasa), ['nhc', 'inggris', 'mandarin', 'jerman']))
                                             <div class="mb-3">
                                                 <label class="form-label">
-                                                    <i class="bi bi-tag"></i> Ukuran Seragam    
+                                                    <i class="bi bi-tag"></i> Ukuran Seragam
                                                 </label>
                                                 <select name="ukuran_seragam" class="form-select" required>
                                                     <option value="">Pilih Ukuran Seragam</option>
@@ -216,7 +245,8 @@
                                         @if (strtolower($program->program_bahasa) === 'arab')
                                             <div class="mb-3">
                                                 <label class="form-label">
-                                                    <i class="bi bi-house-fill"></i> Akomodasi (Camp Reguler) - Optional
+                                                    <i class="bi bi-house-fill"></i> Akomodasi (Camp Reguler) -
+                                                    Optional
                                                 </label>
                                                 <select name="akomodasi" class="form-select" id="campSelect">
                                                     <option value="" data-harga="0">Pilih Akomodasi (Opsional)
@@ -332,39 +362,42 @@
                                             </select>
                                         </div>
 
-
-
                                         {{-- Preview total --}}
-                                        <div class="d-flex align-items-center border rounded p-2 bg-light mt-2">
-                                            <strong>Total:</strong>
-                                            <span id="totalPreview"
-                                                class="ms-2">Rp{{ number_format($program->harga, 0, ',', '.') }}</span>
+                                        <div
+                                            class="d-flex align-items-center border rounded p-3 bg-light mt-3 shadow-sm">
+                                            <strong class="me-2">Total:</strong>
+                                            <span id="totalPreview" class="fw-bold text-success">
+                                                Rp{{ number_format($program->harga, 0, ',', '.') }}
+                                            </span>
 
                                             <a href="javascript:void(0)" id="btnLihatTotal"
-                                                class="ms-auto btn btn-sm btn-link" style="text-decoration:none;">
-                                                Lihat lebih lanjut
+                                                class="ms-auto btn btn-sm btn-outline-primary rounded-pill px-3">
+                                                Lihat Detail
                                             </a>
                                         </div>
 
                                         {{-- Modal struk --}}
                                         <div class="modal fade" id="modalTotal" tabindex="-1" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content shadow-sm">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title">Rincian Pembayaran</h5>
+                                            <div class="modal-dialog modal-dialog-centered modal-sm">
+                                                <div class="modal-content rounded-3 shadow-lg">
+                                                    <div class="modal-header border-0">
+                                                        <h5 class="modal-title fw-bold">Rincian Pembayaran</h5>
                                                         <button type="button" class="btn-close"
                                                             data-bs-dismiss="modal"></button>
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="d-flex justify-content-between mb-2">
                                                             <span>Harga Program</span>
-                                                            <span
-                                                                id="hargaProgram">Rp{{ number_format($program->harga, 0, ',', '.') }}</span>
+                                                            <span id="hargaProgram">
+                                                                Rp{{ number_format($program->harga, 0, ',', '.') }}
+                                                            </span>
                                                         </div>
+
                                                         <div class="d-flex justify-content-between mb-2">
                                                             <span>Transportasi</span>
                                                             <span id="hargaTransport">Rp0</span>
                                                         </div>
+
                                                         @if (strtolower($program->program_bahasa) === 'arab')
                                                             <div class="d-flex justify-content-between mb-2">
                                                                 <span>Akomodasi Camp (Reguler)</span>
@@ -372,22 +405,18 @@
                                                             </div>
                                                         @endif
 
-
-                                                        {{-- <div class="d-flex justify-content-between mb-2">
-                                                            <span>Camp (VIP/Reguler)</span>
-                                                            <span id="hargaCamp">Rp0</span>
-                                                        </div> --}}
                                                         <hr>
-                                                        <div class="d-flex justify-content-between fw-bold fs-5">
+                                                        <div
+                                                            class="d-flex justify-content-between fw-bold fs-5 text-primary">
                                                             <span>Total</span>
-                                                            <span
-                                                                id="totalModal">Rp{{ number_format($program->harga, 0, ',', '.') }}</span>
+                                                            <span id="totalModal">
+                                                                Rp{{ number_format($program->harga, 0, ',', '.') }}
+                                                            </span>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-
 
                                         <script>
                                             document.addEventListener("DOMContentLoaded", function() {
@@ -404,12 +433,10 @@
 
                                                 function updateTotal() {
                                                     let transportPrice = selectTransport?.selectedOptions[0]?.dataset.harga ?
-                                                        parseInt(selectTransport.selectedOptions[0].dataset.harga) :
-                                                        0;
+                                                        parseInt(selectTransport.selectedOptions[0].dataset.harga) : 0;
 
                                                     let campPrice = selectCamp?.selectedOptions[0]?.dataset.harga ?
-                                                        parseInt(selectCamp.selectedOptions[0].dataset.harga) :
-                                                        0;
+                                                        parseInt(selectCamp.selectedOptions[0].dataset.harga) : 0;
 
                                                     let total = basePrice + transportPrice + campPrice;
 
@@ -419,7 +446,9 @@
                                                     // update detail modal
                                                     hargaProgram.textContent = "Rp" + basePrice.toLocaleString('id-ID');
                                                     hargaTransport.textContent = "Rp" + transportPrice.toLocaleString('id-ID');
-                                                    hargaCamp.textContent = "Rp" + campPrice.toLocaleString('id-ID');
+                                                    if (hargaCamp) {
+                                                        hargaCamp.textContent = "Rp" + campPrice.toLocaleString('id-ID');
+                                                    }
                                                     totalModal.textContent = "Rp" + total.toLocaleString('id-ID');
                                                 }
 
@@ -433,8 +462,8 @@
                                                 });
                                             });
                                         </script>
-                                        <br>
 
+                                        <br>
 
 
                                         {{-- ====================================================== --}}

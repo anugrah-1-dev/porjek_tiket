@@ -165,7 +165,7 @@
                                         <input type="text" name="asal_kota" class="form-control"
                                             value="{{ old('asal_kota') }}">
                                     </div>
-
+                                    {{--
                                     <div class="mb-3">
                                         <label class="form-label">
                                             <i class="bi bi-house-fill"></i> Akomodasi (Camp Reguler) - Optional
@@ -173,13 +173,11 @@
                                         <select name="akomodasi" class="form-select" id="campSelect">
                                             <option value="" data-harga="0">Pilih Akomodasi (Opsional)
                                             </option>
-
-                                            {{-- Static Reguler --}}
                                             <option value="reguler" data-harga="180000">Reguler (Rp 180.000)
-                                            </option>
+                                            </option> --}}
 
-                                            {{-- Camp VIP dari database --}}
-                                            {{-- @foreach ($camps as $camp)
+                                    {{-- Camp VIP dari database --}}
+                                    {{-- @foreach ($camps as $camp)
                                                     @if ($camp->kategori === 'VIP')
                                                         <option value="camp-{{ $camp->id }}"
                                                             data-harga="{{ $camp->harga }}">
@@ -188,26 +186,27 @@
                                                         </option>
                                                     @endif
                                                 @endforeach --}}
-                                        </select>
-                                    </div>
+                                    {{-- </select>
+                                    </div> --}}
 
-                                    <div class="d-flex align-items-center border rounded p-2 bg-light mt-2">
-                                        <strong>Total:</strong>
-                                        <span id="totalPreview"
-                                            class="ms-2">Rp{{ number_format($program->harga, 0, ',', '.') }}</span>
+                                    <div class="d-flex align-items-center border rounded p-3 bg-light mt-3 shadow-sm">
+                                        <strong class="me-2">Total:</strong>
+                                        <span id="totalPreview" class="fw-bold text-success">
+                                            Rp{{ number_format($program->harga, 0, ',', '.') }}
+                                        </span>
 
                                         <a href="javascript:void(0)" id="btnLihatTotal"
-                                            class="ms-auto btn btn-sm btn-link" style="text-decoration:none;">
-                                            Lihat lebih lanjut
+                                            class="ms-auto btn btn-sm btn-outline-primary rounded-pill px-3">
+                                            Lihat Detail
                                         </a>
                                     </div>
 
-                                    {{-- Modal struk --}}
+                                    <!-- Modal Rincian -->
                                     <div class="modal fade" id="modalTotal" tabindex="-1" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content shadow-sm">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Rincian Pembayaran</h5>
+                                        <div class="modal-dialog modal-dialog-centered modal-sm">
+                                            <div class="modal-content rounded-3 shadow-lg">
+                                                <div class="modal-header border-0">
+                                                    <h5 class="modal-title fw-bold">Rincian Pembayaran</h5>
                                                     <button type="button" class="btn-close"
                                                         data-bs-dismiss="modal"></button>
                                                 </div>
@@ -219,15 +218,9 @@
                                                         </span>
                                                     </div>
 
-                                                    @if (strtolower($program->program_bahasa) === 'arab')
-                                                        <div class="d-flex justify-content-between mb-2">
-                                                            <span>Akomodasi Camp (Reguler)</span>
-                                                            <span id="hargaCamp">Rp0</span>
-                                                        </div>
-                                                    @endif
-
                                                     <hr>
-                                                    <div class="d-flex justify-content-between fw-bold fs-5">
+                                                    <div
+                                                        class="d-flex justify-content-between fw-bold fs-5 text-primary">
                                                         <span>Total</span>
                                                         <span id="totalModal">
                                                             Rp{{ number_format($program->harga, 0, ',', '.') }}
@@ -237,6 +230,14 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <script>
+                                        // Event show modal
+                                        document.getElementById('btnLihatTotal').addEventListener('click', function() {
+                                            new bootstrap.Modal(document.getElementById('modalTotal')).show();
+                                        });
+                                    </script>
+
 
                                     <script>
                                         document.addEventListener("DOMContentLoaded", function() {

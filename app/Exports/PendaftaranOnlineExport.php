@@ -12,6 +12,8 @@ use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+
 
 // 2. Tambahkan kembali WithMapping dan WithDrawings
 class PendaftaranOnlineExport implements FromCollection, WithHeadings, WithMapping, WithEvents, WithDrawings
@@ -22,14 +24,22 @@ class PendaftaranOnlineExport implements FromCollection, WithHeadings, WithMappi
     protected $column_H_width = 20; // Kolom gambar sekarang H
 
     // Terima parameter dari controller
-    public function __construct($startDate, $endDate)
+    public function __construct($startDate, $endDate, $programBahasa = null)
     {
-        // 3. Ambil data SATU KALI di sini dan simpan ke properti.
-        $this->pendaftarans = PendaftaranProgramOnline::with(['program', 'period']) // Eager loading relasi
+        $query = PendaftaranProgramOnline::with(['program', 'period', 'bank'])
             ->whereDate('created_at', '>=', $startDate)
-            ->whereDate('created_at', '<=', $endDate)
-            ->get();
+            ->whereDate('created_at', '<=', $endDate);
+
+        // filter program_bahasa kalau dipilih
+        if ($programBahasa) {
+            $query->whereHas('program', function ($q) use ($programBahasa) {
+                $q->where('program_bahasa', $programBahasa);
+            });
+        }
+
+        $this->pendaftarans = $query->get();
     }
+
 
     /**
      * 4. Method collection() sekarang hanya mengembalikan data yang sudah diambil.
@@ -52,6 +62,9 @@ class PendaftaranOnlineExport implements FromCollection, WithHeadings, WithMappi
             'Bukti Pembayaran',
             'Status',
             'Tipe Pembayaran',
+            'Subtotal',
+            'Akomodasi Tipe',
+            'Akomodasi Harga',
         ];
     }
 
@@ -65,9 +78,12 @@ class PendaftaranOnlineExport implements FromCollection, WithHeadings, WithMappi
             $pendaftaran->asal_kota,
             $pendaftaran->program ? $pendaftaran->program->nama : 'N/A',
             $pendaftaran->period ? $pendaftaran->period->date->format('d F Y') : 'N/A',
-            '', // Kolom Bukti Pembayaran dikosongkan
+            '', // Kolom Bukti Pembayaran dikosongkan (gambar di drawings)
             $pendaftaran->status,
-            $pendaftaran->payment_type,  // <-- Data kolom baru
+            $pendaftaran->payment_type,
+            $pendaftaran->subtotal ? $pendaftaran->subtotal : 0,   // pastikan field subtotal ada
+            $pendaftaran->akomodasi_tipe ?? '-',                   // pastikan field ini ada di model
+            $pendaftaran->akomodasi_harga ? $pendaftaran->akomodasi_harga : 0,
         ];
     }
 
@@ -87,11 +103,12 @@ class PendaftaranOnlineExport implements FromCollection, WithHeadings, WithMappi
                 $drawing->setName('Bukti Pembayaran');
                 $drawing->setDescription($pendaftaran->nama_lengkap);
                 $drawing->setPath($pathToFile);
-                // Koordinat diubah ke kolom 'H'
-                $drawing->setCoordinates('H' . ($key + 2));
+
+                // Index 8 berarti kolom H (urutan ke-8 di headings)
+                $drawing->setCoordinates(Coordinate::stringFromColumnIndex(8) . ($key + 2));
 
                 // Logika untuk posisi tengah
-                list($originalWidth, $originalHeight) = getimagesize($pathToFile);
+                [$originalWidth, $originalHeight] = getimagesize($pathToFile);
                 $newHeight = $this->row_height - 10;
                 $drawing->setHeight($newHeight);
                 $newWidth = ($originalWidth / $originalHeight) * $newHeight;
@@ -104,6 +121,7 @@ class PendaftaranOnlineExport implements FromCollection, WithHeadings, WithMappi
         return $drawings;
     }
 
+
     public function registerEvents(): array
     {
         return [
@@ -115,7 +133,7 @@ class PendaftaranOnlineExport implements FromCollection, WithHeadings, WithMappi
 
                 $sheet->getStyle($cellRange)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
                 $sheet->getStyle($cellRange)->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
-                $sheet->getStyle('A1:' . $highestColumn.'1')->getFont()->setBold(true);
+                $sheet->getStyle('A1:' . $highestColumn . '1')->getFont()->setBold(true);
 
                 foreach ($this->pendaftarans as $key => $pendaftaran) {
                     $rowNumber = $key + 2;
@@ -127,7 +145,9 @@ class PendaftaranOnlineExport implements FromCollection, WithHeadings, WithMappi
                 }
 
                 // Pengaturan lebar kolom disesuaikan untuk versi Online
-                foreach (range('A', 'G') as $col) { $sheet->getDelegate()->getColumnDimension($col)->setAutoSize(true); }
+                foreach (range('A', 'G') as $col) {
+                    $sheet->getDelegate()->getColumnDimension($col)->setAutoSize(true);
+                }
                 $sheet->getDelegate()->getColumnDimension('I')->setAutoSize(true);
                 $sheet->getDelegate()->getColumnDimension('H')->setWidth($this->column_H_width);
 

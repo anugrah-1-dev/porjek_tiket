@@ -43,13 +43,16 @@ class ProgramOfflinePublicController extends Controller
             'email' => 'required|email',
             'no_hp' => 'required|string|max:20',
             'asal_kota' => 'nullable|string|max:100',
+            'tempat_lahir'   => 'required|string|max:100',
+            'tanggal_lahir'  => 'required|date',
+            'gender'         => 'required|in:Laki-laki,Perempuan',
             'no_wali' => 'nullable|string|max:20',
             'period_id' => 'required|exists:periods,id',
             'transport_id' => 'nullable|exists:transports,id',
             'payment_type' => 'required|in:tunai,transfer,qris',
             'bank_id' => 'required_if:payment_type,transfer|nullable|exists:banks,id',
             'akomodasi' => 'nullable|string',
-            'ukuran_seragam' => 'nullable|in:S,M,L,XL,XXL', // <--- validasi seragam
+            'ukuran_seragam' => 'nullable|in:S,M,L,XL,XXL',
         ]);
 
         // Cek kuota
@@ -102,6 +105,9 @@ class ProgramOfflinePublicController extends Controller
             'email' => $validated['email'],
             'no_hp' => $validated['no_hp'],
             'asal_kota' => $validated['asal_kota'] ?? null,
+            'tempat_lahir'   => $validated['tempat_lahir'],
+            'tanggal_lahir'  => $validated['tanggal_lahir'],
+            'gender'         => $validated['gender'],
             'no_wali' => $validated['no_wali'] ?? null,
             'status' => 'pending',
             'payment_type' => $validated['payment_type'],
@@ -109,7 +115,7 @@ class ProgramOfflinePublicController extends Controller
             'akomodasi_tipe' => $akomodasiTipe,
             'akomodasi_harga' => $akomodasiHarga,
             'subtotal' => $subtotal,
-            'ukuran_seragam' => $validated['ukuran_seragam'] ?? null, // <--- disimpan
+            'ukuran_seragam' => $validated['ukuran_seragam'] ?? null, 
         ]);
 
         // Kurangi kuota

@@ -17,6 +17,9 @@ class PendaftaranProgramOffline extends Model
         'email',
         'no_hp',
         'asal_kota',
+        'tempat_lahir',
+        'tanggal_lahir',
+        'gender',
         'no_wali',
         'program_id',
         'period_id',
@@ -27,8 +30,8 @@ class PendaftaranProgramOffline extends Model
         'bukti_pembayaran',
         'status',
         'subtotal',
-        'akomodasi_tipe',   // <--- baru
-        'akomodasi_harga',  // <--- baru
+        'akomodasi_tipe',
+        'akomodasi_harga',
     ];
 
 

@@ -38,7 +38,7 @@
             <form action="{{ route('admin.pendaftaran.offline.export') }}" method="GET">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exportModalLabel">Export Berdasarkan Tanggal</h5>
+                        <h5 class="modal-title" id="exportModalLabel">Export Berdasarkan Tanggal & Program</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -52,6 +52,15 @@
                             <label>Sampai Tanggal:</label>
                             <input type="date" name="end_date" class="form-control" required>
                         </div>
+                        <div class="form-group">
+                            <label>Pilih Program Bahasa:</label>
+                            <select name="program_bahasa" class="form-control">
+                                <option value="">Semua Program</option>
+                                @foreach ($programBahasa as $bahasa)
+                                    <option value="{{ $bahasa }}">{{ ucfirst($bahasa) }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success">Export</button>
@@ -60,6 +69,7 @@
             </form>
         </div>
     </div>
+
 
     <div class="card card-outline card-primary">
         <div class="card-header">
@@ -75,6 +85,10 @@
                             <th>Nama</th>
                             <th>Email</th>
                             <th>No HP</th>
+                            <th>Tempat Lahir</th>
+                            <th>Tanggal Lahir</th>
+                            <th>Gender</th>
+                            <th>Asal Kota</th>
                             <th>Program</th>
                             <th>Periode</th>
                             <th>Tipe Pembayaran</th>
@@ -94,6 +108,17 @@
                                 <td>{{ $data->nama_lengkap }}</td>
                                 <td>{{ $data->email }}</td>
                                 <td>{{ $data->no_hp ?? '-' }}</td>
+                                <td>{{ $data->tempat_lahir ?? '-' }}</td>
+                                <td>
+                                    @if ($data->tanggal_lahir)
+                                        {{ \Carbon\Carbon::parse($data->tanggal_lahir)->translatedFormat('d F
+                                                                                                                        Y') }}
+                                    @else
+                                        -
+                                    @endif
+                                </td>
+                                <td>{{ $data->gender ?? '-' }}</td>
+                                <td>{{ $data->asal_kota ?? '-' }}</td>
                                 <td>{{ $data->program->nama ?? '-' }}</td>
                                 <td>
                                     @if ($data->period)

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Response;
 use App\Exports\PendaftaranOnlineExport;
 use Maatwebsite\Excel\Facades\Excel;
 
+
 class PendaftaranOnlineController extends Controller
 {
     /**
@@ -21,8 +22,11 @@ class PendaftaranOnlineController extends Controller
     {
         $pendaftar = PendaftaranProgramOnline::with(['program'])
             ->latest()->paginate(10);
+        $programBahasa = ProgramOnline::select('program_bahasa')
+            ->distinct()
+            ->pluck('program_bahasa');
 
-        return view('admin.pendaftaran_online.index', compact('pendaftar'));
+        return view('admin.pendaftaran_online.index', compact('pendaftar', 'programBahasa'));
     }
 
     /**
@@ -136,17 +140,31 @@ class PendaftaranOnlineController extends Controller
      * Mengekspor data ke CSV.
      */
 
+    // public function exportOnline(Request $request)
+    // {
+    //     $start = $request->input('start_date');
+    //     $end = $request->input('end_date');
+
+    //     if (!$start || !$end) {
+    //         return redirect()->back()->with('error', 'Tanggal mulai dan akhir wajib diisi.');
+    //     }
+
+    //     $filename = "pendaftaran_online_{$start}_to_{$end}.xlsx";
+
+    //     return Excel::download(new PendaftaranOnlineExport($start, $end), $filename);
+    // }
     public function exportOnline(Request $request)
     {
         $start = $request->input('start_date');
-        $end = $request->input('end_date');
+        $end   = $request->input('end_date');
+        $programBahasa = $request->input('program_bahasa'); // ambil dari form
 
         if (!$start || !$end) {
-            return redirect()->back()->with('error', 'Tanggal mulai dan akhir wajib diisi.');
+            return redirect()->back()->with('error', 'Tanggal harus diisi!');
         }
 
         $filename = "pendaftaran_online_{$start}_to_{$end}.xlsx";
 
-        return Excel::download(new PendaftaranOnlineExport($start, $end), $filename);
+        return Excel::download(new PendaftaranOnlineExport($start, $end, $programBahasa), $filename);
     }
 }

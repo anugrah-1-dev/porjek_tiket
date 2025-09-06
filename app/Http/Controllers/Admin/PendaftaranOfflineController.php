@@ -9,6 +9,7 @@ use App\Exports\PendaftaranOfflineExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
+use App\Models\ProgramOffline;
 
 
 class PendaftaranOfflineController extends Controller
@@ -17,8 +18,11 @@ class PendaftaranOfflineController extends Controller
     {
         $pendaftar = PendaftaranProgramOffline::with(['program', 'period'])
             ->latest()->paginate(10);
+        $programBahasa = ProgramOffline::select('program_bahasa')
+            ->distinct()
+            ->pluck('program_bahasa');
 
-        return view('admin.pendaftaran_offline.index', compact('pendaftar'));
+        return view('admin.pendaftaran_offline.index', compact('pendaftar', 'programBahasa'));
     }
 
     public function show($id)
@@ -76,7 +80,8 @@ class PendaftaranOfflineController extends Controller
     public function export(Request $request)
     {
         $start = $request->input('start_date');
-        $end = $request->input('end_date');
+        $end   = $request->input('end_date');
+        $programBahasa = $request->input('program_bahasa'); // ambil dari form
 
         if (!$start || !$end) {
             return redirect()->back()->with('error', 'Tanggal harus diisi!');
@@ -84,8 +89,9 @@ class PendaftaranOfflineController extends Controller
 
         $filename = "pendaftaran_offline_{$start}_to_{$end}.xlsx";
 
-        return Excel::download(new PendaftaranOfflineExport($start, $end), $filename);
+        return Excel::download(new PendaftaranOfflineExport($start, $end, $programBahasa), $filename);
     }
+
 
     /**
      * Menampilkan bukti pembayaran dari database.
