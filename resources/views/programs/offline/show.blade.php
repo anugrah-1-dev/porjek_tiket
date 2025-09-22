@@ -54,8 +54,8 @@
                                 @if ($program->thumbnail)
                                     <div class="text-center mb-3">
 
-                                        <img src="{{ asset('storage/' . $program->thumbnail) }}"
-                                            class="img-fluid rounded" alt="{{ $program->nama }}">
+                                        <img src="{{ asset('storage/' . $program->thumbnail) }}" class="img-fluid rounded"
+                                            alt="{{ $program->nama }}">
                                     </div>
                                 @endif
 
@@ -68,7 +68,8 @@
                                         <th class="bg-light">Jadwal</th>
                                         <td>{{ \Carbon\Carbon::parse($program->jadwal_mulai)->format('d M Y') }} -
 
-                                            {{ \Carbon\Carbon::parse($program->jadwal_selesai)->format('d M Y') }}</td>
+                                            {{ \Carbon\Carbon::parse($program->jadwal_selesai)->format('d M Y') }}
+                                        </td>
 
                                     </tr>
                                     <tr>
@@ -85,8 +86,8 @@
 
                                                     $features =
                                                         json_last_error() === JSON_ERROR_NONE && is_array($decoded)
-                                                            ? $decoded
-                                                            : explode("\n", $features);
+                                                        ? $decoded
+                                                        : explode("\n", $features);
                                                 }
                                             @endphp
 
@@ -94,7 +95,8 @@
                                                 <ul class="list-unstyled mb-0">
                                                     @foreach ($features as $fitur)
                                                         <li>{{ \App\Helpers\FeatureHelper::getFeatureIcon($fitur) }}
-                                                            {{ trim($fitur) }}</li>
+                                                            {{ trim($fitur) }}
+                                                        </li>
                                                     @endforeach
                                                 </ul>
                                             @else
@@ -167,11 +169,9 @@
                                                 Gender</label>
                                             <select name="gender" class="form-select" required>
                                                 <option value="" disabled selected>-- Pilih Gender --</option>
-                                                <option value="Laki-laki"
-                                                    {{ old('gender') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki
+                                                <option value="Laki-laki" {{ old('gender') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki
                                                 </option>
-                                                <option value="Perempuan"
-                                                    {{ old('gender') == 'Perempuan' ? 'selected' : '' }}>Perempuan
+                                                <option value="Perempuan" {{ old('gender') == 'Perempuan' ? 'selected' : '' }}>Perempuan
                                                 </option>
                                             </select>
                                         </div>
@@ -203,17 +203,16 @@
                                                 </label>
                                                 <select name="ukuran_seragam" class="form-select" required>
                                                     <option value="">Pilih Ukuran Seragam</option>
-                                                    <option value="S"
-                                                        {{ old('ukuran_seragam') == 'S' ? 'selected' : '' }}>S</option>
-                                                    <option value="M"
-                                                        {{ old('ukuran_seragam') == 'M' ? 'selected' : '' }}>M</option>
-                                                    <option value="L"
-                                                        {{ old('ukuran_seragam') == 'L' ? 'selected' : '' }}>L</option>
-                                                    <option value="XL"
-                                                        {{ old('ukuran_seragam') == 'XL' ? 'selected' : '' }}>XL
+                                                    <option value="S" {{ old('ukuran_seragam') == 'S' ? 'selected' : '' }}>S
                                                     </option>
-                                                    <option value="XXL"
-                                                        {{ old('ukuran_seragam') == 'XXL' ? 'selected' : '' }}>XXL
+                                                    <option value="M" {{ old('ukuran_seragam') == 'M' ? 'selected' : '' }}>M
+                                                    </option>
+                                                    <option value="L" {{ old('ukuran_seragam') == 'L' ? 'selected' : '' }}>L
+                                                    </option>
+                                                    <option value="XL" {{ old('ukuran_seragam') == 'XL' ? 'selected' : '' }}>
+                                                        XL
+                                                    </option>
+                                                    <option value="XXL" {{ old('ukuran_seragam') == 'XXL' ? 'selected' : '' }}>XXL
                                                     </option>
                                                 </select>
                                             </div>
@@ -229,8 +228,8 @@
                                             <ul class="nav nav-tabs mb-3" id="servicesTab" role="tablist">
                                                 <li class="nav-item" role="presentation">
                                                     <button class="nav-link active" id="catering-tab"
-                                                        data-bs-toggle="tab" data-bs-target="#catering"
-                                                        type="button" role="tab">Catering</button>
+                                                        data-bs-toggle="tab" data-bs-target="#catering" type="button"
+                                                        role="tab">Catering</button>
                                                 </li>
                                                 <li class="nav-item" role="presentation">
                                                     <button class="nav-link" id="laundry-tab" data-bs-toggle="tab"
@@ -254,36 +253,35 @@
                                             </ul>
 
                                             <div class="tab-content" id="servicesTabContent">
-                                                {{-- Catering Tab --}}
-                                                <div class="tab-pane fade show active" id="catering"
-                                                    role="tabpanel">
+                                                {{-- ================== TAB CATERING ================== --}}
+                                                <div class="tab-pane fade show active" id="catering" role="tabpanel">
                                                     <div class="row">
                                                         @if (isset($catering_packages) && count($catering_packages) > 0)
                                                             @foreach ($catering_packages as $catering)
                                                                 <div class="col-md-4 mb-4">
                                                                     <div class="card h-100 service-card">
-                                                                        <!-- Thumbnail di tengah -->
                                                                         <div class="text-center p-3">
                                                                             <img src="{{ $catering->thumbnail ? asset('storage/' . $catering->thumbnail) : 'https://via.placeholder.com/150' }}"
                                                                                 alt="{{ $catering->nama_paket }}"
                                                                                 class="img-fluid rounded"
                                                                                 style="height: 150px; object-fit: cover;">
+                                                                            <button type="button"
+                                                                                class="btn btn-outline-info btn-sm w-100 py-1"
+                                                                                data-bs-toggle="modal"
+                                                                                data-bs-target="#detailCatering{{ $catering->id }}">
+                                                                                Lihat Detail
+                                                                            </button>
                                                                         </div>
-
-
                                                                         <div class="card-body d-flex flex-column p-3">
-                                                                            <!-- Nama paket di tengah -->
                                                                             <div class="text-center mb-2">
                                                                                 <h6 class="card-title fw-bold mb-1">
                                                                                     {{ $catering->nama_paket }}</h6>
-                                                                                <!-- Harga di tengah bawah -->
                                                                                 <p
                                                                                     class="card-text text-primary fw-semibold mb-2">
                                                                                     Rp
                                                                                     {{ number_format($catering->harga, 0, ',', '.') }}
                                                                                 </p>
                                                                             </div>
-
                                                                             <div class="mt-auto">
                                                                                 <div
                                                                                     class="d-flex justify-content-center align-items-center mb-2">
@@ -293,62 +291,89 @@
                                                                                     <input type="number"
                                                                                         id="catering{{ $catering->id }}"
                                                                                         class="form-control form-control-sm mx-2 text-center"
-                                                                                        value="0" min="0"
-                                                                                        style="width: 50px;">
+                                                                                        value="0" min="0" style="width: 50px;">
                                                                                     <button type="button"
                                                                                         class="btn btn-sm btn-outline-secondary px-2"
                                                                                         onclick="increaseQuantity('catering{{ $catering->id }}')">+</button>
                                                                                 </div>
-
                                                                                 <button type="button"
-                                                                                    class="btn btn-primary btn-sm w-100 py-1"
+                                                                                    class="btn btn-primary btn-sm w-100 py-1 mb-2"
                                                                                     onclick="addToCart('catering', {{ $catering->id }}, '{{ $catering->nama_paket }}', {{ $catering->harga }}, document.getElementById('catering{{ $catering->id }}').value)">
-                                                                                    <i
-                                                                                        class="bi bi-cart-plus me-1"></i>
-                                                                                    Tambah
+                                                                                    <i class="bi bi-cart-plus me-1"></i> Tambah
                                                                                 </button>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- Modal Catering -->
+                                                                <div class="modal fade" id="detailCatering{{ $catering->id }}"
+                                                                    tabindex="-1" aria-hidden="true">
+                                                                    <div class="modal-dialog modal-dialog-centered">
+                                                                        <div class="modal-content rounded-3 shadow">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title">
+                                                                                    {{ $catering->nama_paket }}</h5>
+                                                                                <button type="button" class="btn-close"
+                                                                                    data-bs-dismiss="modal"></button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <img src="{{ $catering->thumbnail ? asset('storage/' . $catering->thumbnail) : 'https://via.placeholder.com/300' }}"
+                                                                                    class="img-fluid mb-3 rounded"
+                                                                                    alt="{{ $catering->nama_paket }}">
+                                                                                <p><strong>Harga:</strong> Rp
+                                                                                    {{ number_format($catering->harga, 0, ',', '.') }}
+                                                                                </p>
+                                                                                <p><strong>Status:</strong>
+                                                                                    {{ ucfirst($catering->status) }}</p>
+                                                                                <p><strong>Deskripsi:</strong><br>{{ $catering->deskripsi ?? 'Tidak ada deskripsi' }}
+                                                                                </p>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button class="btn btn-secondary"
+                                                                                    data-bs-dismiss="modal">Tutup</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             @endforeach
                                                         @else
-                                                            <div class="col-12 text-center py-4">
-                                                                <p class="text-muted">Tidak ada paket catering tersedia
-                                                                </p>
-                                                            </div>
+                                                            <p class="text-center">Belum ada paket catering.</p>
                                                         @endif
                                                     </div>
                                                 </div>
 
-                                                {{-- Laundry Tab --}}
+
+                                                {{-- ================== TAB LAUNDRY ================== --}}
                                                 <div class="tab-pane fade" id="laundry" role="tabpanel">
                                                     <div class="row">
                                                         @if (isset($laundry_packages) && count($laundry_packages) > 0)
                                                             @foreach ($laundry_packages as $laundry)
                                                                 <div class="col-md-4 mb-4">
                                                                     <div class="card h-100 service-card">
-                                                                        <!-- Thumbnail di tengah -->
                                                                         <div class="text-center p-3">
                                                                             <img src="{{ $laundry->thumbnail ? asset('storage/' . $laundry->thumbnail) : 'https://via.placeholder.com/150' }}"
                                                                                 alt="{{ $laundry->nama_paket }}"
                                                                                 class="img-fluid rounded"
                                                                                 style="height: 150px; object-fit: cover;">
+                                                                            <button type="button"
+                                                                                class="btn btn-outline-info btn-sm w-100 py-1"
+                                                                                data-bs-toggle="modal"
+                                                                                data-bs-target="#detailLaundry{{ $laundry->id }}">
+                                                                                Lihat Detail
+                                                                            </button>
                                                                         </div>
-
                                                                         <div class="card-body d-flex flex-column p-3">
-                                                                            <!-- Nama paket di tengah -->
                                                                             <div class="text-center mb-2">
                                                                                 <h6 class="card-title fw-bold mb-1">
                                                                                     {{ $laundry->nama_paket }}</h6>
-                                                                                <!-- Harga di tengah bawah -->
                                                                                 <p
                                                                                     class="card-text text-primary fw-semibold mb-2">
                                                                                     Rp
                                                                                     {{ number_format($laundry->harga, 0, ',', '.') }}
                                                                                 </p>
                                                                             </div>
-
                                                                             <div class="mt-auto">
                                                                                 <div
                                                                                     class="d-flex justify-content-center align-items-center mb-2">
@@ -358,63 +383,95 @@
                                                                                     <input type="number"
                                                                                         id="laundry{{ $laundry->id }}"
                                                                                         class="form-control form-control-sm mx-2 text-center"
-                                                                                        value="0" min="0"
-                                                                                        style="width: 50px;">
+                                                                                        value="0" min="0" style="width: 50px;">
                                                                                     <button type="button"
                                                                                         class="btn btn-sm btn-outline-secondary px-2"
                                                                                         onclick="increaseQuantity('laundry{{ $laundry->id }}')">+</button>
                                                                                 </div>
-
                                                                                 <button type="button"
-                                                                                    class="btn btn-primary btn-sm w-100 py-1"
+                                                                                    class="btn btn-primary btn-sm w-100 py-1 mb-2"
                                                                                     onclick="addToCart('laundry', {{ $laundry->id }}, '{{ $laundry->nama_paket }}', {{ $laundry->harga }}, document.getElementById('laundry{{ $laundry->id }}').value)">
-                                                                                    <i
-                                                                                        class="bi bi-cart-plus me-1"></i>
-                                                                                    Tambah
+                                                                                    <i class="bi bi-cart-plus me-1"></i> Tambah
                                                                                 </button>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- Modal Laundry -->
+                                                                <div class="modal fade" id="detailLaundry{{ $laundry->id }}"
+                                                                    tabindex="-1" aria-hidden="true">
+                                                                    <div class="modal-dialog modal-dialog-centered">
+                                                                        <div class="modal-content rounded-3 shadow">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title">
+                                                                                    {{ $laundry->nama_paket }}</h5>
+                                                                                <button type="button" class="btn-close"
+                                                                                    data-bs-dismiss="modal"></button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <img src="{{ $laundry->thumbnail ? asset('storage/' . $laundry->thumbnail) : 'https://via.placeholder.com/300' }}"
+                                                                                    class="img-fluid mb-3 rounded"
+                                                                                    alt="{{ $laundry->nama_paket }}">
+                                                                                <p><strong>Harga:</strong> Rp
+                                                                                    {{ number_format($laundry->harga, 0, ',', '.') }}
+                                                                                </p>
+                                                                                <p><strong>Status:</strong>
+                                                                                    {{ ucfirst($laundry->status) }}</p>
+                                                                                <p><strong>Jenis:</strong>
+                                                                                    {{ $laundry->jenis ?? '-' }}</p>
+                                                                                <p><strong>Periode:</strong>
+                                                                                    {{ $laundry->periode ? $laundry->periode . ' hari' : '-' }}
+                                                                                </p>
+                                                                                <p><strong>Deskripsi:</strong><br>{{ $laundry->deskripsi ?? 'Tidak ada deskripsi' }}
+                                                                                </p>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button class="btn btn-secondary"
+                                                                                    data-bs-dismiss="modal">Tutup</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             @endforeach
                                                         @else
-                                                            <div class="col-12 text-center py-4">
-                                                                <p class="text-muted">Tidak ada paket laundry tersedia
-                                                                </p>
-                                                            </div>
+                                                            <p class="text-center">Belum ada paket laundry.</p>
                                                         @endif
                                                     </div>
                                                 </div>
 
-                                                {{-- Holiday Tab --}}
+
+                                                {{-- ================== TAB HOLIDAY ================== --}}
                                                 <div class="tab-pane fade" id="holiday" role="tabpanel">
                                                     <div class="row">
                                                         @if (isset($holiday_packages) && count($holiday_packages) > 0)
                                                             @foreach ($holiday_packages as $holiday)
                                                                 <div class="col-md-4 mb-4">
                                                                     <div class="card h-100 service-card">
-                                                                        <!-- Thumbnail di tengah -->
                                                                         <div class="text-center p-3">
-                                                                            <img src="{{ $holiday->thumbnail ? asset('storage/' . $laundry->thumbnail) : 'https://via.placeholder.com/150' }}"
+                                                                            <img src="{{ $holiday->gambar_cover ? asset('storage/' . $holiday->gambar_cover) : 'https://via.placeholder.com/150' }}"
                                                                                 alt="{{ $holiday->nama_paket }}"
                                                                                 class="img-fluid rounded"
                                                                                 style="height: 150px; object-fit: cover;">
+                                                                            <button type="button"
+                                                                                class="btn btn-outline-info btn-sm w-100 py-1"
+                                                                                data-bs-toggle="modal"
+                                                                                data-bs-target="#detailHoliday{{ $holiday->id }}">
+                                                                                Lihat Detail
+                                                                            </button>
                                                                         </div>
 
-
                                                                         <div class="card-body d-flex flex-column p-3">
-                                                                            <!-- Nama paket di tengah -->
                                                                             <div class="text-center mb-2">
                                                                                 <h6 class="card-title fw-bold mb-1">
                                                                                     {{ $holiday->nama_paket }}</h6>
-                                                                                <!-- Harga di tengah bawah -->
                                                                                 <p
                                                                                     class="card-text text-primary fw-semibold mb-2">
                                                                                     Rp
                                                                                     {{ number_format($holiday->harga, 0, ',', '.') }}
                                                                                 </p>
                                                                             </div>
-
                                                                             <div class="mt-auto">
                                                                                 <div
                                                                                     class="d-flex justify-content-center align-items-center mb-2">
@@ -424,33 +481,59 @@
                                                                                     <input type="number"
                                                                                         id="holiday{{ $holiday->id }}"
                                                                                         class="form-control form-control-sm mx-2 text-center"
-                                                                                        value="0" min="0"
-                                                                                        style="width: 50px;">
+                                                                                        value="0" min="0" style="width: 50px;">
                                                                                     <button type="button"
                                                                                         class="btn btn-sm btn-outline-secondary px-2"
                                                                                         onclick="increaseQuantity('holiday{{ $holiday->id }}')">+</button>
                                                                                 </div>
-
                                                                                 <button type="button"
-                                                                                    class="btn btn-primary btn-sm w-100 py-1"
+                                                                                    class="btn btn-primary btn-sm w-100 py-1 mb-2"
                                                                                     onclick="addToCart('holiday', {{ $holiday->id }}, '{{ $holiday->nama_paket }}', {{ $holiday->harga }}, document.getElementById('holiday{{ $holiday->id }}').value)">
-                                                                                    <i
-                                                                                        class="bi bi-cart-plus me-1"></i>
-                                                                                    Tambah
+                                                                                    <i class="bi bi-cart-plus me-1"></i> Tambah
                                                                                 </button>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- Modal Holiday -->
+                                                                <div class="modal fade" id="detailHoliday{{ $holiday->id }}"
+                                                                    tabindex="-1" aria-hidden="true">
+                                                                    <div class="modal-dialog modal-dialog-centered">
+                                                                        <div class="modal-content rounded-3 shadow">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title">
+                                                                                    {{ $holiday->nama_paket }}</h5>
+                                                                                <button type="button" class="btn-close"
+                                                                                    data-bs-dismiss="modal"></button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <img src="{{ $holiday->gambar_cover ? asset('storage/' . $holiday->gambar_cover) : 'https://via.placeholder.com/300' }}"
+                                                                                    class="img-fluid mb-3 rounded"
+                                                                                    alt="{{ $holiday->nama_paket }}">
+                                                                                <p><strong>Harga:</strong> Rp
+                                                                                    {{ number_format($holiday->harga, 0, ',', '.') }}
+                                                                                </p>
+                                                                                <p><strong>Status:</strong>
+                                                                                    {{ ucfirst($holiday->status) }}</p>
+                                                                                <p><strong>Deskripsi:</strong><br>{{ $holiday->deskripsi ?? 'Tidak ada deskripsi' }}
+                                                                                </p>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button class="btn btn-secondary"
+                                                                                    data-bs-dismiss="modal">Tutup</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             @endforeach
                                                         @else
-                                                            <div class="col-12 text-center py-4">
-                                                                <p class="text-muted">Tidak ada paket holiday tersedia
-                                                                </p>
-                                                            </div>
+                                                            <p class="text-center">Belum ada paket holiday.</p>
                                                         @endif
                                                     </div>
                                                 </div>
+
                                             </div>
 
                                             {{-- Cart Tab --}}
@@ -632,19 +715,19 @@
                                                             const listItem = document.createElement('div');
                                                             listItem.className = 'list-group-item cart-item';
                                                             listItem.innerHTML = `
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6 class="mb-1">${item.name}</h6>
-                            <small class="text-muted">Rp ${formatNumber(item.price)} x ${item.quantity}</small>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <span class="me-3 fw-bold">Rp ${formatNumber(itemTotal)}</span>
-                            <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeFromCart('${type}', ${item.id})">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
+                                                                <div class="d-flex justify-content-between align-items-center">
+                                                                    <div>
+                                                                        <h6 class="mb-1">${item.name}</h6>
+                                                                        <small class="text-muted">Rp ${formatNumber(item.price)} x ${item.quantity}</small>
+                                                                    </div>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <span class="me-3 fw-bold">Rp ${formatNumber(itemTotal)}</span>
+                                                                        <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeFromCart('${type}', ${item.id})">
+                                                                            <i class="bi bi-trash"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            `;
 
                                                             cartItems.insertBefore(listItem, emptyCartMessage);
                                                         });
@@ -673,23 +756,12 @@
                                                 }
 
                                                 // Inisialisasi cart saat halaman dimuat
-                                                document.addEventListener('DOMContentLoaded', function() {
+                                                document.addEventListener('DOMContentLoaded', function () {
                                                     updateCart();
                                                 });
                                             </script>
 
-                                            {{-- <div class="mb-3">
-                                            <label class="form-label">
-                                                <i class="bi bi-house-fill"></i> Akomodasi (Camp Reguler) - Optional
-                                            </label>
-                                            <select name="akomodasi" class="form-select" id="campSelect">
-                                                <option value="" data-harga="0">Pilih Akomodasi (Opsional)
-                                                </option>
-
-                                                <option value="reguler" data-harga="180000">Reguler (Rp 180.000)
-                                                </option>
-                                                   </select>
-                                        </div> --}}
+                                      
                                             <div class="mb-3">
                                                 <label class="form-label"><i class="bi bi-person-lines-fill"></i> No.
                                                     HP
@@ -718,86 +790,85 @@
 
                                             {{-- Camp VIP dari database --}}
                                             {{-- @foreach ($camps as $camp)
-                                                    @if ($camp->kategori === 'VIP')
-                                                        <option value="camp-{{ $camp->id }}"
-                                                            data-harga="{{ $camp->harga }}">
-                                                            {{ $camp->nama }} (VIP) - Rp
-                                                            {{ number_format($camp->harga, 0, ',', '.') }}
-                                                        </option>
-                                                    @endif
-                                                @endforeach --}}
+                                            @if ($camp->kategori === 'VIP')
+                                            <option value="camp-{{ $camp->id }}" data-harga="{{ $camp->harga }}">
+                                                {{ $camp->nama }} (VIP) - Rp
+                                                {{ number_format($camp->harga, 0, ',', '.') }}
+                                            </option>
+                                            @endif
+                                            @endforeach --}}
 
 
                                             {{-- Tempat tampil harga
-                                        <div id="akomodasi-harga" class="mt-2 fw-bold text-success"></div>
- --}}
+                                            <div id="akomodasi-harga" class="mt-2 fw-bold text-success"></div>
+                                            --}}
 
 
 
                                             {{-- <div class="duration-options-container" id="durasiContainer"
-                                            style="display:none;">
-                                            @php
+                                                style="display:none;">
+                                                @php
                                                 $durasiOptions = [
-                                                    'perhari' => [
-                                                        'label' => 'Per Day',
-                                                        'harga' => $camp->harga_perhari ?? 0,
-                                                    ],
-                                                    'satu_minggu' => [
-                                                        'label' => '1 Week',
-                                                        'harga' => $camp->harga_satu_minggu ?? 0,
-                                                    ],
-                                                    'dua_minggu' => [
-                                                        'label' => '2 Weeks',
-                                                        'harga' => $camp->harga_dua_minggu ?? 0,
-                                                    ],
-                                                    'satu_bulan' => [
-                                                        'label' => '1 Month',
-                                                        'harga' => $camp->harga_satu_bulan ?? 0,
-                                                    ],
-                                                    'dua_bulan' => [
-                                                        'label' => '2 Months',
-                                                        'harga' => $camp->harga_dua_bulan ?? 0,
-                                                    ],
-                                                    'tiga_bulan' => [
-                                                        'label' => '3 Months',
-                                                        'harga' => $camp->harga_tiga_bulan ?? 0,
-                                                    ],
-                                                    'enam_bulan' => [
-                                                        'label' => '6 Months',
-                                                        'harga' => $camp->harga_enam_bulan ?? 0,
-                                                    ],
-                                                    'satu_tahun' => [
-                                                        'label' => '1 Year',
-                                                        'harga' => $camp->harga_satu_tahun ?? 0,
-                                                    ],
+                                                'perhari' => [
+                                                'label' => 'Per Day',
+                                                'harga' => $camp->harga_perhari ?? 0,
+                                                ],
+                                                'satu_minggu' => [
+                                                'label' => '1 Week',
+                                                'harga' => $camp->harga_satu_minggu ?? 0,
+                                                ],
+                                                'dua_minggu' => [
+                                                'label' => '2 Weeks',
+                                                'harga' => $camp->harga_dua_minggu ?? 0,
+                                                ],
+                                                'satu_bulan' => [
+                                                'label' => '1 Month',
+                                                'harga' => $camp->harga_satu_bulan ?? 0,
+                                                ],
+                                                'dua_bulan' => [
+                                                'label' => '2 Months',
+                                                'harga' => $camp->harga_dua_bulan ?? 0,
+                                                ],
+                                                'tiga_bulan' => [
+                                                'label' => '3 Months',
+                                                'harga' => $camp->harga_tiga_bulan ?? 0,
+                                                ],
+                                                'enam_bulan' => [
+                                                'label' => '6 Months',
+                                                'harga' => $camp->harga_enam_bulan ?? 0,
+                                                ],
+                                                'satu_tahun' => [
+                                                'label' => '1 Year',
+                                                'harga' => $camp->harga_satu_tahun ?? 0,
+                                                ],
                                                 ];
-                                            @endphp
-                                            <select name="durasi" class="form-select" id="durasiSelect">
-                                                <option value="">Pilih Durasi</option>
-                                                @foreach ($durasiOptions as $key => $option)
-                                                    <option value="{{ $key }}"
-                                                        data-harga="{{ $option['harga'] }}">
+                                                @endphp
+                                                <select name="durasi" class="form-select" id="durasiSelect">
+                                                    <option value="">Pilih Durasi</option>
+                                                    @foreach ($durasiOptions as $key => $option)
+                                                    <option value="{{ $key }}" data-harga="{{ $option['harga'] }}">
                                                         {{ $option['label'] }} -
                                                         Rp.{{ number_format($option['harga'], 0, ',', '.') }}
                                                     </option>
-                                                @endforeach
-                                            </select>
-                                        </div> --}}
+                                                    @endforeach
+                                                </select>
+                                            </div> --}}
 
-                                            {{-- <script>
-                                            document.addEventListener("DOMContentLoaded", function() {
-                                                const campSelect = document.getElementById("campSelect");
-                                                const durasiContainer = document.getElementById("durasiContainer");
+                                            {{--
+                                            <script>
+                                                document.addEventListener("DOMContentLoaded", function () {
+                                                    const campSelect = document.getElementById("campSelect");
+                                                    const durasiContainer = document.getElementById("durasiContainer");
 
-                                                campSelect.addEventListener("change", function() {
-                                                    if (this.value) {
-                                                        durasiContainer.style.display = "block"; // tampilkan jika ada camp dipilih
-                                                    } else {
-                                                        durasiContainer.style.display = "none"; // sembunyikan jika kosong
-                                                    }
+                                                    campSelect.addEventListener("change", function () {
+                                                        if (this.value) {
+                                                            durasiContainer.style.display = "block"; // tampilkan jika ada camp dipilih
+                                                        } else {
+                                                            durasiContainer.style.display = "none"; // sembunyikan jika kosong
+                                                        }
+                                                    });
                                                 });
-                                            });
-                                        </script> --}}
+                                            </script> --}}
 
 
                                             <br>
@@ -817,8 +888,7 @@
                                             </div>
 
                                             {{-- Modal struk --}}
-                                            <div class="modal fade" id="modalTotal" tabindex="-1"
-                                                aria-hidden="true">
+                                            <div class="modal fade" id="modalTotal" tabindex="-1" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered modal-sm">
                                                     <div class="modal-content rounded-3 shadow-lg">
                                                         <div class="modal-header border-0">
@@ -860,30 +930,58 @@
                                             </div>
 
                                             <script>
-                                                document.addEventListener("DOMContentLoaded", function() {
+                                                document.addEventListener("DOMContentLoaded", function () {
                                                     let basePrice = {{ $program->harga }};
                                                     let selectTransport = document.getElementById("transportSelect");
                                                     let selectCamp = document.getElementById("campSelect");
                                                     let btnLihatTotal = document.getElementById("btnLihatTotal");
-
+                                            
                                                     let hargaProgram = document.getElementById("hargaProgram");
                                                     let hargaTransport = document.getElementById("hargaTransport");
                                                     let hargaCamp = document.getElementById("hargaCamp");
                                                     let totalPreview = document.getElementById("totalPreview");
                                                     let totalModal = document.getElementById("totalModal");
-
+                                            
+                                                    // ✅ Tambahkan elemen untuk detail layanan tambahan
+                                                    let modalBody = document.querySelector("#modalTotal .modal-body");
+                                                    let serviceDetailContainer = document.createElement("div");
+                                                    serviceDetailContainer.id = "serviceDetailContainer";
+                                                    modalBody.insertBefore(serviceDetailContainer, modalBody.querySelector("hr"));
+                                            
+                                                    function getCartTotal() {
+                                                        let total = 0;
+                                                        let details = [];
+                                            
+                                                        for (const type in cart) {
+                                                            cart[type].forEach(item => {
+                                                                let itemTotal = item.price * item.quantity;
+                                                                total += itemTotal;
+                                                                details.push(`<div class="d-flex justify-content-between mb-2">
+                                                                                <span>${item.name} (${item.quantity}x)</span>
+                                                                                <span>Rp${itemTotal.toLocaleString('id-ID')}</span>
+                                                                              </div>`);
+                                                            });
+                                                        }
+                                            
+                                                        serviceDetailContainer.innerHTML = details.join("") || "";
+                                                        return total;
+                                                    }
+                                            
                                                     function updateTotal() {
                                                         let transportPrice = selectTransport?.selectedOptions[0]?.dataset.harga ?
                                                             parseInt(selectTransport.selectedOptions[0].dataset.harga) : 0;
-
+                                            
                                                         let campPrice = selectCamp?.selectedOptions[0]?.dataset.harga ?
                                                             parseInt(selectCamp.selectedOptions[0].dataset.harga) : 0;
-
-                                                        let total = basePrice + transportPrice + campPrice;
-
+                                            
+                                                        // ✅ Tambahkan total cart
+                                                        let cartTotal = getCartTotal();
+                                            
+                                                        let total = basePrice + transportPrice + campPrice + cartTotal;
+                                            
                                                         // update preview total
                                                         totalPreview.textContent = "Rp" + total.toLocaleString('id-ID');
-
+                                            
                                                         // update detail modal
                                                         hargaProgram.textContent = "Rp" + basePrice.toLocaleString('id-ID');
                                                         hargaTransport.textContent = "Rp" + transportPrice.toLocaleString('id-ID');
@@ -892,17 +990,29 @@
                                                         }
                                                         totalModal.textContent = "Rp" + total.toLocaleString('id-ID');
                                                     }
-
+                                            
                                                     // trigger saat pilih transport / camp
                                                     if (selectTransport) selectTransport.addEventListener("change", updateTotal);
                                                     if (selectCamp) selectCamp.addEventListener("change", updateTotal);
-
+                                            
                                                     // buka modal
-                                                    btnLihatTotal.addEventListener("click", function() {
+                                                    btnLihatTotal.addEventListener("click", function () {
+                                                        updateTotal(); // hitung ulang sebelum tampil
                                                         new bootstrap.Modal(document.getElementById('modalTotal')).show();
                                                     });
+                                            
+                                                    // update ulang total setiap kali cart berubah
+                                                    const originalUpdateCart = updateCart;
+                                                    updateCart = function () {
+                                                        originalUpdateCart();
+                                                        updateTotal();
+                                                    };
+                                            
+                                                    // inisialisasi awal
+                                                    updateTotal();
                                                 });
                                             </script>
+                                            
 
                                             <br>
                                             <div class="mb-3">
@@ -913,19 +1023,16 @@
 
                                                     {{-- Tunai --}}
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio"
-                                                            name="payment_type" id="pay_tunai" value="tunai"
-                                                            {{ old('payment_type') == 'tunai' ? 'checked' : '' }}
-                                                            required>
+                                                        <input class="form-check-input" type="radio" name="payment_type"
+                                                            id="pay_tunai" value="tunai" {{ old('payment_type') == 'tunai' ? 'checked' : '' }} required>
                                                         <label class="form-check-label" for="pay_tunai">Bayar Tunai
                                                             (Cash)</label>
                                                     </div>
 
                                                     {{-- Transfer --}}
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio"
-                                                            name="payment_type" id="pay_transfer" value="transfer"
-                                                            {{ old('payment_type') == 'transfer' ? 'checked' : '' }}
+                                                        <input class="form-check-input" type="radio" name="payment_type"
+                                                            id="pay_transfer" value="transfer" {{ old('payment_type') == 'transfer' ? 'checked' : '' }}
                                                             required>
                                                         <label class="form-check-label" for="pay_transfer">Transfer
                                                             Bank</label>
@@ -934,12 +1041,9 @@
                                                     {{-- Qris muncul hanya jika bahasa == mandarin --}}
                                                     @if (strtolower($program->program_bahasa) === 'mandarin')
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="radio"
-                                                                name="payment_type" id="pay_qris" value="qris"
-                                                                {{ old('payment_type') == 'qris' ? 'checked' : '' }}
-                                                                required>
-                                                            <label class="form-check-label"
-                                                                for="pay_qris">QRIS</label>
+                                                            <input class="form-check-input" type="radio" name="payment_type"
+                                                                id="pay_qris" value="qris" {{ old('payment_type') == 'qris' ? 'checked' : '' }} required>
+                                                            <label class="form-check-label" for="pay_qris">QRIS</label>
                                                         </div>
                                                     @endif
                                                 </div>
@@ -950,13 +1054,11 @@
                                                 <label class="form-label fw-bold"><i class="bi bi-bank"></i> Pilih
                                                     Bank
                                                     Tujuan</label>
-                                                <select name="bank_id" class="form-select"
-                                                    {{ old('payment_type') == 'transfer' ? 'required' : '' }}>
+                                                <select name="bank_id" class="form-select" {{ old('payment_type') == 'transfer' ? 'required' : '' }}>
                                                     <option value="">-- Pilih Bank --</option>
                                                     @if (isset($banks) && $banks->isNotEmpty())
                                                         @foreach ($banks as $bank)
-                                                            <option value="{{ $bank->id }}"
-                                                                {{ old('bank_id') == $bank->id ? 'selected' : '' }}>
+                                                            <option value="{{ $bank->id }}" {{ old('bank_id') == $bank->id ? 'selected' : '' }}>
                                                                 {{ $bank->name }}
                                                             </option>
                                                         @endforeach
@@ -981,10 +1083,10 @@
                                             </div>
 
                                             <script>
-                                                $(document).ready(function() {
+                                                $(document).ready(function () {
                                                     toggleBankDropdown();
 
-                                                    $('input[name="payment_type"]').change(function() {
+                                                    $('input[name="payment_type"]').change(function () {
                                                         toggleBankDropdown();
                                                     });
 
@@ -1019,8 +1121,7 @@
                                                                     $today >= $period->start_date->toDateString() &&
                                                                     $today <= $period->end_date->toDateString();
                                                             @endphp
-                                                            <option value="{{ $period->id }}"
-                                                                {{ old('period_nhc_id') == $period->id ? 'selected' : ($isToday ? 'selected' : '') }}>
+                                                            <option value="{{ $period->id }}" {{ old('period_nhc_id') == $period->id ? 'selected' : ($isToday ? 'selected' : '') }}>
                                                                 {{ $period->start_date->translatedFormat('d M Y') }}
                                                                 -
                                                                 {{ $period->end_date->translatedFormat('d M Y') }}
@@ -1045,8 +1146,7 @@
                                                                 )->toDateString();
                                                                 $isToday = $periodDate === $today;
                                                             @endphp
-                                                            <option value="{{ $period->id }}"
-                                                                {{ old('period_id') == $period->id ? 'selected' : ($isToday ? 'selected' : '') }}>
+                                                            <option value="{{ $period->id }}" {{ old('period_id') == $period->id ? 'selected' : ($isToday ? 'selected' : '') }}>
                                                                 {{ \Carbon\Carbon::parse($period->date)->translatedFormat('d M Y') }}
                                                                 {{ $isToday ? '(Aktif Hari Ini)' : '' }}
                                                             </option>
@@ -1062,26 +1162,26 @@
                                                 @endif
                                             </div>
 
-                                            <button type="submit" class="btn btn-primary w-100"
-                                                @if (
-                                                    ($program->program_bahasa === 'nhc' && $activePeriodsNHC->isEmpty()) ||
-                                                        ($program->program_bahasa !== 'nhc' && $periods->isEmpty()) ||
-                                                        !isset($banks) ||
-                                                        $banks->isEmpty()) disabled @endif>
+                                            <button type="submit" class="btn btn-primary w-100" @if (
+                                                ($program->program_bahasa === 'nhc' && $activePeriodsNHC->isEmpty()) ||
+                                                ($program->program_bahasa !== 'nhc' && $periods->isEmpty()) ||
+                                                !isset($banks) ||
+                                                $banks->isEmpty()
+                                            ) disabled @endif>
 
                                                 <i class="bi bi-send-fill"></i>
 
                                                 @if (
-                                                    ($program->program_bahasa === 'nhc' && $activePeriodsNHC->isNotEmpty()) ||
-                                                        ($program->program_bahasa !== 'nhc' && $periods->isNotEmpty()))
+                                                        ($program->program_bahasa === 'nhc' && $activePeriodsNHC->isNotEmpty()) ||
+                                                        ($program->program_bahasa !== 'nhc' && $periods->isNotEmpty())
+                                                    )
                                                     Daftar Sekarang
                                                 @else
                                                     Pendaftaran Ditutup
                                                 @endif
                                             </button>
 
-                                            <a href="{{ url('/') }}"
-                                                class="btn btn-outline-secondary w-100 mt-2"><i
+                                            <a href="{{ url('/') }}" class="btn btn-outline-secondary w-100 mt-2"><i
                                                     class="bi bi-arrow-left"></i> Kembali ke Beranda</a>
                                     </form>
                                 </div>
@@ -1105,8 +1205,8 @@
 
     <!-- Script Autocomplete -->
     <script>
-        $(function() {
-            $.getJSON('/indonesia-indonesian.json', function(data) {
+        $(function () {
+            $.getJSON('/indonesia-indonesian.json', function (data) {
                 let kotaList = [];
 
                 // Gabungkan semua kota/kab dari semua provinsi jadi satu array
@@ -1125,17 +1225,18 @@
 
 
 
-    {{-- <script>
-document.addEventListener("DOMContentLoaded", function() {
-    Swal.fire({
-        icon: 'warning',
-        title: 'PERHATIAN',
-        html: 'Formulir pendaftaran ini <b>dikhususkan untuk pendaftaran PROGRAM</b>.<br>Apabila ingin mendaftar camp, maka <b>kembalilah ke HALAMAN UTAMA</b>.',
-        confirmButtonText: 'Mengerti',
-        confirmButtonColor: '#d33'
-    });
-});
-</script> --}}
+    {{--
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            Swal.fire({
+                icon: 'warning',
+                title: 'PERHATIAN',
+                html: 'Formulir pendaftaran ini <b>dikhususkan untuk pendaftaran PROGRAM</b>.<br>Apabila ingin mendaftar camp, maka <b>kembalilah ke HALAMAN UTAMA</b>.',
+                confirmButtonText: 'Mengerti',
+                confirmButtonColor: '#d33'
+            });
+        });
+    </script> --}}
 
 
 </body>

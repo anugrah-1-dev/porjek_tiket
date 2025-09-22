@@ -67,6 +67,14 @@
                                         <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" placeholder="Tuliskan detail paket laundry..."></textarea>
                                     </div>
                                 </div>
+                                <div class="form-group row">
+                                    <label for="thumbnail" class="col-sm-4 col-form-label">Thumbnail</label>
+                                    <div class="col-sm-8">
+                                        <input type="file" class="form-control" id="thumbnail" name="thumbnail" accept="image/*">
+                                        <small class="text-muted">Upload gambar thumbnail (opsional)</small>
+                                    </div>
+                                </div>
+                                
 
                                 <div class="form-group row">
                                     <label for="status" class="col-sm-4 col-form-label">Status Paket <span class="text-danger">*</span></label>

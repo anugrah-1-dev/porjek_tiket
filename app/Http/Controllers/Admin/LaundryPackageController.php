@@ -22,41 +22,56 @@ class LaundryPackageController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_paket'         => 'required|string|max:255',
-            'harga'              => 'required|numeric',
-            'jenis'              => 'nullable|string|max:255',
-            'periode'            => 'nullable|integer',
-            // 'tanggal_penjemputan' => 'nullable|date',
-            'status'             => 'required|in:aktif,nonaktif',
-            'deskripsi'          => 'nullable|string',
+            'nama_paket' => 'required|string|max:255',
+            'harga'      => 'required|numeric',
+            'jenis'      => 'nullable|string|max:255',
+            'periode'    => 'nullable|integer',
+            'status'     => 'required|in:aktif,nonaktif',
+            'deskripsi'  => 'nullable|string',
+            'thumbnail'  => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
-
-        LaundryPackage::create($request->all());
-
+    
+        $data = $request->except('thumbnail');
+    
+        if ($request->hasFile('thumbnail')) {
+            $path = $request->file('thumbnail')->store('laundry/thumbnails', 'public');
+            $data['thumbnail'] = $path;
+        }
+    
+        LaundryPackage::create($data);
+    
         return redirect()->route('admin.laundry.index')->with('success', 'Laundry package berhasil ditambahkan!');
     }
-
-    public function edit(LaundryPackage $laundryPackage)
-    {
-        return view('admin.laundry.edit', compact('laundryPackage'));
-    }
-
+    
     public function update(Request $request, LaundryPackage $laundryPackage)
     {
         $request->validate([
-            'nama_paket'         => 'required|string|max:255',
-            'harga'              => 'required|numeric',
-            'jenis'              => 'nullable|string|max:255',
-            'periode'            => 'nullable|integer',
-            // 'tanggal_penjemputan' => 'nullable|date',
-            'status'             => 'required|in:aktif,nonaktif',
-            'deskripsi'          => 'nullable|string',
+            'nama_paket' => 'required|string|max:255',
+            'harga'      => 'required|numeric',
+            'jenis'      => 'nullable|string|max:255',
+            'periode'    => 'nullable|integer',
+            'status'     => 'required|in:aktif,nonaktif',
+            'deskripsi'  => 'nullable|string',
+            'thumbnail'  => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
-
-        $laundryPackage->update($request->all());
-
+    
+        $data = $request->except('thumbnail');
+    
+        if ($request->hasFile('thumbnail')) {
+            // Hapus file lama kalau ada
+            if ($laundryPackage->thumbnail && file_exists(storage_path('app/public/' . $laundryPackage->thumbnail))) {
+                unlink(storage_path('app/public/' . $laundryPackage->thumbnail));
+            }
+    
+            $path = $request->file('thumbnail')->store('laundry/thumbnails', 'public');
+            $data['thumbnail'] = $path;
+        }
+    
+        $laundryPackage->update($data);
+    
         return redirect()->route('admin.laundry.index')->with('success', 'Laundry package berhasil diperbarui!');
     }
+    
 
     public function destroy(LaundryPackage $laundryPackage)
     {

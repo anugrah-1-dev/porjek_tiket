@@ -95,7 +95,20 @@
                                             </select>
                                         </div>
                                     </div>
-
+                                    <div class="form-group row">
+                                        <label for="thumbnail" class="col-sm-4 col-form-label">Thumbnail</label>
+                                        <div class="col-sm-8">
+                                            <input type="file" class="form-control" id="thumbnail" name="thumbnail" accept="image/*">
+                                            @if ($laundry->thumbnail)
+                                                <div class="mt-2">
+                                                    <img src="{{ asset('storage/' . $laundry->thumbnail) }}" 
+                                                         alt="Thumbnail" class="img-fluid rounded" style="max-height: 120px;">
+                                                </div>
+                                            @endif
+                                            <small class="text-muted">Biarkan kosong jika tidak ingin mengganti</small>
+                                        </div>
+                                    </div>
+                                    
                                     <!-- Deskripsi -->
                                     <div class="form-group row">
                                         <label for="deskripsi" class="col-sm-3 col-form-label">Deskripsi</label>
