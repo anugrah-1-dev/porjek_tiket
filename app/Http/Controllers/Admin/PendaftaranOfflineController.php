@@ -24,12 +24,46 @@ class PendaftaranOfflineController extends Controller
 
         return view('admin.pendaftaran_offline.index', compact('pendaftar', 'programBahasa'));
     }
-
     public function show($id)
     {
-        $data = PendaftaranProgramOffline::with(['program', 'period'])->findOrFail($id);
-        return view('admin.pendaftaran_offline.show', compact('data'));
+        $pendaftaran = PendaftaranProgramOffline::with([
+            'caterings.cateringPackage',
+            'laundries.laundryPackage',
+            'holidays.holidayPackage'
+        ])->findOrFail($id);
+
+        // Hitung total catering
+        $totalCatering = $pendaftaran->caterings->sum(function ($item) {
+            return $item->jumlah_porsi * $item->harga;
+        });
+
+        // Hitung total laundry
+        $totalLaundry = $pendaftaran->laundries->sum(function ($item) {
+            return $item->jumlah * $item->harga;
+        });
+
+        // Hitung total holiday
+        $totalHoliday = $pendaftaran->holidays->sum(function ($item) {
+            return $item->jumlah_peserta * $item->harga;
+        });
+
+        // Gabungan semua total
+        $total = $totalCatering + $totalLaundry + $totalHoliday;
+
+        // Kalau mau ada PPN 10%
+        $totalWithTax = $total + ($total * 0.1);
+
+        return view('admin.pendaftaran_offline.show', compact(
+            'pendaftaran',
+            'total',
+            'totalCatering',
+            'totalLaundry',
+            'totalHoliday',
+            'totalWithTax'
+        ));
     }
+ 
+
 
     /**
      * Menampilkan halaman untuk mengedit status pendaftaran.
@@ -98,6 +132,8 @@ class PendaftaranOfflineController extends Controller
      */
 
 
+
+
     public function showBukti($id)
     {
         $pendaftaran = PendaftaranProgramOffline::findOrFail($id);
@@ -116,3 +152,4 @@ class PendaftaranOfflineController extends Controller
         ]);
     }
 }
+

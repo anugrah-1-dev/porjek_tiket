@@ -562,10 +562,9 @@
                                                 </div>
                                             </div>
                                             {{-- Hidden input untuk kirim data ke controller --}}
-                                            <input type="hidden" name="id_catering" id="idCateringInput">
-                                            <input type="hidden" name="id_laundry" id="idLaundryInput">
-                                            <input type="hidden" name="id_holiday" id="idHolidayInput">
-
+                                            <input type="hidden" name="catering" id="cateringInput">
+                                            <input type="hidden" name="laundry" id="laundryInput">
+                                            <input type="hidden" name="holiday" id="holidayInput">
 
 
                                             <style>
@@ -625,35 +624,6 @@
                                             </style>
 
                                             <script>
-
-                                           function addToCart(type, id, name, price, qty) {
-    if (qty > 0) {
-        // isi hidden input sesuai kategori paket
-        if (type === 'catering') {
-            document.getElementById('idCateringInput').value = id;
-        } else if (type === 'laundry') {
-            document.getElementById('idLaundryInput').value = id;
-        } else if (type === 'holiday') {
-            document.getElementById('idHolidayInput').value = id;
-        }
-
-        // kode existing buat update keranjang
-        let cartItems = document.getElementById('cart-items');
-        document.getElementById('empty-cart-message')?.remove();
-
-        let item = document.createElement('div');
-        item.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
-        item.innerHTML = `
-            ${name} x${qty}
-            <span>Rp ${price.toLocaleString()}</span>
-        `;
-        cartItems.appendChild(item);
-
-        updateCartTotal();
-    }
-}
-
-
                                                 let cart = {
                                                     catering: [],
                                                     laundry: [],
@@ -775,13 +745,11 @@
                                                     cartTotal.textContent = `Rp ${formatNumber(totalPrice)}`;
                                                 }
 
-                                             function updateHiddenInputs() {
-    document.getElementById('idCateringInput').value = cart.catering.length > 0 ? cart.catering[0].id : '';
-    document.getElementById('idLaundryInput').value = cart.laundry.length > 0 ? cart.laundry[0].id : '';
-    document.getElementById('idHolidayInput').value = cart.holiday.length > 0 ? cart.holiday[0].id : '';
-}
-
-
+                                                function updateHiddenInputs() {
+                                                    document.getElementById('cateringInput').value = JSON.stringify(cart.catering);
+                                                    document.getElementById('laundryInput').value = JSON.stringify(cart.laundry);
+                                                    document.getElementById('holidayInput').value = JSON.stringify(cart.holiday);
+                                                }
 
                                                 function formatNumber(number) {
                                                     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -793,7 +761,7 @@
                                                 });
                                             </script>
 
-                                      
+
                                             <div class="mb-3">
                                                 <label class="form-label"><i class="bi bi-person-lines-fill"></i> No.
                                                     HP
@@ -967,23 +935,23 @@
                                                     let selectTransport = document.getElementById("transportSelect");
                                                     let selectCamp = document.getElementById("campSelect");
                                                     let btnLihatTotal = document.getElementById("btnLihatTotal");
-                                            
+
                                                     let hargaProgram = document.getElementById("hargaProgram");
                                                     let hargaTransport = document.getElementById("hargaTransport");
                                                     let hargaCamp = document.getElementById("hargaCamp");
                                                     let totalPreview = document.getElementById("totalPreview");
                                                     let totalModal = document.getElementById("totalModal");
-                                            
+
                                                     // ✅ Tambahkan elemen untuk detail layanan tambahan
                                                     let modalBody = document.querySelector("#modalTotal .modal-body");
                                                     let serviceDetailContainer = document.createElement("div");
                                                     serviceDetailContainer.id = "serviceDetailContainer";
                                                     modalBody.insertBefore(serviceDetailContainer, modalBody.querySelector("hr"));
-                                            
+
                                                     function getCartTotal() {
                                                         let total = 0;
                                                         let details = [];
-                                            
+
                                                         for (const type in cart) {
                                                             cart[type].forEach(item => {
                                                                 let itemTotal = item.price * item.quantity;
@@ -994,26 +962,26 @@
                                                                               </div>`);
                                                             });
                                                         }
-                                            
+
                                                         serviceDetailContainer.innerHTML = details.join("") || "";
                                                         return total;
                                                     }
-                                            
+
                                                     function updateTotal() {
                                                         let transportPrice = selectTransport?.selectedOptions[0]?.dataset.harga ?
                                                             parseInt(selectTransport.selectedOptions[0].dataset.harga) : 0;
-                                            
+
                                                         let campPrice = selectCamp?.selectedOptions[0]?.dataset.harga ?
                                                             parseInt(selectCamp.selectedOptions[0].dataset.harga) : 0;
-                                            
+
                                                         // ✅ Tambahkan total cart
                                                         let cartTotal = getCartTotal();
-                                            
+
                                                         let total = basePrice + transportPrice + campPrice + cartTotal;
-                                            
+
                                                         // update preview total
                                                         totalPreview.textContent = "Rp" + total.toLocaleString('id-ID');
-                                            
+
                                                         // update detail modal
                                                         hargaProgram.textContent = "Rp" + basePrice.toLocaleString('id-ID');
                                                         hargaTransport.textContent = "Rp" + transportPrice.toLocaleString('id-ID');
@@ -1022,29 +990,29 @@
                                                         }
                                                         totalModal.textContent = "Rp" + total.toLocaleString('id-ID');
                                                     }
-                                            
+
                                                     // trigger saat pilih transport / camp
                                                     if (selectTransport) selectTransport.addEventListener("change", updateTotal);
                                                     if (selectCamp) selectCamp.addEventListener("change", updateTotal);
-                                            
+
                                                     // buka modal
                                                     btnLihatTotal.addEventListener("click", function () {
                                                         updateTotal(); // hitung ulang sebelum tampil
                                                         new bootstrap.Modal(document.getElementById('modalTotal')).show();
                                                     });
-                                            
+
                                                     // update ulang total setiap kali cart berubah
                                                     const originalUpdateCart = updateCart;
                                                     updateCart = function () {
                                                         originalUpdateCart();
                                                         updateTotal();
                                                     };
-                                            
+
                                                     // inisialisasi awal
                                                     updateTotal();
                                                 });
                                             </script>
-                                            
+
 
                                             <br>
                                             <div class="mb-3">

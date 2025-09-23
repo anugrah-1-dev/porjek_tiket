@@ -256,7 +256,8 @@ Route::middleware(['auth', 'role:admin|officer'])->prefix('admin')->name('admin.
     Route::get('pendaftaran/offline/{id}/bukti', [PendaftaranOfflineController::class, 'showBukti'])->name('pendaftaran.offline.bukti');
     Route::get('/pendaftaran/program-offline', [PendaftaranOfflineController::class, 'create'])->name('pendaftaran.program_offline.create');
     Route::post('/pendaftaran/program-offline', [PendaftaranOfflineController::class, 'store'])->name('pendaftaran.program_offline.store');
-
+    Route::get('pendaftaran/offline/{id}', [PendaftaranOfflineController::class, 'show'])
+        ->name('pendaftaran.offline.show');
     // Pendaftaran Program Camp
     Route::get('/pendaftaran/camp', [PendaftaranProgramCampController::class, 'index'])->name('pendaftaran.camp.index');
     Route::get('/pendaftaran/camp/{id}/edit', [PendaftaranProgramCampController::class, 'edit'])->name('pendaftaran.camp.edit');

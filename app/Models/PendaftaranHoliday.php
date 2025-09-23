@@ -12,6 +12,7 @@ class PendaftaranHoliday extends Model
         'pendaftaran_id',
         'holiday_package_id',
         'jumlah_peserta',
+        'harga',
         'catatan',
     ];
 

@@ -12,6 +12,7 @@ class PendaftaranLaundry extends Model
         'pendaftaran_id',
         'laundry_package_id',
         'jumlah',
+        'harga',
         'catatan',
     ];
 

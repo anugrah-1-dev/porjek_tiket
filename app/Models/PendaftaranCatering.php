@@ -12,6 +12,7 @@ class PendaftaranCatering extends Model
         'pendaftaran_id',
         'catering_package_id',
         'jumlah_porsi',
+        'harga',
         'catatan',
     ];
 

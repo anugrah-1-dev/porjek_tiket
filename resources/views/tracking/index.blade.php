@@ -157,45 +157,156 @@
                                     </p>
                                 </div>
 
-                                {{-- Catering --}}
-                                @if ($caterings->count() > 0)
-                                    <div class="col-md-6 mb-3">
-                                        <h5 class="text-muted">Catering</h5>
-                                        @foreach ($caterings as $c)
-                                            <p class="fs-6 mb-1">
-                                                {{ $c->cateringPackage->nama_paket ?? 'Paket Tidak Ditemukan' }}
-                                                (x{{ $c->jumlah_porsi }})
-                                            </p>
-                                        @endforeach
+                                <div class="container mt-4">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h4 class="mb-4 text-start">Ringkasan Pemesanan</h4>
 
-                                    </div>
-                                @endif
+                                            <!-- Tabel Catering -->
+                                            @if ($caterings->count() > 0)
+                                                <div class="table-responsive mb-4">
+                                                    <h5 class="text-muted mb-3 text-start">Catering</h5>
+                                                    <table class="table table-bordered table-striped">
+                                                        <thead class="table-light">
+                                                            <tr>
+                                                                <th width="50%" class="text-start">Nama Paket</th>
+                                                                <th width="20%" class="text-center">Jumlah Porsi</th>
+                                                                <th width="30%" class="text-end">Harga</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @php $totalCatering = 0; @endphp
+                                                            @foreach ($caterings as $c)
+                                                                @php $totalCatering += $c->harga; @endphp
+                                                                <tr>
+                                                                    <td class="text-start">
+                                                                        {{ $c->cateringPackage->nama_paket ?? 'Paket Tidak Ditemukan' }}
+                                                                    </td>
+                                                                    <td class="text-center">x{{ $c->jumlah_porsi }}</td>
+                                                                    <td class="text-end">Rp
+                                                                        {{ number_format($c->harga, 0, ',', '.') }}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr class="table-active">
+                                                                <td colspan="2" class="text-end fw-bold">Total Catering:</td>
+                                                                <td class="text-end fw-bold">Rp
+                                                                    {{ number_format($totalCatering, 0, ',', '.') }}</td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+                                            @endif
 
-                                {{-- Laundry --}}
-                                @if ($laundries->count() > 0)
-                                    <div class="col-md-6 mb-3">
-                                        <h5 class="text-muted">Laundry</h5>
-                                        @foreach ($laundries as $l)
-                                            <p class="fs-6 mb-1">
-                                                {{ $l->laundryPackage->nama ?? 'Paket Tidak Ditemukan' }}
-                                                (x{{ $l->jumlah }})
-                                            </p>
-                                        @endforeach
-                                    </div>
-                                @endif
+                                            <!-- Tabel Laundry -->
+                                            @if ($laundries->count() > 0)
+                                                <div class="table-responsive mb-4">
+                                                    <h5 class="text-muted mb-3 text-start">Laundry</h5>
+                                                    <table class="table table-bordered table-striped">
+                                                        <thead class="table-light">
+                                                            <tr>
+                                                                <th width="50%" class="text-start">Nama Paket</th>
+                                                                <th width="20%" class="text-center">Jumlah</th>
+                                                                <th width="30%" class="text-end">Harga</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @php $totalLaundry = 0; @endphp
+                                                            @foreach ($laundries as $l)
+                                                                @php $totalLaundry += $l->harga; @endphp
+                                                                <tr>
+                                                                    <td class="text-start">
+                                                                        {{ $l->laundryPackage->nama_paket ?? 'Paket Tidak Ditemukan' }}
+                                                                    </td>
+                                                                    <td class="text-center">x{{ $l->jumlah }}</td>
+                                                                    <td class="text-end">Rp
+                                                                        {{ number_format($l->harga, 0, ',', '.') }}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr class="table-active">
+                                                                <td colspan="2" class="text-end fw-bold">Total Laundry:
+                                                                </td>
+                                                                <td class="text-end fw-bold">Rp
+                                                                    {{ number_format($totalLaundry, 0, ',', '.') }}</td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+                                            @endif
 
-                                {{-- Holiday --}}
-                                @if ($holidays->count() > 0)
-                                    <div class="col-md-6 mb-3">
-                                        <h5 class="text-muted">Holiday</h5>
-                                        @foreach ($holidays as $h)
-                                            <p class="fs-6 mb-1">
-                                                {{ $h->holidayPackage->nama ?? 'Paket Tidak Ditemukan' }}
-                                                (x{{ $h->jumlah }})
-                                            </p>
-                                        @endforeach
+                                            <!-- Tabel Holiday -->
+                                            @if ($holidays->count() > 0)
+                                                <div class="table-responsive mb-4">
+                                                    <h5 class="text-muted mb-3 text-start">Holiday</h5>
+                                                    <table class="table table-bordered table-striped">
+                                                        <thead class="table-light">
+                                                            <tr>
+                                                                <th width="50%" class="text-start">Nama Paket</th>
+                                                                <th width="20%" class="text-center">Jumlah Peserta</th>
+                                                                <th width="30%" class="text-end">Harga</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @php $totalHoliday = 0; @endphp
+                                                            @foreach ($holidays as $h)
+                                                                @php $totalHoliday += $h->harga; @endphp
+                                                                <tr>
+                                                                    <td class="text-start">
+                                                                        {{ $h->holidayPackage->nama_paket ?? 'Paket Tidak Ditemukan' }}
+                                                                    </td>
+                                                                    <td class="text-center">x{{ $h->jumlah_peserta }}</td>
+                                                                    <td class="text-end">Rp
+                                                                        {{ number_format($h->harga, 0, ',', '.') }}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr class="table-active">
+                                                                <td colspan="2" class="text-end fw-bold">Total Holiday:
+                                                                </td>
+                                                                <td class="text-end fw-bold">Rp
+                                                                    {{ number_format($totalHoliday, 0, ',', '.') }}</td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+                                            @endif
+
+
+                                            <!-- Total Keseluruhan -->
+                                            @php
+                                                $totalOnline =
+                                                    ($totalCatering ?? 0) + ($totalLaundry ?? 0) + ($totalHoliday ?? 0);
+                                                $grandTotal = $totalOnline + (isset($offline) ? $offline->subtotal : 0);
+                                            @endphp
+
+                                            @if ($grandTotal > 0)
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="card border-primary">
+                                                            <div class="card-body text-start">
+                                                                <h5 class="card-title text-primary">Total Keseluruhan</h5>
+                                                                <h3 class="text-primary">Rp
+                                                                    {{ number_format($grandTotal, 0, ',', '.') }}</h3>
+                                                                @if ($totalOnline > 0 && isset($offline) && $offline->subtotal > 0)
+                                                                    <p class="text-muted mb-0">
+                                                                        (Add Ons: Rp
+                                                                        {{ number_format($totalOnline, 0, ',', '.') }} +
+                                                                        Offline: Rp
+                                                                        {{ number_format($offline->subtotal, 0, ',', '.') }})
+                                                                    </p>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        </div>
                                     </div>
-                                @endif
+                                </div>
 
                                 @if ($cs)
                                     <div class="text-end">

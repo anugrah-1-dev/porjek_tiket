@@ -162,30 +162,46 @@ class ProgramOfflinePublicController extends Controller
         // === Simpan data catering (jika ada) ===
         $caterings = parseRequestArray($request->catering);
         foreach ($caterings as $catering) {
+            // ambil harga paket catering
+            $package = CateringPackage::find($catering['id']);
+            $harga = $package ? $package->harga : 0;
+            $jumlah = $catering['quantity'] ?? 1;
+
             \App\Models\PendaftaranCatering::create([
                 'pendaftaran_id'      => $pendaftaran->id,
                 'catering_package_id' => $catering['id'],
-                'jumlah_porsi'        => $catering['quantity'] ?? 1, // pakai quantity sesuai data kamu
+                'jumlah_porsi'        => $jumlah,
+                'harga'               => $harga * $jumlah, // simpan harga total
             ]);
         }
 
         // === Simpan data laundry (jika ada) ===
         $laundries = parseRequestArray($request->laundry);
         foreach ($laundries as $laundry) {
+            $package = LaundryPackage::find($laundry['id']);
+            $harga = $package ? $package->harga : 0;
+            $jumlah = $laundry['jumlah'] ?? 1;
+
             \App\Models\PendaftaranLaundry::create([
                 'pendaftaran_id'      => $pendaftaran->id,
                 'laundry_package_id'  => $laundry['id'],
-                'jumlah'              => $laundry['jumlah'] ?? 1,
+                'jumlah'              => $jumlah,
+                'harga'               => $harga * $jumlah,
             ]);
         }
 
         // === Simpan data holiday (jika ada) ===
         $holidays = parseRequestArray($request->holiday);
         foreach ($holidays as $holiday) {
+            $package = HolidayPackage::find($holiday['id']);
+            $harga = $package ? $package->harga : 0;
+            $jumlah = $holiday['jumlah'] ?? 1;
+
             \App\Models\PendaftaranHoliday::create([
                 'pendaftaran_id'      => $pendaftaran->id,
                 'holiday_package_id'  => $holiday['id'],
-                'jumlah_peserta'      => $holiday['jumlah'] ?? 1,
+                'jumlah_peserta'      => $jumlah,
+                'harga'               => $harga * $jumlah,
             ]);
         }
 

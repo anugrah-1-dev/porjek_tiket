@@ -112,7 +112,7 @@
                                 <td>
                                     @if ($data->tanggal_lahir)
                                         {{ \Carbon\Carbon::parse($data->tanggal_lahir)->translatedFormat('d F
-                                                                                                                        Y') }}
+                                                                                                                                                                Y') }}
                                     @else
                                         -
                                     @endif
@@ -205,10 +205,21 @@
                                 {{-- KOLOM AKSI --}}
                                 <td>
                                     <div class="btn-group btn-group-sm">
+                                        {{-- Tombol Show muncul hanya jika ada add-ons --}}
+                                        @if ($data->caterings->count() > 0 || $data->laundries->count() > 0 || $data->holidays->count() > 0)
+                                            <a href="{{ route('admin.pendaftaran.offline.show', $data->id) }}"
+                                                class="btn btn-info btn-action" title="Lihat Add-ons">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                        @endif
+
+                                        {{-- Tombol Edit --}}
                                         <a href="{{ route('admin.pendaftaran.offline.edit', $data->id) }}"
                                             class="btn btn-primary btn-action" title="Edit Status">
                                             <i class="fas fa-pencil-alt"></i>
                                         </a>
+
+                                        {{-- Tombol Delete --}}
                                         <form action="{{ route('admin.pendaftaran.offline.destroy', $data->id) }}"
                                             method="POST"
                                             onsubmit="return confirm('Anda yakin ingin menghapus pendaftaran ini secara permanen?');"
@@ -221,6 +232,7 @@
                                         </form>
                                     </div>
                                 </td>
+
                             </tr>
                         @empty
                             <tr>
