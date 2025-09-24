@@ -165,7 +165,7 @@ body {
     inset: 0;
     min-width: 100%;
     height: 100%;
-    opacity: 0; 
+    opacity: 0;
     pointer-events: none;
     transition: opacity 1.2s ease-in-out;
 }
@@ -766,7 +766,8 @@ body {
     margin-bottom: 30px;
     transition: all 0.8s ease 0.4s;
 }
-.filter-btn {
+/* Awal: posisi sembunyi untuk animasi masuk */
+/* .filter-btn {
     padding: 8px 20px;
     margin: 0 0.5rem;
     border: 2px solid var(--blue);
@@ -775,17 +776,19 @@ body {
     font-weight: 600;
     border-radius: 30px;
     cursor: pointer;
-    transition: all 0.3s ease;
-}
+
+    /* Interaksi aja */
+/* transition: background 0.3s ease, color 0.3s ease;
+} */
+/* 
 .filter-btn:hover:not(.active) {
     background: #f8f9fa;
 }
 .filter-btn.active {
     background: var(--blue);
     color: var(--white);
-}
-
-.program-grid {
+} */
+*/ .program-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 2rem;

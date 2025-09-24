@@ -273,7 +273,7 @@
                 </div>
             </div>
         </div>
-
+    </section>
    
 
     <section class="registration-flow-section" id="alur-pendaftaran">
