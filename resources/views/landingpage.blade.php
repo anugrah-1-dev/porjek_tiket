@@ -126,101 +126,122 @@
                     Tingkatkan kemampuan Bahasa Inggris Anda secara efektif dengan metode pembelajaran inovatif dan lingkungan belajar yang mendukung di Brilliant English Course. Nikmati fasilitas asrama nyaman dan program terstruktur yang dirancang khusus untuk membantu Anda meraih prestasi maksimal. Bergabunglah sekarang dan wujudkan potensi terbaik Anda bersama kami!
                 </p>
 
-
                 <a href="#" id="openPopupBtn" class="cta-button" data-aos="fade-up" data-aos-delay="200">
                     DAFTAR PROGRAM
                 </a>
-            </div>
-            <button class="nav prev">&#10094;</button>
-            <button class="nav next">&#10095;</button>
-        </div>
-        <div id="programPopup" class="popup1-overlay">
-            <div class="popup1-content">
-                <div class="popup1-header">
-                    <h2>Pilih Program Kursus Anda</h2>
-                    <button id="closePopupBtn" class="close1-button">&times;</button>
+                
+                <!-- Popup 1: Pilih Tempat Kursus -->
+                <div id="kursusPopup" class="popup1-overlay">
+                    <div class="popup1-content">
+                        <div class="popup1-header">
+                            <h2>Pilih Tempat Kursus</h2>
+                            <button id="closeKursusPopupBtn" class="close1-button">&times;</button>
+                        </div>
+                        <div class="program1-grid">
+                            <a href="#" class="program1-card pilih-kursus" data-kursus="bie">
+                                <h3>Brilliant International Education</h3>
+                                <span class="pilih1-button">Pilih</span>
+                            </a>
+                            <a href="#" class="program1-card pilih-kursus" data-kursus="bec">
+                                <h3>Brilliant English Course</h3>
+                                <span class="pilih1-button">Pilih</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-
-               <div class="program1-grid">
-    <a href="{{ route('program.inggris') }}" class="program1-card inggris">
-        <div class="program1-icon icon-inggris">
-            <img src="{{ asset('asset/img/bendera inggris.jpg') }}" alt="Bendera Inggris" class="program1-img">
-        </div>
-        <h3>Kursus Bahasa Inggris</h3>
-        <span class="pilih1-button">Pilih</span>
-    </a>
-
-    <a href="{{ route('program.arab') }}" class="program1-card arab">
-        <div class="program1-icon icon-arab">
-            <img src="{{ asset('asset/img/bendera arab.jpg') }}" alt="Bendera Arab" class="program1-img">
-        </div>
-        <h3>Kursus Bahasa Arab</h3>
-        <span class="pilih1-button">Pilih</span>
-    </a>
-
-    <a href="{{ route('program.jerman') }}" class="program1-card jerman">
-        <div class="program1-icon icon-jerman">
-            <img src="{{ asset('asset/img/bendera jerman.jpg') }}" alt="Bendera Jerman" class="program1-img">
-        </div>
-        <h3>Kursus Bahasa Jerman</h3>
-        <span class="pilih1-button">Pilih</span>
-    </a>
-
-    <a href="{{ route('program.mandarin') }}" class="program1-card mandarin">
-        <div class="program1-icon icon-mandarin">
-            <img src="{{ asset('asset/img/bendera mandarin.jpg') }}" alt="Bendera Mandarin" class="program1-img">
-        </div>
-        <h3>Kursus Bahasa Mandarin</h3>
-        <span class="pilih1-button">Pilih</span>
-    </a>
-</div>
-
-
-            </div>
-
-        </div>
-        </div>
-        </div>
+                
+                <!-- Popup 2: Pilih Program Bahasa -->
+                <div id="programPopup" class="popup1-overlay">
+                    <div class="popup1-content">
+                        <div class="popup1-header">
+                            <h2>Pilih Program Kursus Anda</h2>
+                            <button id="closePopupBtn" class="close1-button">&times;</button>
+                        </div>
+                        <div class="program1-grid">
+                            <a href="{{ route('program.inggris') }}" class="program1-card inggris">
+                                <div class="program1-icon icon-inggris">
+                                    <img src="{{ asset('asset/img/bendera inggris.jpg') }}" alt="Bendera Inggris" class="program1-img">
+                                </div>
+                                <h3>Kursus Bahasa Inggris</h3>
+                                <span class="pilih1-button">Pilih</span>
+                            </a>
+                            <a href="{{ route('program.arab') }}" class="program1-card arab">
+                                <div class="program1-icon icon-arab">
+                                    <img src="{{ asset('asset/img/bendera arab.jpg') }}" alt="Bendera Arab" class="program1-img">
+                                </div>
+                                <h3>Kursus Bahasa Arab</h3>
+                                <span class="pilih1-button">Pilih</span>
+                            </a>
+                            <a href="{{ route('program.jerman') }}" class="program1-card jerman">
+                                <div class="program1-icon icon-jerman">
+                                    <img src="{{ asset('asset/img/bendera jerman.jpg') }}" alt="Bendera Jerman" class="program1-img">
+                                </div>
+                                <h3>Kursus Bahasa Jerman</h3>
+                                <span class="pilih1-button">Pilih</span>
+                            </a>
+                            <a href="{{ route('program.mandarin') }}" class="program1-card mandarin">
+                                <div class="program1-icon icon-mandarin">
+                                    <img src="{{ asset('asset/img/bendera mandarin.jpg') }}" alt="Bendera Mandarin" class="program1-img">
+                                </div>
+                                <h3>Kursus Bahasa Mandarin</h3>
+                                <span class="pilih1-button">Pilih</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
 
         <script>
-            // Get the necessary elements
-            const openPopupButton = document.getElementById('openPopupBtn');
-            const closePopupButton = document.getElementById('closePopupBtn');
-            const programPopup = document.getElementById('programPopup');
-            const pilihButtons = document.querySelectorAll('.pilih-button');
+           const openPopupButton = document.getElementById('openPopupBtn');
+const kursusPopup = document.getElementById('kursusPopup');
+const closeKursusPopupButton = document.getElementById('closeKursusPopupBtn');
 
-            // Function to show the popup
-            function showPopup() {
-                programPopup.classList.add('show');
-            }
+const programPopup = document.getElementById('programPopup');
+const closePopupButton = document.getElementById('closePopupBtn');
 
-            // Function to hide the popup
-            function hidePopup() {
-                programPopup.classList.remove('show');
-            }
+// Show / hide function
+function showPopup(popup) {
+    popup.classList.add('show');
+}
+function hidePopup(popup) {
+    popup.classList.remove('show');
+}
 
-            // --- Event Listeners ---
+// Step 1: Klik "Daftar Program" -> buka popup kursus
+openPopupButton.addEventListener('click', function (e) {
+    e.preventDefault();
+    showPopup(kursusPopup);
+});
 
-            // Open popup when "DAFTAR SEKARANG" is clicked
-            openPopupButton.addEventListener('click', function(event) {
-                event.preventDefault(); // Prevents the page from jumping to the top
-                showPopup();
-            });
+// Step 2: Tutup popup kursus
+closeKursusPopupButton.addEventListener('click', function () {
+    hidePopup(kursusPopup);
+});
 
-            // Close popup when the 'X' button is clicked
-            closePopupButton.addEventListener('click', hidePopup);
+// Step 3: Klik pilihan kursus -> tutup popup kursus & buka popup program
+document.querySelectorAll('.pilih-kursus').forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        hidePopup(kursusPopup);
+        showPopup(programPopup);
 
-            // Close popup when clicking on the dark overlay background
-            programPopup.addEventListener('click', function(event) {
-                if (event.target === programPopup) {
-                    hidePopup();
-                }
-            });
+        // Bisa dipakai kalau mau bedakan program sesuai kursus
+        let selectedKursus = this.getAttribute('data-kursus');
+        console.log("Kursus yang dipilih:", selectedKursus);
+    });
+});
 
-            // Close popup when any of the "Pilih" buttons are clicked
-            pilihButtons.forEach(function(button) {
-                button.addEventListener('click', hidePopup);
-            });
+// Step 4: Tutup popup program
+closePopupButton.addEventListener('click', function () {
+    hidePopup(programPopup);
+});
+
+// Step 5: Klik overlay untuk tutup popup
+[kursusPopup, programPopup].forEach(popup => {
+    popup.addEventListener('click', function (event) {
+        if (event.target === popup) hidePopup(popup);
+    });
+});
         </script>
     </section>
 

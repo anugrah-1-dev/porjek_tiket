@@ -91,6 +91,112 @@ body {
     color: #ececeb;
     line-height: 1.8;
 }
+/* === Overlay background khusus popup kursus === */
+#kursusPopup {
+    display: none; /* default tertutup */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    z-index: 9998;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.3s ease;
+}
+
+/* Saat popup aktif */
+#kursusPopup.show {
+    display: flex;
+    opacity: 1;
+}
+
+/* Konten popup kursus */
+#kursusPopup .popup1-content {
+    background: #fff;
+    padding: 30px 25px;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    animation: fadeInScaleKursus 0.3s ease;
+}
+
+/* Animasi masuk (khusus kursus) */
+@keyframes fadeInScaleKursus {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* Header popup kursus */
+#kursusPopup .popup1-header h2 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: #333;
+    font-weight: 600;
+}
+
+/* Tombol close popup kursus */
+#kursusPopup .close1-button {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: transparent;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #666;
+    transition: color 0.2s;
+}
+#kursusPopup .close1-button:hover {
+    color: #000;
+}
+
+/* Grid pilihan kursus */
+#kursusPopup .program1-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Card pilihan kursus */
+#kursusPopup .program1-card {
+    display: block;
+    background: #f8f9fa;
+    padding: 18px 20px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #222;
+    font-size: 1.1rem;
+    font-weight: 500;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    transition: all 0.25s ease;
+}
+#kursusPopup .program1-card:hover {
+    background: #007bff;
+    color: #fff;
+    transform: translateY(-3px);
+}
+
+/* Tombol "Pilih" popup kursus */
+#kursusPopup .pilih1-button {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 6px 14px;
+    background: #007bff;
+    color: #fff;
+    font-size: 0.85rem;
+    border-radius: 20px;
+    transition: background 0.25s;
+}
+#kursusPopup .program1-card:hover .pilih1-button {
+    background: #0056b3;
+}
+
+
 
 /* CTA Button */
 .cta-button {
