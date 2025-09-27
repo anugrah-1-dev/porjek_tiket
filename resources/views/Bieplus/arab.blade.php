@@ -29,7 +29,7 @@
         </div>
 
         <div class="hero-text">
-            <h1>BRILLIANT ALSAEID ARABIC COURSES</h1>
+            <h1>BIEPLUS ALSAEID ARABIC COURSES</h1>
             <p>Kuasai bahasa Arab dengan metode interaktif dan pengajar berpengalaman.</p>
 
         </div>
@@ -319,6 +319,7 @@
             </path>
         </svg>
     </div>
+
     <!-- Alur Pendaftaran -->
     <section class="alur" id="alur">
         <div class="container">
@@ -396,6 +397,7 @@
             });
         </script>
     </section>
+
 
 
 

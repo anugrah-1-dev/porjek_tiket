@@ -35,7 +35,7 @@
             <button class="next">&#10095;</button>
         </div>
         <div class="hero-text">
-            <h1>BRILLIANT DEUTSCHE SPARCHE</h1>
+            <h1>BIEPLUS DEUTSCHE SPARCHE</h1>
             <p>Kuasai bahasa Jerman dengan metode interaktif dan pengajar berpengalaman.</p>
             <a href="#program" class="cta-button">Lihat Program Kami</a>
         </div>

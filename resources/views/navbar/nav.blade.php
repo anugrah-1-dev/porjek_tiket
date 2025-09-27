@@ -21,8 +21,10 @@
                 <img src="{{ asset('asset/img/JermanLogo.png') }}" alt="Logo Jerman" style="height: 95px;">
             @elseif (request()->routeIs('landing.nhc'))
                 <img src="{{ asset('asset/img/logonhc.png') }}" alt="Logo NHC" style="height: 95px;">
+            @elseif (request()->routeIs('program.inggris'))
+                <img src="{{ asset('asset/img/inggris2.png') }}" alt="Logo Inggris" style="height: 150px;">
             @else
-                <img src="{{ asset('asset/img/Inggris2.png') }}" alt="Logo Default" style="height: 150px;">
+                <img src="{{ asset('asset/img/b2.png') }}" alt="Logo Default" style="height: 84px;">
             @endif
         </a>
     </div>

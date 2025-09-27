@@ -26,18 +26,9 @@
 
 
         <div class="dropdown" id="programDropdown">
-            <button class="dropbtn">
-                PROGRAM <span class="arrow">▼</span>
+            <button class="dropbtn" id="openKursusPopupBtn">
+                PROGRAM
             </button>
-            <div class="dropdown-content">
-                <a href="{{ route('program.inggris') }}">Bahasa Inggris</a>
-                <a href="{{ route('program.jerman') }}">Bahasa Jerman</a>
-                <a href="{{ route('program.mandarin') }}">Bahasa Mandarin</a>
-                <a href="{{ route('program.arab') }}">Bahasa Arab</a>
-                <!-- <a href="{{ route('landing.nhc') }}">NHC</a> -->
-
-
-            </div>
         </div>
 
         <div class="dropdown" id="galleryDropdown">
@@ -69,46 +60,69 @@
             navbar.classList.remove('scrolled');
         }
     });
+    document.addEventListener("DOMContentLoaded", function () {
+        const openBtn = document.getElementById("openKursusPopupBtn");
+        const popup = document.getElementById("kursusPopup");
+        const closeBtn = document.getElementById("closeKursusPopupBtn");
 
-    // Dropdown functionality (support multiple dropdowns)
-    document.addEventListener('DOMContentLoaded', function () {
-        const dropdowns = document.querySelectorAll('.dropdown');
+        if (openBtn && popup && closeBtn) {
+            // buka popup
+            openBtn.addEventListener("click", function () {
+                popup.classList.add("show");
+            });
 
-        dropdowns.forEach(dropdown => {
-            const button = dropdown.querySelector('.dropbtn');
+            // tutup popup
+            closeBtn.addEventListener("click", function () {
+                popup.classList.remove("show");
+            });
 
-            if (button) {
-                button.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-
-                    // Tutup semua dropdown lain dulu
-                    dropdowns.forEach(d => {
-                        if (d !== dropdown) d.classList.remove('active');
-                    });
-
-                    // Toggle dropdown yang diklik
-                    dropdown.classList.toggle('active');
-                });
-            }
-        });
-
-        // Close all dropdowns when clicking outside
-        document.addEventListener('click', function (e) {
-            dropdowns.forEach(dropdown => {
-                if (!dropdown.contains(e.target)) {
-                    dropdown.classList.remove('active');
+            // tutup popup kalau klik luar area
+            popup.addEventListener("click", function (e) {
+                if (e.target === popup) {
+                    popup.classList.remove("show");
                 }
             });
-        });
+        }
+    })
+    // Dropdown functionality (support multiple dropdowns)
+    // document.addEventListener('DOMContentLoaded', function () {
+    //     const dropdowns = document.querySelectorAll('.dropdown');
 
-        // Close dropdown when item is selected
-        document.querySelectorAll('.dropdown-content a').forEach(item => {
-            item.addEventListener('click', function () {
-                dropdowns.forEach(d => d.classList.remove('active'));
-            });
-        });
-    });
+    //     dropdowns.forEach(dropdown => {
+    //         const button = dropdown.querySelector('.dropbtn');
+
+    //         if (button) {
+    //             button.addEventListener('click', function (e) {
+    //                 e.preventDefault();
+    //                 e.stopPropagation();
+
+    //                 // Tutup semua dropdown lain dulu
+    //                 dropdowns.forEach(d => {
+    //                     if (d !== dropdown) d.classList.remove('active');
+    //                 });
+
+    //                 // Toggle dropdown yang diklik
+    //                 dropdown.classList.toggle('active');
+    //             });
+    //         }
+    //     });
+
+    //     // Close all dropdowns when clicking outside
+    //     document.addEventListener('click', function (e) {
+    //         dropdowns.forEach(dropdown => {
+    //             if (!dropdown.contains(e.target)) {
+    //                 dropdown.classList.remove('active');
+    //             }
+    //         });
+    //     });
+
+    //     // Close dropdown when item is selected
+    //     document.querySelectorAll('.dropdown-content a').forEach(item => {
+    //         item.addEventListener('click', function () {
+    //             dropdowns.forEach(d => d.classList.remove('active'));
+    //         });
+    //     });
+    // });
 
     // Mobile navbar toggle
     function toggleNavbar() {

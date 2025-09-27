@@ -429,14 +429,14 @@ body {
 
 /* Animasi untuk judul dan paragraf */
 .alur h2,
-.alur p {
+.alur .intro {
     opacity: 0;
     transform: translateY(20px);
     transition: all 0.6s ease-out;
 }
 
 .alur h2.show,
-.alur p.show {
+.alur .intro.show {
     opacity: 1;
     transform: translateY(0);
 }
