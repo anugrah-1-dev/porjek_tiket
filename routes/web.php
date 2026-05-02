@@ -69,7 +69,7 @@ Route::get('/camp/room/{trx_id}', [PendaftranCampController::class, 'halamanKama
 
 Route::post('/camp/proses-kamar', [PendaftranCampController::class, 'proseskamaruser'])->name('camp.proseskamaruser');
 Route::get('/camp/pembayaran/{trx_id}', [PendaftranCampController::class, 'halamanPembayaran'])->name('camp.pembayaran');
-Route::post('/pembayaran/upload', [PendaftranCampController::class, 'uploadBukti'])->name('payment.upload');
+Route::post('/pembayaran/upload', [PendaftranCampController::class, 'uploadBukti'])->name('pembayaran.upload');
 
 
 
