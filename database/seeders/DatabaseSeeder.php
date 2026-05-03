@@ -15,9 +15,11 @@ class DatabaseSeeder extends Seeder
         $this->call(AdminUserSeeder::class);
         $this->call(RolePermissionSeeder::class);
         $this->call(BankSeeder::class);
+        $this->call(PeriodSeeder::class);
         $this->call(ProgramOnlineSeeder::class);
         $this->call(ProgramOfflineSeeder::class);
         $this->call(BrilliantIEProgramSeeder::class);
+        $this->call(BrilliantIEOnlineProgramSeeder::class);
         $this->call(BIEPlusProgramSeeder::class);
         $this->call(BIEPlusJermanSeeder::class);
         $this->call(BIEPlusMandarinSeeder::class);
