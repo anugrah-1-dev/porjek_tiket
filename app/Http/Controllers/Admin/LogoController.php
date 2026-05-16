@@ -11,17 +11,18 @@ class LogoController extends Controller
 {
     public function index()
     {
-        $logo = Logo::first();
-        return view('admin.logos.index', compact('logo'));
+        $logo1 = Logo::where('key', 'logo1')->first();
+        $logo2 = Logo::where('key', 'logo2')->first();
+        return view('admin.logos.index', compact('logo1', 'logo2'));
     }
 
-    public function update(Request $request)
+    public function update(Request $request, string $key)
     {
         $request->validate([
             'image_path' => 'required|image|mimes:jpeg,png,jpg,gif,webp,svg|max:2048',
         ]);
 
-        $logo = Logo::first();
+        $logo = Logo::where('key', $key)->first();
 
         if ($logo && $logo->image_path) {
             Storage::disk('public')->delete($logo->image_path);
@@ -32,13 +33,15 @@ class LogoController extends Controller
         if ($logo) {
             $logo->update(['image_path' => $path]);
         } else {
-            Logo::create(['image_path' => $path]);
+            Logo::create(['key' => $key, 'image_path' => $path]);
         }
+
+        $label = $key === 'logo1' ? 'Logo Default' : 'Logo Scroll';
 
         return redirect()->route('admin.logos.index')->with('alert', [
             'icon'  => 'success',
             'title' => 'Berhasil!',
-            'text'  => 'Logo landing page berhasil diperbarui.',
+            'text'  => $label . ' berhasil diperbarui.',
         ]);
     }
 }

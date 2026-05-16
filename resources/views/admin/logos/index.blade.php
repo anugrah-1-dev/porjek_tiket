@@ -7,30 +7,61 @@
 @stop
 
 @section('content')
-    <div class="row justify-content-center">
+    <div class="row">
+        {{-- Logo 1: Default --}}
         <div class="col-md-6">
-            <x-adminlte-card title="Logo Saat Ini" theme="lightblue" theme-mode="outline">
+            <x-adminlte-card title="Logo Default (Sebelum Scroll)" theme="lightblue" theme-mode="outline">
                 <div class="text-center mb-3">
-                    @if ($logo && $logo->image_path)
-                        <img src="{{ asset('storage/' . $logo->image_path) }}" alt="Logo"
+                    @if ($logo1 && $logo1->image_path)
+                        <img src="{{ asset('storage/' . $logo1->image_path) }}" alt="Logo Default"
                             class="img-fluid img-thumbnail" style="max-height: 200px;">
                     @else
                         <img src="{{ asset('asset/img/LogoWebBrillaintPare.png') }}" alt="Logo Default"
                             class="img-fluid img-thumbnail" style="max-height: 200px;">
-                        <p class="text-muted mt-2"><small>Menggunakan gambar default. Upload logo baru untuk menggantinya.</small></p>
+                        <p class="text-muted mt-2"><small>Menggunakan gambar default.</small></p>
                     @endif
                 </div>
 
-                <form action="{{ route('admin.logos.update') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.logos.update', 'logo1') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <x-adminlte-input-file name="image_path" label="Upload Logo Baru" id="imageInput"
+                    <x-adminlte-input-file name="image_path" label="Upload Logo Default" id="imageInput1"
                         placeholder="Pilih gambar..." />
-                    <img id="imagePreview" src="#" alt="Preview" class="mt-2 d-none img-thumbnail"
+                    <img id="imagePreview1" src="#" alt="Preview" class="mt-2 d-none img-thumbnail"
                         style="max-height: 150px;">
 
                     <div class="d-flex justify-content-end mt-3">
                         <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-upload"></i> Simpan Logo
+                            <i class="fas fa-upload"></i> Simpan
+                        </button>
+                    </div>
+                </form>
+            </x-adminlte-card>
+        </div>
+
+        {{-- Logo 2: Scroll --}}
+        <div class="col-md-6">
+            <x-adminlte-card title="Logo Scroll (Setelah Scroll)" theme="success" theme-mode="outline">
+                <div class="text-center mb-3">
+                    @if ($logo2 && $logo2->image_path)
+                        <img src="{{ asset('storage/' . $logo2->image_path) }}" alt="Logo Scroll"
+                            class="img-fluid img-thumbnail" style="max-height: 200px;">
+                    @else
+                        <img src="{{ asset('asset/img/LogoWebBrillaintPare.png') }}" alt="Logo Scroll Default"
+                            class="img-fluid img-thumbnail" style="max-height: 200px;">
+                        <p class="text-muted mt-2"><small>Menggunakan gambar default.</small></p>
+                    @endif
+                </div>
+
+                <form action="{{ route('admin.logos.update', 'logo2') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <x-adminlte-input-file name="image_path" label="Upload Logo Scroll" id="imageInput2"
+                        placeholder="Pilih gambar..." />
+                    <img id="imagePreview2" src="#" alt="Preview" class="mt-2 d-none img-thumbnail"
+                        style="max-height: 150px;">
+
+                    <div class="d-flex justify-content-end mt-3">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-upload"></i> Simpan
                         </button>
                     </div>
                 </form>
@@ -52,14 +83,19 @@
         </script>
     @endif
     <script>
-        document.getElementById('imageInput').addEventListener('change', function (event) {
-            const preview = document.getElementById('imagePreview');
+        document.getElementById('imageInput1').addEventListener('change', function (event) {
+            const preview = document.getElementById('imagePreview1');
             if (event.target.files && event.target.files[0]) {
                 const reader = new FileReader();
-                reader.onload = e => {
-                    preview.src = e.target.result;
-                    preview.classList.remove('d-none');
-                };
+                reader.onload = e => { preview.src = e.target.result; preview.classList.remove('d-none'); };
+                reader.readAsDataURL(event.target.files[0]);
+            }
+        });
+        document.getElementById('imageInput2').addEventListener('change', function (event) {
+            const preview = document.getElementById('imagePreview2');
+            if (event.target.files && event.target.files[0]) {
+                const reader = new FileReader();
+                reader.onload = e => { preview.src = e.target.result; preview.classList.remove('d-none'); };
                 reader.readAsDataURL(event.target.files[0]);
             }
         });

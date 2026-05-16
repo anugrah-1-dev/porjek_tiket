@@ -26,7 +26,8 @@ class AppServiceProvider extends ServiceProvider
         // Pastikan View facade di-import
         \Illuminate\Support\Facades\View::composer('*', function ($view) {
             $view->with('contactServices', Customer_Service::all());
-            $view->with('navLogo', Logo::first());
+            $view->with('navLogo1', Logo::where('key', 'logo1')->first());
+            $view->with('navLogo2', Logo::where('key', 'logo2')->first());
         });
     }
 }

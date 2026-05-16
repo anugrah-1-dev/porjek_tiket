@@ -1,8 +1,8 @@
 <!-- Navbar -->
 <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
 <script>
-    const logo1URL = "{{ asset('asset/img/LogoWebBrillaintPare.png') }}";
-    const logo2URL = "{{ asset('asset/img/LogoWebBrillaintPare.png') }}";
+    const logo1URL = "{{ $navLogo1 && $navLogo1->image_path ? asset('storage/' . $navLogo1->image_path) : asset('asset/img/LogoWebBrillaintPare.png') }}";
+    const logo2URL = "{{ $navLogo2 && $navLogo2->image_path ? asset('storage/' . $navLogo2->image_path) : asset('asset/img/LogoWebBrillaintPare.png') }}";
 </script>
 <script src="{{ asset('js/landingpage.js') }}"></script>
 <!-- Navbar css-->
@@ -12,8 +12,8 @@
 
 <nav id="navbar">
     <div class="logo">
-        @if ($navLogo && $navLogo->image_path)
-            <img src="{{ asset('storage/' . $navLogo->image_path) }}" alt="Logo" id="navbarLogo" style="height: 70px;">
+        @if ($navLogo1 && $navLogo1->image_path)
+            <img src="{{ asset('storage/' . $navLogo1->image_path) }}" alt="Logo" id="navbarLogo" style="height: 70px;">
         @else
             <img src="{{ asset('asset/img/LogoWebBrillaintPare.png') }}" alt="Logo" id="navbarLogo" style="height: 70px;">
         @endif

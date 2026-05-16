@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Logo extends Model
 {
-    protected $fillable = ['image_path'];
+    protected $fillable = ['key', 'image_path'];
 }
