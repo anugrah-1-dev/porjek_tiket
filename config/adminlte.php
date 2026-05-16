@@ -693,12 +693,12 @@
                 ],
             ],
             'Sweetalert2' => [
-                'active' => false,
+                'active' => true,
                 'files' => [
                     [
                         'type' => 'js',
                         'asset' => false,
-                        'location' => '//cdn.jsdelivr.net/npm/sweetalert2@8',
+                        'location' => '//cdn.jsdelivr.net/npm/sweetalert2@11',
                     ],
                 ],
             ],
@@ -740,6 +740,16 @@
                         'type' => 'js',
                         'asset' => true,
                         'location' => 'vendor/jquery/jquery.min.js',
+                    ],
+                ],
+            ],
+            'BsCustomFileInput' => [
+                'active' => true,
+                'files' => [
+                    [
+                        'type' => 'js',
+                        'asset' => false,
+                        'location' => '//cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js',
                     ],
                 ],
             ],

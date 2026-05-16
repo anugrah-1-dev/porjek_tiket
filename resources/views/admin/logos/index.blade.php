@@ -7,20 +7,6 @@
 @stop
 
 @section('content')
-    @if (session('alert'))
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                Swal.fire({
-                    icon: '{{ session('alert')['icon'] }}',
-                    title: '{{ session('alert')['title'] }}',
-                    text: '{{ session('alert')['text'] }}',
-                    timer: 2500,
-                    showConfirmButton: false,
-                });
-            });
-        </script>
-    @endif
-
     <div class="row justify-content-center">
         <div class="col-md-6">
             <x-adminlte-card title="Logo Saat Ini" theme="lightblue" theme-mode="outline">
@@ -54,6 +40,17 @@
 @stop
 
 @section('js')
+    @if (session('alert'))
+        <script>
+            Swal.fire({
+                icon: '{{ session('alert')['icon'] }}',
+                title: '{{ session('alert')['title'] }}',
+                text: '{{ session('alert')['text'] }}',
+                timer: 2500,
+                showConfirmButton: false,
+            });
+        </script>
+    @endif
     <script>
         document.getElementById('imageInput').addEventListener('change', function (event) {
             const preview = document.getElementById('imagePreview');
