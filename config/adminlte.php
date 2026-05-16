@@ -528,6 +528,11 @@
                         'icon' => 'fas fa-university',
                     ],
                     [
+                        'text' => 'Logo',
+                        'url'  => '/admin/logos',
+                        'icon' => 'fas fa-image',
+                    ],
+                    [
                         'text' => 'Customer Service',
                         'url'  => '/admin/customer_services',
                         'icon' => 'fas fa-headset',

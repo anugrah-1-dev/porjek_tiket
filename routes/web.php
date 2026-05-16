@@ -29,6 +29,7 @@ use App\Http\Controllers\PendaftranCampController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\TrackingController;
 use App\Http\Controllers\Admin\ThumbnailController;
+use App\Http\Controllers\Admin\LogoController;
 
 use App\Http\Controllers\ProgramInggrisController;
 use App\Http\Controllers\ProgramJermanController;
@@ -200,6 +201,8 @@ Route::middleware(['auth', 'role:admin|officer'])->prefix('admin')->name('admin.
     Route::resource('users', UserController::class);
     //banks
     Route::resource('banks', BankController::class);
+    // logos
+    Route::resource('logos', LogoController::class);
     //transports
     Route::resource('transports', TransportsController::class);
     //cs
