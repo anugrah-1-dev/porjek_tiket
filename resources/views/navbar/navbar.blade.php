@@ -12,8 +12,11 @@
 
 <nav id="navbar">
     <div class="logo">
-        <img src="{{ asset('asset/img/LogoWebBrillaintPare.png') }}" alt="Logo" id="navbarLogo" style="height: 70px;">
-
+        @if ($navLogo && $navLogo->image_path)
+            <img src="{{ asset('storage/' . $navLogo->image_path) }}" alt="Logo" id="navbarLogo" style="height: 70px;">
+        @else
+            <img src="{{ asset('asset/img/LogoWebBrillaintPare.png') }}" alt="Logo" id="navbarLogo" style="height: 70px;">
+        @endif
     </div>
 
     <div class="burger" onclick="toggleNavbar()">
