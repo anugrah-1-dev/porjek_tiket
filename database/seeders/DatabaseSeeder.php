@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ProgramCampSeeder::class);
         $this->call(RoomSeeder::class);
         $this->call(ThumbnailSeeder::class);
+        $this->call(LaundryPackageSeeder::class);
 
     }
 }
