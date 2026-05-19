@@ -23,6 +23,8 @@
                 <img src="{{ asset('asset/img/logonhc.png') }}" alt="Logo NHC" style="height: 95px;">
             @elseif (request()->routeIs('program.inggris'))
                 <img src="{{ asset('asset/img/Inggris2.png') }}" alt="Logo Inggris" style="height: 150px;">
+            @elseif (request()->routeIs('bieplus.program.inggris', 'bieplus.program.jerman', 'bieplus.program.mandarin', 'bieplus.program.arab'))
+                <img src="{{ asset('asset/img/bietest.png') }}" alt="Logo BIE+" style="height: 84px;">
             @else
                 @if (request()->routeIs('landing') && $navLogo && $navLogo->image_path)
                     <img src="{{ asset('storage/' . $navLogo->image_path) }}" alt="Logo" style="height: 84px;">
