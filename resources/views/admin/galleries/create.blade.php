@@ -95,6 +95,7 @@
             </div>
         </div>`;
     container.insertAdjacentHTML('beforeend', html);
+        }
     </script>
 
     @if (session('success'))
