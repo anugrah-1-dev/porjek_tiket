@@ -407,7 +407,7 @@
         </style>
 
         <!-- Registration Form Section (DINONAKTIFKAN SEMENTARA) -->
-        {{--
+        @if(false)
         <div class="card border-0 shadow-sm mb-4 mb-lg-5">
             <div class="card-header bg-primary text-white py-3">
                 <h3 class="fw-bold mb-0 text-center">Formulir Registrasi Camp BIEPLUS</h3>
@@ -433,11 +433,7 @@
                         </div>
                         <div class="col-12 col-md-6">
                             <label for="asal_kota" class="form-label fw-semibold">Alamat</label>
-                            <input type="text" id="asal_kota" name="asal_kota" class="form-control form-control-lg"
-                                required>
-
-
-
+                            <input type="text" id="asal_kota" name="asal_kota" class="form-control form-control-lg" required>
                         </div>
 
                         <div class="col-12 col-md-6">
@@ -450,23 +446,20 @@
                         </div>
 
                         @php
-                            $today = \Carbon\Carbon::now('Asia/Jakarta')->toDateString(); // format: '2025-07-27'
+                            $today = \Carbon\Carbon::now('Asia/Jakarta')->toDateString();
                         @endphp
 
                         <div class="col-12 col-md-6">
-                            <label for="period_id" class="form-label fw-semibold">Periode </label>
+                            <label for="period_id" class="form-label fw-semibold">Periode</label>
                             <select name="period_id" id="period_id" class="form-select form-select-lg" autocomplete="off" required>
                                 <option value="">-- Pilih Periode --</option>
                                 @foreach ($periods as $period)
                                     @php
                                         $periodDate = \Carbon\Carbon::parse($period->date)->toDateString();
                                     @endphp
-
-                                    --}} {{-- hanya tampilkan period yang >= hari ini --}} {{--
                                     @if ($periodDate >= $today)
                                         <option value="{{ $period->id }}" {{ $periodDate == $today ? 'selected' : '' }}>
-                                            Periode:
-                                            {{ \Carbon\Carbon::parse($period->date)->translatedFormat('d M Y') }}
+                                            Periode: {{ \Carbon\Carbon::parse($period->date)->translatedFormat('d M Y') }}
                                             {{ $periodDate == $today ? '(Aktif Hari Ini)' : '' }}
                                         </option>
                                     @endif
@@ -474,20 +467,13 @@
                             </select>
                         </div>
 
-
-
                         <div class="row">
-                            <!-- JavaScript untuk menampilkan/sembunyikan form bank -->
                             <div class="col-12 col-md-6 mt-3">
-                                <label for="payment_type" class="form-label fw-semibold">Jenis
-                                    Pembayaran</label>
+                                <label for="payment_type" class="form-label fw-semibold">Jenis Pembayaran</label>
                                 <select name="payment_type" id="payment_type" class="form-select form-select-lg" required>
                                     <option value="">-- Pilih Jenis Pembayaran --</option>
-                                    <option value="tunai" {{ old('payment_type') == 'tunai' ? 'selected' : '' }}>
-                                        Tunai</option>
-                                    <option value="nontunai" {{ old('payment_type') == 'nontunai' ? 'selected' : '' }}>
-                                        NonTunai
-                                    </option>
+                                    <option value="tunai" {{ old('payment_type') == 'tunai' ? 'selected' : '' }}>Tunai</option>
+                                    <option value="nontunai" {{ old('payment_type') == 'nontunai' ? 'selected' : '' }}>NonTunai</option>
                                 </select>
                             </div>
 
@@ -503,78 +489,27 @@
                                 </select>
                             </div>
 
-                            <div class="col-12 col-md-6 mt-3 bukti-section" style="display:none;">
-                                <label for="bukti_pembayaran" class="form-label fw-semibold">Upload Bukti
-                                    Pembayaran</label>
-                                <input type="file" name="bukti_pembayaran" id="bukti_pembayaran" class="form-control"
-                                    accept="image/*" />
-                            </div>
-
-                            <script>
-                                document.getElementById('payment_type').addEventListener('change', function () {
-                                    const bankForm = document.getElementById('bankForm');
-                                    if (this.value === 'nontunai') {
-                                        bankForm.style.display = 'block';
-                                        document.getElementById('bank_id').setAttribute('required', 'required');
-                                    } else {
-                                        bankForm.style.display = 'none';
-                                        document.getElementById('bank_id').removeAttribute('required');
-                                        document.getElementById('bank_id').value = '';
-                                    }
-                                });
-
-                                document.addEventListener('DOMContentLoaded', function () {
-                                    document.getElementById('payment_type').dispatchEvent(new Event('change'));
-                                });
-                            </script>
-
                             <div class="col-12">
                                 <p class="form-label fw-semibold d-block mb-2">Paket Durasi</p>
                                 <div class="duration-options-container">
                                     @php
                                         $durasiOptions = [
-                                            'perhari' => [
-                                                'label' => 'Per Hari',
-                                                'harga' => $program->harga_perhari,
-                                            ],
-                                            'satu_minggu' => [
-                                                'label' => '1 Minggu',
-                                                'harga' => $program->harga_satu_minggu,
-                                            ],
-                                            'dua_minggu' => [
-                                                'label' => '2 Minggu',
-                                                'harga' => $program->harga_dua_minggu,
-                                            ],
-                                            'tiga_minggu' => [
-                                                'label' => '3 Minggu',
-                                                'harga' => $program->harga_tiga_minggu,
-                                            ],
-                                            'satu_bulan' => [
-                                                'label' => '1 Bulan',
-                                                'harga' => $program->harga_satu_bulan,
-                                            ],
-                                            'dua_bulan' => [
-                                                'label' => '2 Bulan',
-                                                'harga' => $program->harga_dua_bulan,
-                                            ],
-                                            'tiga_bulan' => [
-                                                'label' => '3 Bulan',
-                                                'harga' => $program->harga_tiga_bulan,
-                                            ],
-                                          
+                                            'perhari'      => ['label' => 'Per Hari',  'harga' => $program->harga_perhari],
+                                            'satu_minggu'  => ['label' => '1 Minggu',  'harga' => $program->harga_satu_minggu],
+                                            'dua_minggu'   => ['label' => '2 Minggu',  'harga' => $program->harga_dua_minggu],
+                                            'tiga_minggu'  => ['label' => '3 Minggu',  'harga' => $program->harga_tiga_minggu],
+                                            'satu_bulan'   => ['label' => '1 Bulan',   'harga' => $program->harga_satu_bulan],
+                                            'dua_bulan'    => ['label' => '2 Bulan',   'harga' => $program->harga_dua_bulan],
+                                            'tiga_bulan'   => ['label' => '3 Bulan',   'harga' => $program->harga_tiga_bulan],
                                         ];
                                     @endphp
                                     @foreach ($durasiOptions as $key => $option)
                                         @if ($option['harga'] > 0)
                                             <div class="duration-option">
-                                                <input class="form-check-input d-none" type="radio" name="durasi_paket"
-                                                    id="{{ $key }}" value="{{ $key }}" required>
-                                                <label
-                                                    class="d-flex flex-column justify-content-center align-items-center p-3 rounded border text-center"
-                                                    for="{{ $key }}">
+                                                <input class="form-check-input d-none" type="radio" name="durasi_paket" id="{{ $key }}" value="{{ $key }}" required>
+                                                <label class="d-flex flex-column justify-content-center align-items-center p-3 rounded border text-center" for="{{ $key }}">
                                                     <span class="fw-semibold">{{ $option['label'] }}</span>
-                                                    <small class="text-muted">Rp
-                                                        {{ number_format($option['harga']) }}</small>
+                                                    <small class="text-muted">Rp {{ number_format($option['harga']) }}</small>
                                                 </label>
                                             </div>
                                         @endif
@@ -591,51 +526,12 @@
                 </form>
             </div>
         </div>
-        --}}
+        @endif
     </div>
 
     <!-- jQuery UI CDN -->
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
-    <script>
-        $(function () {
-            $.getJSON('/indonesia-indonesian.json', function (data) {
-                let kotaList = [];
-
-                // Gabungkan semua kota/kab dari semua provinsi jadi satu array
-                for (let provinsi in data) {
-                    kotaList = kotaList.concat(data[provinsi]);
-                }
-
-                // Inisialisasi autocomplete
-                $('#asal_kota').autocomplete({
-                    source: kotaList,
-                    minLength: 2
-                });
-            });
-        });
-    </script>
-    @if($stokHabis)
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const stok = {{ $program->stok }};
-                const form = document.getElementById('pendaftaranForm');
-
-                if (form) {
-                    form.addEventListener('submit', function (e) {
-                        if (stok === 0) {
-                            e.preventDefault();
-                            Swal.fire({
-                                icon: 'warning',
-                                title: 'Maaf!',
-                                text: 'Camp ini sudah penuh! Silahkan hubungi admin untuk informasi lebih lanjut',
-                            });
-                        }
-                    });
-                }
-            });
-        </script>
-    @endif
 
 @endsection
