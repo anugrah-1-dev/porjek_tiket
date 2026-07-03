@@ -40,13 +40,34 @@
 
                             </div>
                         </div>
-                        <a href="{{ url('/') }}" class="btn btn-primary"><i class="bi bi-house-door-fill"></i> Kembali ke Beranda</a>
+                        <a href="{{ url('/') }}" class="btn btn-outline-primary"><i class="bi bi-house-door-fill"></i> Kembali ke Beranda</a>
+                        <button onclick="confirmCetak('{{ route('invoice.cetak', ['trx_id' => $pendaftaran->trx_id]) }}')" class="btn btn-primary"><i class="bi bi-printer-fill"></i> Cetak Invoice</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        function confirmCetak(url) {
+            Swal.fire({
+                title: 'Cetak Invoice?',
+                text: "Apakah Anda yakin ingin mencetak invoice ini?",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#0d6efd',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, Cetak!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.open(url, '_blank');
+                }
+            })
+        }
+    </script>
 
     {{-- SCRIPT BARU UNTUK FUNGSI COPY TO CLIPBOARD --}}
     <script>

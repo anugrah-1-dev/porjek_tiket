@@ -87,6 +87,7 @@
                                             Konfirmasi via WhatsApp</a>
                                         <a href="{{ url('/') }}" class="btn btn-outline-secondary mb-2"><i
                                                 class="bi bi-house-door-fill"></i> Kembali ke Beranda</a>
+                                        <button onclick="confirmCetak('{{ route('invoice.cetak', ['trx_id' => $pendaftaran->trx_id]) }}')" class="btn btn-primary mb-2"><i class="bi bi-printer-fill"></i> Cetak Invoice</button>
                                     </div>
                                 </div>
                             @else
@@ -134,6 +135,7 @@
                                     Konfirmasi via WhatsApp</a>
                                 <a href="{{ url('/') }}" class="btn btn-outline-secondary mb-2"><i
                                         class="bi bi-house-door-fill"></i> Kembali ke Beranda</a>
+                                <button onclick="confirmCetak('{{ route('invoice.cetak', ['trx_id' => $pendaftaran->trx_id]) }}')" class="btn btn-primary mb-2"><i class="bi bi-printer-fill"></i> Cetak Invoice</button>
                             </div>
                         </div>
                     </div>
@@ -255,6 +257,24 @@
                 showConfirmButton: true,
                 confirmButtonText: 'Tutup'
             });
+        </script>
+        <script>
+            function confirmCetak(url) {
+                Swal.fire({
+                    title: 'Cetak Invoice?',
+                    text: "Apakah Anda yakin ingin mencetak invoice ini?",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#0d6efd',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Ya, Cetak!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.open(url, '_blank');
+                    }
+                })
+            }
         </script>
     @endif
 

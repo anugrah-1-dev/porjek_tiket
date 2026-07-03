@@ -1023,11 +1023,11 @@
 
                 <div class="kontak-info">
                     <p><strong>Instagram:</strong> <a
-                            href="https://www.instagram.com/biecast_brilliankampunginggris?igsh=bzdhMGVyemIxZGQ="
-                            target="_blank">@biecast_brilliankampunginggris</a></p>
-                    <p><strong>YouTube:</strong> <a
-                            href="https://youtube.com/@bieplusbrilliantenglishcourse?si=VxZw3YfiD4t5LciM"
-                            target="_blank">BIECAST Brilliant English Course</a></p>
+                            href="https://www.instagram.com/kekampunginggrisbrilliant"
+                            target="_blank">kekampunginggrisbrilliant</a></p>
+                    <p><strong>TikTok:</strong> <a
+                            href="https://www.tiktok.com/@kekampunginggris"
+                            target="_blank">kekampunginggris</a></p>
                 </div>
 
                 <div class="kontak-maps">

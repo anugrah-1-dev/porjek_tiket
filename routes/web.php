@@ -149,7 +149,8 @@ Route::post('/payment/upload', [PaymentController::class, 'uploadProof'])->name(
 Route::get('/tracking', [TrackingController::class, 'index'])->name('tracking.index');
 Route::post('/tracking', [TrackingController::class, 'search'])->name('tracking.search');
 
-
+// ===== ROUTE INVOICE =====
+Route::get('/invoice/cetak/{trx_id}', [App\Http\Controllers\InvoiceController::class, 'cetak'])->name('invoice.cetak');
 
 Route::get('/', [LandingPageController::class, 'index'])->name('landing');
 
