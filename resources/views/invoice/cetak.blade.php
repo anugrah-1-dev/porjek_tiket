@@ -145,11 +145,40 @@
         .status-pending { background-color: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
         .status-failed { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
 
+        .action-buttons {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #ddd;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 0 10px;
+            background-color: #0d6efd;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+        }
+        .btn-success {
+            background-color: #198754;
+        }
+        .btn:hover {
+            opacity: 0.9;
+        }
+
         @media print {
             body {
                 background: none;
                 margin: 0;
                 padding: 0;
+            }
+            .action-buttons {
+                display: none;
             }
             .invoice-container {
                 box-shadow: none;
@@ -171,7 +200,12 @@
 </head>
 <body>
 
-    <div class="invoice-container">
+    <div class="action-buttons">
+        <button onclick="window.print()" class="btn">Print Invoice</button>
+        <button onclick="downloadPDF()" id="btn-download" class="btn btn-success">Download PDF</button>
+    </div>
+
+    <div class="invoice-container" id="invoice-content">
         <!-- Watermark -->
         <div class="watermark">BRILLIANT</div>
 
@@ -281,11 +315,32 @@
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        // Membuka dialog print otomatis setelah halaman di-load
-        window.onload = function() {
-            window.print();
-        };
+        function downloadPDF() {
+            var element = document.getElementById('invoice-content');
+            var opt = {
+                margin:       [0.5, 0.5, 0.5, 0.5], // top, left, bottom, right in inches
+                filename:     'Invoice_{{ $pendaftaran->trx_id }}.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true },
+                jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+            
+            // Change button text while processing
+            var btn = document.getElementById('btn-download');
+            var originalText = btn.innerHTML;
+            btn.innerHTML = 'Memproses...';
+            
+            html2pdf().set(opt).from(element).save().then(function() {
+                btn.innerHTML = originalText;
+            });
+        }
+
+        // Membuka dialog print otomatis setelah halaman di-load jika mau
+        // window.onload = function() {
+        //     window.print();
+        // };
     </script>
 </body>
 </html>
