@@ -111,6 +111,15 @@
                                 @endif
 
                             </div>
+                            {{-- Tombol Invoice Camp --}}
+                            <div class="mt-3 d-flex gap-2 flex-wrap">
+                                <a href="{{ route('invoice.cetak', $camp->trx_id) }}" target="_blank" class="btn btn-primary btn-sm">
+                                    <i class="bi bi-printer-fill me-1"></i> Cetak Invoice
+                                </a>
+                                <a href="{{ route('invoice.cetak', $camp->trx_id) }}" target="_blank" class="btn btn-success btn-sm" id="btn-download-camp">
+                                    <i class="bi bi-download me-1"></i> Download Invoice PDF
+                                </a>
+                            </div>
                         </div>
 
                     </div>
@@ -323,14 +332,24 @@
                             @if ($offline->bukti_pembayaran)
                                 <div class="col-md-12 mb-3">
                                     <h5 class="text-muted">Bukti Pembayaran</h5>
-                                    <a href="{{ asset('storage/bukti_pembayaran/' . $offline->bukti_pembayaran) }}"
-                                        target="_blank">
-                                        <img src="{{ asset('storage/bukti_pembayaran/' . $offline->bukti_pembayaran) }}"
+                                    {{-- Path sudah berisi 'bukti_pembayaran/namafile.png' dari storeAs, cukup prefix 'storage/' --}}
+                                    <a href="{{ asset('storage/' . $offline->bukti_pembayaran) }}" target="_blank">
+                                        <img src="{{ asset('storage/' . $offline->bukti_pembayaran) }}"
                                             alt="Bukti Pembayaran" class="img-fluid rounded shadow-sm"
                                             style="max-height: 300px;">
                                     </a>
                                 </div>
                             @endif
+
+                            {{-- Tombol Invoice Offline --}}
+                            <div class="mt-3 d-flex gap-2 flex-wrap">
+                                <a href="{{ route('invoice.cetak', $offline->trx_id) }}" target="_blank" class="btn btn-primary btn-sm">
+                                    <i class="bi bi-printer-fill me-1"></i> Cetak Invoice
+                                </a>
+                                <a href="{{ route('invoice.cetak', $offline->trx_id) }}" target="_blank" class="btn btn-success btn-sm">
+                                    <i class="bi bi-download me-1"></i> Download Invoice PDF
+                                </a>
+                            </div>
 
                         </div>
                     </div>
@@ -378,14 +397,24 @@
                         @if ($online->bukti_pembayaran)
                             <div class="col-md-12 mb-3">
                                 <h5 class="text-muted">Bukti Pembayaran</h5>
-                                <a href="{{ asset('storage/bukti_pembayaran/' . $online->bukti_pembayaran) }}"
-                                    target="_blank">
-                                    <img src="{{ asset('storage/bukti_pembayaran/' . $online->bukti_pembayaran) }}"
+                                {{-- Path sudah berisi 'bukti_pembayaran/namafile.png' dari storeAs, cukup prefix 'storage/' --}}
+                                <a href="{{ asset('storage/' . $online->bukti_pembayaran) }}" target="_blank">
+                                    <img src="{{ asset('storage/' . $online->bukti_pembayaran) }}"
                                         alt="Bukti Pembayaran" class="img-fluid rounded shadow-sm"
                                         style="max-height: 300px;">
                                 </a>
                             </div>
                         @endif
+
+                        {{-- Tombol Invoice Online --}}
+                        <div class="mt-3 d-flex gap-2 flex-wrap">
+                            <a href="{{ route('invoice.cetak', $online->trx_id) }}" target="_blank" class="btn btn-primary btn-sm">
+                                <i class="bi bi-printer-fill me-1"></i> Cetak Invoice
+                            </a>
+                            <a href="{{ route('invoice.cetak', $online->trx_id) }}" target="_blank" class="btn btn-success btn-sm">
+                                <i class="bi bi-download me-1"></i> Download Invoice PDF
+                            </a>
+                        </div>
 
                     </div>
                 </div>
