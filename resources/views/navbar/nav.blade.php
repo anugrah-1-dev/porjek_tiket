@@ -78,7 +78,6 @@
             </div>
         </div>
 
-        <a href="{{ url('/#camp') }}">CAMP</a>
         {{-- <a href="{{ url('/#galeri') }}">GALLERI</a>
         <a href="{{ url('/#sosmed') }}">SOSMED</a> --}}
         <a href="{{ url('/#kontak') }}">KONTAK</a>

@@ -48,7 +48,6 @@
             </div>
         </div>
 
-        <a href="#camp">CAMP</a>
         {{-- <a href="#galeri">GALLERI</a>
         <a href="#sosmed">SOSMED</a> --}}
         <a href="#kontak">KONTAK</a>

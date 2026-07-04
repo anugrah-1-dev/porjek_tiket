@@ -421,27 +421,6 @@
                 ],
             ],
 
-            [
-                'header' => 'CAMP',
-            ],
-            [
-                'text' => 'Menejemen Camp',
-                'icon' => 'fas fa-list',
-                'submenu' => [
-                    [
-                        'text' => 'Camp',
-                        'url'  => '/admin/programs/camp',
-                        'icon' => 'fas fa-campground',
-                    ],
-
-                    [
-                        'text' => 'Manajemen Kamar',
-                        'url'  => 'admin/rooms',
-                        'icon' => 'fas fa-bed',
-                    ],
-                ],
-            ],
-
             ['header' => 'DATA PENDAFTAR'],
             [
                 'text' => 'Pendaftar Program',
@@ -461,12 +440,6 @@
                         'active' => ['admin/pendaftaran/online*'],
                     ],
 
-                    [
-                        'text' => 'Pendaftar Camp',
-                        'route'  => 'admin.pendaftaran.camp.index',
-                        'icon'   => 'fas fa-clipboard-list',
-                        'active' => ['admin/pendaftaran/camp*'],
-                    ],
                 ],
             ],
 
