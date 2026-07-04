@@ -557,7 +557,7 @@
             </path>
         </svg>
     </div> --}}
-    <section class="camp-section" id="camp">
+    {{-- <section class="camp-section" id="camp">
         <div class="container">
             <div class="text-center mb-5" data-aos="fade-up">
                 <h2 class="section-title-camp">CAMP BIEPLUS</h2>
@@ -754,15 +754,7 @@
                     @endforelse
                 </div>
             </div>
-        </section>
-
-        {{-- <div class="wave-divider5">
-            <svg viewBox="0 0 1440 320" preserveAspectRatio="none">
-                <path class="shape-fill5"
-                    d="M0,224L48,208C96,192,192,160,288,154.7C384,149,480,171,576,186.7C672,203,768,213,864,197.3C960,181,1056,139,1152,122.7C1248,107,1344,117,1392,122.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
-                </path>
-            </svg>
-        </div> --}}
+        </section> --}}
 
         <section id="galeri" class="gallery">
             <div class="container" data-aos="fade-up">
