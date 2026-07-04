@@ -48,7 +48,45 @@
                             <hr>
                             <p class="mb-1"><strong>Program:</strong></p>
                             <p class="lead">{{ $pendaftaran->program->nama }}</p>
-                            <p class="mb-1"><strong>Total Pembayaran:</strong></p>
+
+                            {{-- Rincian Biaya --}}
+                            @php
+                                $programHarga   = $pendaftaran->program->harga ?? 0;
+                                $biayaAdmin     = $pendaftaran->program->biaya_admin ?? 0;
+                                $transportHarga = isset($pendaftaran->transport) && $pendaftaran->transport ? $pendaftaran->transport->price : 0;
+                                $akomodasiHarga = $pendaftaran->akomodasi_harga ?? 0;
+                            @endphp
+
+                            <table class="table table-sm table-borderless text-start mt-2 mb-1">
+                                <tbody>
+                                    <tr>
+                                        <td>Harga Program</td>
+                                        <td class="text-end">Rp {{ number_format($programHarga, 0, ',', '.') }}</td>
+                                    </tr>
+                                    @if ($biayaAdmin > 0)
+                                    <tr>
+                                        <td>Biaya Admin</td>
+                                        <td class="text-end">Rp {{ number_format($biayaAdmin, 0, ',', '.') }}</td>
+                                    </tr>
+                                    @endif
+                                    @if ($transportHarga > 0)
+                                    <tr>
+                                        <td>Transportasi ({{ $pendaftaran->transport->name }})</td>
+                                        <td class="text-end">Rp {{ number_format($transportHarga, 0, ',', '.') }}</td>
+                                    </tr>
+                                    @endif
+                                    @if ($akomodasiHarga > 0)
+                                    <tr>
+                                        <td>Akomodasi ({{ $pendaftaran->akomodasi_tipe }})</td>
+                                        <td class="text-end">Rp {{ number_format($akomodasiHarga, 0, ',', '.') }}</td>
+                                    </tr>
+                                    @endif
+                                    <tr class="fw-bold border-top">
+                                        <td>Total Pembayaran</td>
+                                        <td class="text-end">Rp {{ number_format($pendaftaran->subtotal, 0, ',', '.') }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                             <h2 class="fw-bolder">Rp {{ number_format($pendaftaran->subtotal, 0, ',', '.') }}</h2>
 
 
