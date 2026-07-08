@@ -1058,70 +1058,61 @@
     {{-- ===== COMING SOON MODAL ===== --}}
     <div id="comingSoonModal" class="cs-overlay">
         <div class="cs-box">
-            {{-- Animated background particles --}}
-            <div class="cs-particles">
-                <span></span><span></span><span></span>
-                <span></span><span></span><span></span>
-            </div>
 
             {{-- Close button --}}
-            <button class="cs-close-btn" id="closeComingSoon" title="Tutup">
-                <i class="fas fa-times"></i>
-            </button>
+            <button class="cs-close-btn" id="closeComingSoon" title="Tutup">&times;</button>
 
-            {{-- Icon ring --}}
-            <div class="cs-icon-ring">
-                <div class="cs-icon-ring-inner">
-                    <i class="fas fa-ticket-alt"></i>
+            {{-- Left accent bar --}}
+            <div class="cs-accent-bar"></div>
+
+            {{-- Top label --}}
+            <div class="cs-top-label">
+                <span class="cs-dot"></span>
+                <span>Brilliant English Course &mdash; 2026</span>
+            </div>
+
+            {{-- Main heading --}}
+            <div class="cs-headline-wrap">
+                <p class="cs-pre-title">Tiket Konser</p>
+                <h2 class="cs-title">FOR<br>REVENGE</h2>
+                <div class="cs-title-sub">segera&nbsp;dibuka&nbsp;&mdash;&nbsp;nantikan&nbsp;pengumuman&nbsp;resmi</div>
+            </div>
+
+            {{-- Divider --}}
+            <div class="cs-rule"></div>
+
+            {{-- Event details — tabel gaya poster --}}
+            <div class="cs-details-grid">
+                <div class="cs-detail-item">
+                    <span class="cs-detail-key">Tanggal</span>
+                    <span class="cs-detail-val">21 Agustus 2026</span>
+                </div>
+                <div class="cs-detail-item">
+                    <span class="cs-detail-key">Lokasi</span>
+                    <span class="cs-detail-val">Kampung Inggris, Pare</span>
+                </div>
+                <div class="cs-detail-item">
+                    <span class="cs-detail-key">Artist</span>
+                    <span class="cs-detail-val">For Revenge</span>
+                </div>
+                <div class="cs-detail-item">
+                    <span class="cs-detail-key">Status</span>
+                    <span class="cs-detail-val cs-status-pill">Segera Hadir</span>
                 </div>
             </div>
 
-            {{-- Badge --}}
-            <div class="cs-badge">
-                <i class="fas fa-bolt"></i> Segera Hadir
-            </div>
+            {{-- Divider --}}
+            <div class="cs-rule"></div>
 
-            {{-- Title --}}
-            <h2 class="cs-title">Pembelian Tiket<br><span>Segera Dibuka!</span></h2>
-
-            {{-- Description --}}
-            <p class="cs-desc">
-                Tiket konser <strong>For Revenge</strong> di Brilliant English Course<br>
-                akan segera tersedia. Nantikan pengumuman resmi dari kami!
-            </p>
-
-            {{-- Event Info Cards --}}
-            <div class="cs-info-row">
-                <div class="cs-info-card">
-                    <i class="fas fa-calendar-alt"></i>
-                    <div>
-                        <span class="cs-info-label">Tanggal</span>
-                        <span class="cs-info-val">21 Agustus 2026</span>
-                    </div>
-                </div>
-                <div class="cs-info-card">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <div>
-                        <span class="cs-info-label">Lokasi</span>
-                        <span class="cs-info-val">Kampung Inggris Pare</span>
-                    </div>
-                </div>
-                <div class="cs-info-card">
-                    <i class="fas fa-music"></i>
-                    <div>
-                        <span class="cs-info-label">Artist</span>
-                        <span class="cs-info-val">For Revenge</span>
-                    </div>
-                </div>
-            </div>
-
-
-            {{-- Notify CTA --}}
-            <a href="https://wa.me/6282130203020?text=Halo%2C+saya+ingin+mendapatkan+info+tiket+konser+For+Revenge+di+Kampung+Inggris+Pare!" target="_blank" class="cs-notify-btn">
-                <i class="fab fa-whatsapp"></i> Beritahu Saya via WhatsApp
+            {{-- WA CTA --}}
+            <a href="https://wa.me/6282130203020?text=Halo%2C+saya+ingin+mendapatkan+info+tiket+konser+For+Revenge+di+Kampung+Inggris+Pare!" target="_blank" class="cs-wa-btn">
+                <i class="fab fa-whatsapp"></i>
+                <span>Info via WhatsApp</span>
+                <i class="fas fa-arrow-right cs-arrow"></i>
             </a>
 
-            <p class="cs-footnote">Pantau terus info terbaru di media sosial kami ✨</p>
+            <p class="cs-footnote">Pantau sosial media kami untuk pengumuman harga &amp; jadwal resmi.</p>
+
         </div>
     </div>
     {{-- ===== END COMING SOON MODAL ===== --}}
