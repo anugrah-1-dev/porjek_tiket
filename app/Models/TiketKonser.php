@@ -13,6 +13,7 @@ class TiketKonser extends Model
 
     protected $fillable = [
         'trx_id',
+        'status',
         'kategori',
         'nama_lengkap',
         'ttl',

@@ -11,6 +11,10 @@ class PengaturanTiket extends Model
     protected $fillable = [
         'harga_umum',
         'harga_member',
+        'nama_kategori_umum',
+        'harga_vip',
+        'nama_kategori_vip',
+        'gambar_poster',
     ];
 
     /**
@@ -19,8 +23,11 @@ class PengaturanTiket extends Model
     public static function get(): self
     {
         return static::firstOrCreate([], [
-            'harga_umum'   => 150000,
-            'harga_member' => 100000,
+            'harga_umum'         => 150000,
+            'harga_member'       => 100000,
+            'nama_kategori_umum' => 'Sales 1',
+            'harga_vip'          => 350000,
+            'nama_kategori_vip'  => 'VIP',
         ]);
     }
 }

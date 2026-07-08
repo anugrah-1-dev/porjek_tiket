@@ -21,12 +21,18 @@
 
     @include('navbar.navbar')
 
-    @if ($programsgambar)
+    @if ($pengaturanTiket->gambar_poster)
         <div id="pamflet-popup" class="pamflet-popup" style="display:none;">
             <div class="pamflet-content position-relative">
-                <!-- Tombol silang -->
                 <button id="closePamflet" class="btn-close-custom" aria-label="Close">&times;</button>
-
+                <img src="{{ asset('storage/' . $pengaturanTiket->gambar_poster) }}" alt="Poster Konser"
+                    class="img-fluid rounded shadow mb-2">
+            </div>
+        </div>
+    @elseif ($programsgambar)
+        <div id="pamflet-popup" class="pamflet-popup" style="display:none;">
+            <div class="pamflet-content position-relative">
+                <button id="closePamflet" class="btn-close-custom" aria-label="Close">&times;</button>
                 <img src="{{ asset('uploads/programs/' . $programsgambar->gambar) }}" alt="{{ $programsgambar->judul }}"
                     class="img-fluid rounded shadow mb-2">
             </div>
@@ -148,8 +154,16 @@
                 <div class="program2-icon" style="background:#fff3cd;padding:16px;border-radius:8px;">
                     <i class="fas fa-ticket-alt" style="font-size:3rem;color:#FFA109;"></i>
                 </div>
-                <h3>Umum</h3>
-                <span class="pilih1-button">Pilih</span>
+                <h3>{{ $pengaturanTiket->nama_kategori_umum }}</h3>
+                <span class="pilih1-button">Rp {{ number_format($pengaturanTiket->harga_umum, 0, ',', '.') }}</span>
+            </a>
+            <a href="{{ route('tiket-konser.create', ['kategori' => 'vip']) }}"
+               class="program1-card">
+                <div class="program2-icon" style="background:#f8d7da;padding:16px;border-radius:8px;">
+                    <i class="fas fa-crown" style="font-size:3rem;color:#dc3545;"></i>
+                </div>
+                <h3>{{ $pengaturanTiket->nama_kategori_vip }}</h3>
+                <span class="pilih1-button" style="background:#dc3545;">Rp {{ number_format($pengaturanTiket->harga_vip, 0, ',', '.') }}</span>
             </a>
             <a href="{{ route('tiket-konser.create', ['kategori' => 'member']) }}"
                class="program1-card">
@@ -157,7 +171,7 @@
                     <i class="fas fa-id-card" style="font-size:3rem;color:#28a745;"></i>
                 </div>
                 <h3>Member Aktif Brilliant</h3>
-                <span class="pilih1-button">Pilih</span>
+                <span class="pilih1-button" style="background:#28a745;">Rp {{ number_format($pengaturanTiket->harga_member, 0, ',', '.') }}</span>
             </a>
         </div>
     </div>

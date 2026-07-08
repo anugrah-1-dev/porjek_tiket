@@ -316,6 +316,7 @@ Route::middleware(['auth', 'role:admin|officer'])->prefix('admin')->name('admin.
     // ===== TIKET KONSER (ADMIN) =====
     Route::get('/tiket-konser', [AdminTiketKonserController::class, 'index'])->name('tiket-konser.index');
     Route::get('/tiket-konser/{id}', [AdminTiketKonserController::class, 'show'])->name('tiket-konser.show');
+    Route::put('/tiket-konser/{id}/status', [AdminTiketKonserController::class, 'updateStatus'])->name('tiket-konser.update-status');
     Route::delete('/tiket-konser/{id}', [AdminTiketKonserController::class, 'destroy'])->name('tiket-konser.destroy');
 
     // ===== PENGATURAN HARGA TIKET (ADMIN) =====

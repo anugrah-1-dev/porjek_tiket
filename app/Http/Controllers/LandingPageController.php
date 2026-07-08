@@ -11,6 +11,7 @@ use App\Models\ProgramOnline;
 use App\Models\ProgramCamp;
 use App\Models\Sosmed;
 use App\Models\Customer_Service;
+use App\Models\PengaturanTiket;
 
 
 
@@ -25,7 +26,8 @@ class LandingPageController extends Controller
         $camps           = ProgramCamp::orderBy('id', 'asc')->get();
         $sosmed          = Sosmed::all();
         $contactServices = Customer_Service::all();
-        $programsgambar = Program::where('status', 'aktif')->first();
+        $programsgambar  = Program::where('status', 'aktif')->first();
+        $pengaturanTiket = PengaturanTiket::get();
 
         // Kelompokkan berdasarkan platform sosial media
         $groupedSosmed = [
@@ -72,7 +74,8 @@ class LandingPageController extends Controller
             'contactServices' => $contactServices,
             'groupedSosmed' => $groupedSosmed,
             'hasSosmed' => $hasSosmed,
-            'programsgambar' => $programsgambar,
+            'programsgambar'  => $programsgambar,
+            'pengaturanTiket' => $pengaturanTiket,
 
         ]);
     }

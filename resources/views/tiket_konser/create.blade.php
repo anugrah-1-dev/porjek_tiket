@@ -61,29 +61,43 @@
             <div class="card form-card border-0">
                 <div class="card-body p-4">
 
-                    {{-- Kategori Terpilih (Read-only) --}}
+                    {{-- Pilihan Kategori --}}
                     <div class="mb-4">
-                        <label class="form-label d-block">Kategori Tiket</label>
-                        @if ($kategori === 'member')
-                            <span class="badge bg-success px-3 py-2 fs-6">
-                                <i class="fas fa-id-card me-1"></i> Member Aktif Brilliant
-                            </span>
-                        @else
-                            <span class="badge bg-warning text-dark px-3 py-2 fs-6">
-                                <i class="fas fa-ticket-alt me-1"></i> Umum
-                            </span>
-                        @endif
+                        <label class="form-label fw-bold">Pilih Kategori Tiket</label>
+                        <div class="row g-2">
+                            <div class="col-12 col-sm-4">
+                                <input type="radio" class="btn-check" name="kategori_pilih" id="cat_umum"
+                                       value="umum" {{ old('kategori', $kategori) === 'umum' ? 'checked' : '' }}>
+                                <label class="btn btn-outline-warning w-100 py-3" for="cat_umum">
+                                    <i class="fas fa-ticket-alt d-block mb-1 fs-4"></i>
+                                    <strong>{{ $namaUmum }}</strong><br>
+                                    <small>Rp {{ number_format($hargaUmum, 0, ',', '.') }}</small>
+                                </label>
+                            </div>
+                            <div class="col-12 col-sm-4">
+                                <input type="radio" class="btn-check" name="kategori_pilih" id="cat_vip"
+                                       value="vip" {{ old('kategori', $kategori) === 'vip' ? 'checked' : '' }}>
+                                <label class="btn btn-outline-danger w-100 py-3" for="cat_vip">
+                                    <i class="fas fa-crown d-block mb-1 fs-4"></i>
+                                    <strong>{{ $namaVip }}</strong><br>
+                                    <small>Rp {{ number_format($hargaVip, 0, ',', '.') }}</small>
+                                </label>
+                            </div>
+                            <div class="col-12 col-sm-4">
+                                <input type="radio" class="btn-check" name="kategori_pilih" id="cat_member"
+                                       value="member" {{ old('kategori', $kategori) === 'member' ? 'checked' : '' }}>
+                                <label class="btn btn-outline-success w-100 py-3" for="cat_member">
+                                    <i class="fas fa-id-card d-block mb-1 fs-4"></i>
+                                    <strong>Member Aktif</strong><br>
+                                    <small>Rp {{ number_format($hargaMember, 0, ',', '.') }}</small>
+                                </label>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="harga-info mb-4">
                         <i class="fas fa-info-circle text-warning me-1"></i>
-                        Harga per tiket:
-                        <span id="infoHargaUmum" {{ old('kategori', $kategori) === 'umum' ? '' : 'style=display:none' }}>
-                            Umum — <strong>Rp {{ number_format($hargaUmum, 0, ',', '.') }}</strong>
-                        </span>
-                        <span id="infoHargaMember" {{ old('kategori', $kategori) === 'member' ? '' : 'style=display:none' }}>
-                            Member Aktif — <strong>Rp {{ number_format($hargaMember, 0, ',', '.') }}</strong>
-                        </span>
+                        Harga per tiket: <strong id="infoHargaLabel">—</strong>
                     </div>
 
                     <form action="{{ route('tiket-konser.store') }}" method="POST" enctype="multipart/form-data"
@@ -239,12 +253,20 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    const hargaUmum   = {{ $hargaUmum }};
-    const hargaMember = {{ $hargaMember }};
-    const kategori    = "{{ $kategori }}";
+    const hargaMap = {
+        umum:   {{ $hargaUmum }},
+        vip:    {{ $hargaVip }},
+        member: {{ $hargaMember }},
+    };
+    const namaMap = {
+        umum:   '{{ $namaUmum }}',
+        vip:    '{{ $namaVip }}',
+        member: 'Member Aktif Brilliant',
+    };
 
-    function getHargaAktif() {
-        return kategori === 'member' ? hargaMember : hargaUmum;
+    function getKategoriAktif() {
+        const checked = document.querySelector('input[name="kategori_pilih"]:checked');
+        return checked ? checked.value : 'umum';
     }
 
     function formatRupiah(angka) {
@@ -253,35 +275,38 @@
 
     function updateTotal() {
         const jumlah = parseInt(document.getElementById('jumlah_tiket').value) || 0;
-        document.getElementById('totalHargaDisplay').textContent = formatRupiah(jumlah * getHargaAktif());
+        const kat    = getKategoriAktif();
+        document.getElementById('totalHargaDisplay').textContent = formatRupiah(jumlah * (hargaMap[kat] || 0));
+        document.getElementById('infoHargaLabel').textContent    = formatRupiah(hargaMap[kat] || 0);
     }
 
-    function initFormState() {
+    function toggleBuktiMember(kategori) {
         const wrap  = document.getElementById('wrapBuktiMember');
         const input = document.getElementById('bukti_member');
-        const infoUmum   = document.getElementById('infoHargaUmum');
-        const infoMember = document.getElementById('infoHargaMember');
 
         if (kategori === 'member') {
-            wrap.style.display       = 'block';
-            input.required           = true;
-            infoUmum.style.display   = 'none';
-            infoMember.style.display = '';
+            wrap.style.display = 'block';
+            input.required     = true;
         } else {
-            wrap.style.display       = 'none';
-            input.required           = false;
-            infoUmum.style.display   = '';
-            infoMember.style.display = 'none';
+            wrap.style.display = 'none';
+            input.required     = false;
+            input.value        = '';
         }
+        document.getElementById('inputKategori').value = kategori;
         updateTotal();
     }
+
+    document.querySelectorAll('input[name="kategori_pilih"]').forEach(function (radio) {
+        radio.addEventListener('change', function () { toggleBuktiMember(this.value); });
+    });
 
     document.getElementById('jumlah_tiket').addEventListener('input', updateTotal);
 
     document.addEventListener('DOMContentLoaded', function () {
-        initFormState();
+        const current = document.querySelector('input[name="kategori_pilih"]:checked');
+        if (current) toggleBuktiMember(current.value);
+        updateTotal();
 
-        // Tampilkan detail bank jika ada old value (validasi gagal)
         const bankSelect = document.getElementById('bank_id');
         if (bankSelect && bankSelect.value) tampilDetailBank(bankSelect);
     });

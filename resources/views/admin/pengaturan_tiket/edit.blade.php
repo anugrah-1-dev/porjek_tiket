@@ -18,64 +18,85 @@
     <div class="col-md-6">
         <div class="card card-outline card-warning">
             <div class="card-header">
-                <h3 class="card-title"><i class="fas fa-ticket-alt mr-2"></i>Atur Harga Per Tiket</h3>
+                <h3 class="card-title"><i class="fas fa-ticket-alt mr-2"></i>Pengaturan Tiket Konser</h3>
             </div>
             <div class="card-body">
-                <form action="{{ route('admin.pengaturan-tiket.update') }}" method="POST">
+                <form action="{{ route('admin.pengaturan-tiket.update') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
+                    <h6 class="text-muted border-bottom pb-1 mb-3 mt-2">Kategori 1</h6>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="nama_kategori_umum" class="font-weight-bold">Nama Kategori</label>
+                            <input type="text" class="form-control @error('nama_kategori_umum') is-invalid @enderror"
+                                   id="nama_kategori_umum" name="nama_kategori_umum"
+                                   value="{{ old('nama_kategori_umum', $pengaturan->nama_kategori_umum) }}" required>
+                            @error('nama_kategori_umum')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="harga_umum" class="font-weight-bold">Harga (Rp)</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text">Rp</span></div>
+                                <input type="number" class="form-control @error('harga_umum') is-invalid @enderror"
+                                       id="harga_umum" name="harga_umum"
+                                       value="{{ old('harga_umum', $pengaturan->harga_umum) }}" min="1000" required>
+                                @error('harga_umum')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    <h6 class="text-muted border-bottom pb-1 mb-3 mt-3">Kategori VIP</h6>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="nama_kategori_vip" class="font-weight-bold">Nama Kategori</label>
+                            <input type="text" class="form-control @error('nama_kategori_vip') is-invalid @enderror"
+                                   id="nama_kategori_vip" name="nama_kategori_vip"
+                                   value="{{ old('nama_kategori_vip', $pengaturan->nama_kategori_vip) }}" required>
+                            @error('nama_kategori_vip')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="harga_vip" class="font-weight-bold">Harga (Rp)</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text">Rp</span></div>
+                                <input type="number" class="form-control @error('harga_vip') is-invalid @enderror"
+                                       id="harga_vip" name="harga_vip"
+                                       value="{{ old('harga_vip', $pengaturan->harga_vip) }}" min="1000" required>
+                                @error('harga_vip')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    <h6 class="text-muted border-bottom pb-1 mb-3 mt-3">Kategori Member Aktif Brilliant</h6>
                     <div class="form-group">
-                        <label for="harga_umum" class="font-weight-bold">
-                            <i class="fas fa-ticket-alt text-secondary mr-1"></i> Harga Tiket — Umum (Rp)
-                        </label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Rp</span>
-                            </div>
-                            <input type="number"
-                                   class="form-control form-control-lg @error('harga_umum') is-invalid @enderror"
-                                   id="harga_umum"
-                                   name="harga_umum"
-                                   value="{{ old('harga_umum', $pengaturan->harga_umum) }}"
-                                   min="1000"
-                                   required>
-                            @error('harga_umum')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                        <label for="harga_member" class="font-weight-bold">Harga Member (Rp)</label>
+                        <div class="input-group" style="max-width:300px;">
+                            <div class="input-group-prepend"><span class="input-group-text">Rp</span></div>
+                            <input type="number" class="form-control @error('harga_member') is-invalid @enderror"
+                                   id="harga_member" name="harga_member"
+                                   value="{{ old('harga_member', $pengaturan->harga_member) }}" min="1000" required>
+                            @error('harga_member')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                     </div>
 
-                    <div class="form-group mt-3">
-                        <label for="harga_member" class="font-weight-bold">
-                            <i class="fas fa-id-card text-success mr-1"></i> Harga Tiket — Member Aktif Brilliant (Rp)
-                        </label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Rp</span>
+                    <h6 class="text-muted border-bottom pb-1 mb-3 mt-3">Poster Konser</h6>
+                    <div class="form-group">
+                        @if ($pengaturan->gambar_poster)
+                            <div class="mb-2">
+                                <img src="{{ asset('storage/' . $pengaturan->gambar_poster) }}"
+                                     alt="Poster" class="img-thumbnail" style="max-height:150px;">
+                                <p class="text-muted small mt-1">Poster saat ini. Upload baru untuk mengganti.</p>
                             </div>
-                            <input type="number"
-                                   class="form-control form-control-lg @error('harga_member') is-invalid @enderror"
-                                   id="harga_member"
-                                   name="harga_member"
-                                   value="{{ old('harga_member', $pengaturan->harga_member) }}"
-                                   min="1000"
-                                   required>
-                            @error('harga_member')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
+                        @endif
+                        <label for="gambar_poster" class="font-weight-bold">Upload Poster (opsional)</label>
+                        <input type="file" class="form-control-file @error('gambar_poster') is-invalid @enderror"
+                               id="gambar_poster" name="gambar_poster" accept="image/*">
+                        <small class="text-muted">Format JPG/PNG/WEBP, maks 5MB. Poster ini tampil saat website pertama dibuka.</small>
+                        @error('gambar_poster')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                     </div>
 
-                    <div class="alert alert-info mt-3 mb-3">
-                        <i class="fas fa-info-circle mr-1"></i>
-                        Harga saat ini:<br>
-                        <strong>Umum:</strong> Rp {{ number_format($pengaturan->harga_umum, 0, ',', '.') }} per tiket<br>
-                        <strong>Member Aktif:</strong> Rp {{ number_format($pengaturan->harga_member, 0, ',', '.') }} per tiket
-                    </div>
-
-                    <button type="submit" class="btn btn-warning btn-lg">
-                        <i class="fas fa-save mr-2"></i> Simpan Harga
+                    <button type="submit" class="btn btn-warning btn-lg mt-3">
+                        <i class="fas fa-save mr-2"></i> Simpan Pengaturan
                     </button>
                 </form>
             </div>

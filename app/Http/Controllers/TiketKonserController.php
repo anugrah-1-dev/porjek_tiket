@@ -23,10 +23,22 @@ class TiketKonserController extends Controller
         $pengaturan    = PengaturanTiket::get();
         $hargaUmum     = $pengaturan->harga_umum;
         $hargaMember   = $pengaturan->harga_member;
-        $hargaPerTiket = $kategori === 'member' ? $hargaMember : $hargaUmum;
-        $banks         = Banks::where('status', 'active')->get();
+        $hargaVip      = $pengaturan->harga_vip;
+        $namaUmum      = $pengaturan->nama_kategori_umum;
+        $namaVip       = $pengaturan->nama_kategori_vip;
 
-        return view('tiket_konser.create', compact('kategori', 'hargaPerTiket', 'hargaUmum', 'hargaMember', 'banks'));
+        $hargaPerTiket = match ($kategori) {
+            'member' => $hargaMember,
+            'vip'    => $hargaVip,
+            default  => $hargaUmum,
+        };
+        $banks = Banks::where('status', 'active')->get();
+
+        return view('tiket_konser.create', compact(
+            'kategori', 'hargaPerTiket',
+            'hargaUmum', 'hargaMember', 'hargaVip',
+            'namaUmum', 'namaVip', 'banks'
+        ));
     }
 
     /**
@@ -35,7 +47,7 @@ class TiketKonserController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'kategori'         => 'required|in:umum,member',
+            'kategori'         => 'required|in:umum,member,vip',
             'nama_lengkap'     => 'required|string|max:255',
             'ttl'              => 'required|string|max:255',
             'no_hp'            => 'required|string|max:20',
@@ -53,9 +65,11 @@ class TiketKonserController extends Controller
 
         $jumlahTiket   = (int) $validated['jumlah_tiket'];
         $pengaturan    = PengaturanTiket::get();
-        $hargaPerTiket = $validated['kategori'] === 'member'
-            ? $pengaturan->harga_member
-            : $pengaturan->harga_umum;
+        $hargaPerTiket = match ($validated['kategori']) {
+            'member' => $pengaturan->harga_member,
+            'vip'    => $pengaturan->harga_vip,
+            default  => $pengaturan->harga_umum,
+        };
         $totalHarga    = $jumlahTiket * $hargaPerTiket;
 
         // Simpan bukti pembayaran
@@ -91,11 +105,13 @@ class TiketKonserController extends Controller
      */
     public function invoice($id)
     {
-        $tiket         = TiketKonser::findOrFail($id);
+        $tiket         = TiketKonser::with('bank')->findOrFail($id);
         $pengaturan    = PengaturanTiket::get();
-        $hargaPerTiket = $tiket->kategori === 'member'
-            ? $pengaturan->harga_member
-            : $pengaturan->harga_umum;
+        $hargaPerTiket = match ($tiket->kategori) {
+            'member' => $pengaturan->harga_member,
+            'vip'    => $pengaturan->harga_vip,
+            default  => $pengaturan->harga_umum,
+        };
 
         return view('tiket_konser.invoice', compact('tiket', 'hargaPerTiket'));
     }

@@ -36,32 +36,44 @@
                 <thead>
                     <tr>
                         <th width="5%">#</th>
+                        <th>ID Transaksi</th>
                         <th>Nama Lengkap</th>
-                        <th>TTL</th>
                         <th>No HP</th>
                         <th>Kategori</th>
-                        <th>Jml Tiket</th>
+                        <th>Jml</th>
                         <th>Total Harga</th>
+                        <th>Status</th>
                         <th>Tgl Pesan</th>
-                        <th width="12%">Aksi</th>
+                        <th width="15%">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse ($tikets as $index => $tiket)
                         <tr>
                             <td>{{ $tikets->firstItem() + $index }}</td>
+                            <td><code>{{ $tiket->trx_id }}</code></td>
                             <td>{{ $tiket->nama_lengkap }}</td>
-                            <td>{{ $tiket->ttl }}</td>
                             <td>{{ $tiket->no_hp }}</td>
                             <td>
                                 @if ($tiket->kategori === 'member')
-                                    <span class="badge badge-success">Member Aktif</span>
+                                    <span class="badge badge-success">Member</span>
+                                @elseif ($tiket->kategori === 'vip')
+                                    <span class="badge badge-danger">VIP</span>
                                 @else
-                                    <span class="badge badge-warning">Umum</span>
+                                    <span class="badge badge-warning">{{ $tiket->kategori }}</span>
                                 @endif
                             </td>
                             <td>{{ $tiket->jumlah_tiket }}</td>
                             <td>Rp {{ number_format($tiket->total_harga, 0, ',', '.') }}</td>
+                            <td>
+                                @if ($tiket->status === 'diterima')
+                                    <span class="badge badge-success">Diterima</span>
+                                @elseif ($tiket->status === 'ditolak')
+                                    <span class="badge badge-danger">Ditolak</span>
+                                @else
+                                    <span class="badge badge-warning">Pending</span>
+                                @endif
+                            </td>
                             <td>{{ $tiket->created_at->format('d/m/Y H:i') }}</td>
                             <td>
                                 <div class="btn-group btn-group-sm">
@@ -69,12 +81,40 @@
                                        class="btn btn-info" title="Detail">
                                         <i class="fas fa-eye"></i>
                                     </a>
+                                    {{-- Dropdown ubah status --}}
+                                    <div class="btn-group btn-group-sm">
+                                        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
+                                            <i class="fas fa-cog"></i>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <form action="{{ route('admin.tiket-konser.update-status', $tiket->id) }}" method="POST">
+                                                @csrf @method('PUT')
+                                                <input type="hidden" name="status" value="diterima">
+                                                <button class="dropdown-item text-success" type="submit">
+                                                    <i class="fas fa-check mr-1"></i> Terima
+                                                </button>
+                                            </form>
+                                            <form action="{{ route('admin.tiket-konser.update-status', $tiket->id) }}" method="POST">
+                                                @csrf @method('PUT')
+                                                <input type="hidden" name="status" value="pending">
+                                                <button class="dropdown-item text-warning" type="submit">
+                                                    <i class="fas fa-clock mr-1"></i> Pending
+                                                </button>
+                                            </form>
+                                            <form action="{{ route('admin.tiket-konser.update-status', $tiket->id) }}" method="POST">
+                                                @csrf @method('PUT')
+                                                <input type="hidden" name="status" value="ditolak">
+                                                <button class="dropdown-item text-danger" type="submit">
+                                                    <i class="fas fa-times mr-1"></i> Tolak
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
                                     <form action="{{ route('admin.tiket-konser.destroy', $tiket->id) }}"
                                           method="POST"
                                           onsubmit="return confirm('Yakin hapus data ini?');"
                                           class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
+                                        @csrf @method('DELETE')
                                         <button type="submit" class="btn btn-danger" title="Hapus">
                                             <i class="fas fa-trash"></i>
                                         </button>
@@ -84,7 +124,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="9" class="text-center text-muted py-4">Belum ada data pemesan tiket.</td>
+                            <td colspan="10" class="text-center text-muted py-4">Belum ada data pemesan tiket.</td>
                         </tr>
                     @endforelse
                 </tbody>
