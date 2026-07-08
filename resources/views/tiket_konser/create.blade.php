@@ -616,6 +616,79 @@
 
 </div>{{-- end .page-body --}}
 
+{{-- ═══ FLOATING WA CHAT ADMIN ═══ --}}
+@if (isset($contactServices) && $contactServices->count())
+@php
+    $pesanWa = urlencode(
+        "Halo, saya ingin menanyakan informasi tiket konser Brilliant English Course 2026.\n" .
+        "Kategori yang saya pilih: {$namaKategori}\n" .
+        ($isGratis
+            ? "Harga: GRATIS\n"
+            : "Harga: Rp " . number_format($hargaKategori, 0, ',', '.') . " / tiket\n") .
+        "\nBoleh minta info lebih lengkapnya?"
+    );
+@endphp
+<div class="wa-tiket-wrapper">
+    @foreach ($contactServices as $cs)
+        <a href="https://wa.me/62{{ $cs->nomor }}?text={{ $pesanWa }}"
+           class="wa-tiket-btn"
+           target="_blank"
+           title="Chat {{ $cs->nama }}">
+            <img src="{{ asset('asset/wa/WhatsApp.svg') }}" alt="WA" class="wa-tiket-ico">
+            <span class="wa-tiket-label">{{ $cs->nama }}</span>
+        </a>
+    @endforeach
+</div>
+<style>
+    .wa-tiket-wrapper {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        z-index: 99999;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 10px;
+    }
+    .wa-tiket-btn {
+        display: flex;
+        align-items: center;
+        gap: .55rem;
+        background: #25d366;
+        border-radius: 50px;
+        padding: .5rem .85rem .5rem .5rem;
+        text-decoration: none;
+        box-shadow: 0 4px 14px rgba(37,211,102,.45);
+        transition: transform .2s, box-shadow .2s;
+        max-width: 220px;
+    }
+    .wa-tiket-btn:hover {
+        transform: translateY(-3px) scale(1.03);
+        box-shadow: 0 8px 22px rgba(37,211,102,.6);
+    }
+    .wa-tiket-ico {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: #fff;
+        flex-shrink: 0;
+    }
+    .wa-tiket-label {
+        font-family: 'Poppins', sans-serif;
+        font-size: .78rem;
+        font-weight: 600;
+        color: #fff;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    @media (max-width: 480px) {
+        .wa-tiket-btn { padding: .45rem; border-radius: 50%; max-width: unset; }
+        .wa-tiket-label { display: none; }
+    }
+</style>
+@endif
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     const hargaKategori = {{ $hargaKategori }};

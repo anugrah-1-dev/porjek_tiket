@@ -57,13 +57,15 @@ class TiketKonserController extends Controller
             'spesial' => $hargaSpesial,
             default   => $hargaUmum,
         };
-        $banks = Banks::where('status', 'active')->get();
+        $banks           = Banks::where('status', 'active')->get();
+        $contactServices = Customer_Service::all();
 
         return view('tiket_konser.create', compact(
             'kategori', 'hargaPerTiket',
             'hargaUmum', 'hargaMember', 'hargaVip', 'hargaSpesial',
             'namaUmum', 'namaVip', 'namaSpesial', 'banks',
-            'deskripsiUmum', 'deskripsiVip', 'deskripsiMember', 'deskripsiSpesial'
+            'deskripsiUmum', 'deskripsiVip', 'deskripsiMember', 'deskripsiSpesial',
+            'contactServices'
         ));
     }
 
