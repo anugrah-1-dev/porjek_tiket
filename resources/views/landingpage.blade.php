@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 
 <head>
@@ -170,7 +170,7 @@
                 <div class="program2-icon" style="background:#d4edda;padding:16px;border-radius:8px;">
                     <i class="fas fa-id-card" style="font-size:3rem;color:#28a745;"></i>
                 </div>
-                <h3>Member Aktif Brilliant</h3>
+                <h3>Spesial Member Brilliant English Course &amp; BIE Plus</h3>
                 <span class="pilih1-button" style="background:#28a745;">Rp {{ number_format($pengaturanTiket->harga_member, 0, ',', '.') }}</span>
             </a>
             <a href="{{ route('tiket-konser.create', ['kategori' => 'spesial']) }}"

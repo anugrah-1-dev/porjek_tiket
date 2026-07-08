@@ -65,7 +65,7 @@
                     @php
                         $namaKategori = match($kategori) {
                             'vip'     => $namaVip,
-                            'member'  => 'Member Aktif Brilliant',
+                            'member'  => 'Spesial Member Brilliant English Course & BIE Plus',
                             'spesial' => $namaSpesial,
                             default   => $namaUmum,
                         };

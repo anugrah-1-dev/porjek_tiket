@@ -8,10 +8,16 @@ use Illuminate\Http\Request;
 
 class TiketKonserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $tikets = TiketKonser::latest()->paginate(15);
-        return view('admin.tiket_konser.index', compact('tikets'));
+        $status = $request->input('status');
+
+        $tikets = TiketKonser::when($status, fn($q) => $q->where('status', $status))
+            ->latest()
+            ->paginate(15)
+            ->appends(['status' => $status]);
+
+        return view('admin.tiket_konser.index', compact('tikets', 'status'));
     }
 
     public function show($id)

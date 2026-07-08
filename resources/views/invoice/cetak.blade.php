@@ -47,6 +47,19 @@
         .btn-wa img { width: 18px; height: 18px; }
         .btn:hover { opacity: 0.9; }
 
+        /* Logo strip */
+        .inv-logos {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 6px;
+        }
+        .inv-logos img {
+            height: 48px;
+            width: auto;
+            object-fit: contain;
+        }
+
         .invoice-container {
             max-width: 780px;
             margin: auto;
@@ -292,7 +305,25 @@
         {{-- ===== HEADER ===== --}}
         <div class="inv-header">
             <div class="inv-header-left">
-                <h2>BRILLIANT</h2>
+                @php
+                    $logo1 = \App\Models\Logo::where('key', 'logo1')->first();
+                    $logo2 = \App\Models\Logo::where('key', 'logo2')->first();
+                    $logo3 = \App\Models\Logo::where('key', 'logo3')->first();
+                @endphp
+                <div class="inv-logos">
+                    @if ($logo1 && $logo1->image_path)
+                        <img src="{{ asset('storage/' . $logo1->image_path) }}" alt="Logo 1">
+                    @else
+                        <img src="{{ asset('asset/img/LogoWebBrillaintPare.png') }}" alt="Logo 1 Default">
+                    @endif
+                    @if ($logo2 && $logo2->image_path)
+                        <img src="{{ asset('storage/' . $logo2->image_path) }}" alt="Logo 2">
+                    @endif
+                    @if ($logo3 && $logo3->image_path)
+                        <img src="{{ asset('storage/' . $logo3->image_path) }}" alt="Logo 3">
+                    @endif
+                </div>
+                {{-- <h2>BRILLIANT</h2> --}}
                 <p>
                     Pusat Pembelajaran Bahasa Asing<br>
                     Kampung Inggris Pare<br>

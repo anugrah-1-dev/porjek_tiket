@@ -26,6 +26,26 @@
     </div>
 @endif
 
+{{-- Filter Status --}}
+<div class="mb-3 d-flex flex-wrap gap-1">
+    <a href="{{ route('admin.tiket-konser.index') }}"
+       class="btn btn-sm {{ !$status ? 'btn-secondary' : 'btn-outline-secondary' }}">
+        <i class="fas fa-list mr-1"></i> Semua
+    </a>
+    <a href="{{ route('admin.tiket-konser.index', ['status' => 'pending']) }}"
+       class="btn btn-sm {{ $status === 'pending' ? 'btn-warning' : 'btn-outline-warning' }}">
+        <i class="fas fa-clock mr-1"></i> Pending
+    </a>
+    <a href="{{ route('admin.tiket-konser.index', ['status' => 'diterima']) }}"
+       class="btn btn-sm {{ $status === 'diterima' ? 'btn-success' : 'btn-outline-success' }}">
+        <i class="fas fa-check-circle mr-1"></i> Diterima
+    </a>
+    <a href="{{ route('admin.tiket-konser.index', ['status' => 'ditolak']) }}"
+       class="btn btn-sm {{ $status === 'ditolak' ? 'btn-danger' : 'btn-outline-danger' }}">
+        <i class="fas fa-times-circle mr-1"></i> Ditolak
+    </a>
+</div>
+
 <div class="card card-outline card-warning">
     <div class="card-header">
         <h3 class="card-title"><i class="fas fa-ticket-alt mr-2"></i>Daftar Pemesan</h3>
