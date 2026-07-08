@@ -1418,7 +1418,7 @@ body {
     display: none;
     align-items: flex-start;
     justify-content: center;
-    z-index: 1000;
+    z-index: 10000;
     padding: 2rem 1.25rem;
     overflow-y: auto;
 }
