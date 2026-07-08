@@ -17,6 +17,9 @@ class PengaturanTiket extends Model
         'nama_kategori_vip',
         'deskripsi_vip',
         'deskripsi_member',
+        'nama_kategori_spesial',
+        'harga_spesial',
+        'deskripsi_spesial',
         'gambar_poster',
     ];
 
@@ -26,11 +29,13 @@ class PengaturanTiket extends Model
     public static function get(): self
     {
         return static::firstOrCreate([], [
-            'harga_umum'         => 150000,
-            'harga_member'       => 100000,
-            'nama_kategori_umum' => 'Sales 1',
-            'harga_vip'          => 350000,
-            'nama_kategori_vip'  => 'VIP',
+            'harga_umum'            => 150000,
+            'harga_member'          => 100000,
+            'nama_kategori_umum'    => 'Sales 1',
+            'harga_vip'             => 350000,
+            'nama_kategori_vip'     => 'VIP',
+            'nama_kategori_spesial' => 'Member Juli-Agustus',
+            'harga_spesial'         => 0,
         ]);
     }
 }

@@ -59,6 +59,8 @@
                                     <span class="badge badge-success">Member</span>
                                 @elseif ($tiket->kategori === 'vip')
                                     <span class="badge badge-danger">VIP</span>
+                                @elseif ($tiket->kategori === 'spesial')
+                                    <span class="badge badge-primary">Spesial</span>
                                 @else
                                     <span class="badge badge-warning">{{ $tiket->kategori }}</span>
                                 @endif

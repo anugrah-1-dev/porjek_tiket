@@ -94,6 +94,32 @@
                                   placeholder="Contoh: Harga khusus member aktif&#10;Tunjukkan bukti keanggotaan">{{ old('deskripsi_member', $pengaturan->deskripsi_member) }}</textarea>
                     </div>
 
+                    <h6 class="text-muted border-bottom pb-1 mb-3 mt-3">Member Spesial (Gratis - Juli-Agustus)</h6>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="nama_kategori_spesial" class="font-weight-bold">Nama Kategori</label>
+                            <input type="text" class="form-control @error('nama_kategori_spesial') is-invalid @enderror"
+                                   id="nama_kategori_spesial" name="nama_kategori_spesial"
+                                   value="{{ old('nama_kategori_spesial', $pengaturan->nama_kategori_spesial) }}" required>
+                            @error('nama_kategori_spesial')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="harga_spesial" class="font-weight-bold">Harga (Rp) <small class="text-success">— 0 = GRATIS</small></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text">Rp</span></div>
+                                <input type="number" class="form-control @error('harga_spesial') is-invalid @enderror"
+                                       id="harga_spesial" name="harga_spesial"
+                                       value="{{ old('harga_spesial', $pengaturan->harga_spesial ?? 0) }}" min="0" required>
+                                @error('harga_spesial')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="deskripsi_spesial" class="font-weight-bold">Deskripsi / Benefit <small class="text-muted">(tiap baris = 1 poin)</small></label>
+                        <textarea class="form-control" id="deskripsi_spesial" name="deskripsi_spesial" rows="3"
+                                  placeholder="Contoh: Tiket GRATIS untuk member Juli-Agustus&#10;Daftar 10 Juli - 31 Agustus&#10;Tunjukkan bukti keanggotaan periode ini">{{ old('deskripsi_spesial', $pengaturan->deskripsi_spesial) }}</textarea>
+                    </div>
+
                     <h6 class="text-muted border-bottom pb-1 mb-3 mt-3">Poster Konser</h6>
                     <div class="form-group">
                         @if ($pengaturan->gambar_poster)

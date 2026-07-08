@@ -64,40 +64,53 @@
                     {{-- Kategori terpilih (fixed, tidak bisa diubah) --}}
                     @php
                         $namaKategori = match($kategori) {
-                            'vip'    => $namaVip,
-                            'member' => 'Member Aktif Brilliant',
-                            default  => $namaUmum,
+                            'vip'     => $namaVip,
+                            'member'  => 'Member Aktif Brilliant',
+                            'spesial' => $namaSpesial,
+                            default   => $namaUmum,
                         };
                         $hargaKategori = match($kategori) {
-                            'vip'    => $hargaVip,
-                            'member' => $hargaMember,
-                            default  => $hargaUmum,
+                            'vip'     => $hargaVip,
+                            'member'  => $hargaMember,
+                            'spesial' => $hargaSpesial,
+                            default   => $hargaUmum,
                         };
                         $deskripsiKategori = match($kategori) {
-                            'vip'    => $deskripsiVip,
-                            'member' => $deskripsiMember,
-                            default  => $deskripsiUmum,
+                            'vip'     => $deskripsiVip,
+                            'member'  => $deskripsiMember,
+                            'spesial' => $deskripsiSpesial,
+                            default   => $deskripsiUmum,
                         };
                         $badgeClass = match($kategori) {
-                            'vip'    => 'danger',
-                            'member' => 'success',
-                            default  => 'warning',
+                            'vip'     => 'danger',
+                            'member'  => 'success',
+                            'spesial' => 'primary',
+                            default   => 'warning',
                         };
                         $iconClass = match($kategori) {
-                            'vip'    => 'fas fa-crown',
-                            'member' => 'fas fa-id-card',
-                            default  => 'fas fa-ticket-alt',
+                            'vip'     => 'fas fa-crown',
+                            'member'  => 'fas fa-id-card',
+                            'spesial' => 'fas fa-star',
+                            default   => 'fas fa-ticket-alt',
                         };
+                        $isGratis = ($hargaKategori == 0);
+                        $isSpesial = ($kategori === 'spesial');
                     @endphp
 
                     <div class="mb-4 p-3 border rounded-3 border-{{ $badgeClass }}" style="background:rgba(0,0,0,.02)">
-                        <div class="d-flex align-items-center gap-3 mb-2">
+                        <div class="d-flex align-items-center gap-3 mb-2 flex-wrap">
                             <span class="badge bg-{{ $badgeClass }} fs-6 px-3 py-2">
                                 <i class="{{ $iconClass }} me-1"></i> {{ $namaKategori }}
                             </span>
-                            <span class="fw-bold text-{{ $badgeClass === 'warning' ? 'dark' : $badgeClass }}" style="font-size:1.1rem;">
-                                Rp {{ number_format($hargaKategori, 0, ',', '.') }} / tiket
-                            </span>
+                            @if ($isGratis)
+                                <span class="fw-bold text-success" style="font-size:1.1rem;">
+                                    🎉 GRATIS
+                                </span>
+                            @else
+                                <span class="fw-bold" style="font-size:1.1rem;">
+                                    Rp {{ number_format($hargaKategori, 0, ',', '.') }} / tiket
+                                </span>
+                            @endif
                         </div>
                         @if ($deskripsiKategori)
                             <ul class="mb-0 ps-3" style="font-size:.92rem;">
@@ -106,11 +119,22 @@
                                 @endforeach
                             </ul>
                         @endif
+                        @if ($isGratis)
+                            <div class="alert alert-success mt-2 mb-0 py-2 px-3" style="font-size:.88rem;">
+                                <i class="fas fa-gift me-1"></i>
+                                Selamat! Kamu mendapatkan tiket <strong>GRATIS</strong>. Cukup upload bukti keanggotaan periode Juli-Agustus.
+                            </div>
+                        @endif
                     </div>
 
                     <div class="harga-info mb-4">
                         <i class="fas fa-info-circle text-warning me-1"></i>
-                        Harga per tiket: <strong>Rp {{ number_format($hargaKategori, 0, ',', '.') }}</strong>
+                        Harga per tiket:
+                        @if ($isGratis)
+                            <strong class="text-success">GRATIS</strong>
+                        @else
+                            <strong>Rp {{ number_format($hargaKategori, 0, ',', '.') }}</strong>
+                        @endif
                     </div>
 
                     <form action="{{ route('tiket-konser.store') }}" method="POST" enctype="multipart/form-data"
@@ -165,7 +189,8 @@
                             </div>
                         </div>
 
-                        {{-- Pilih Bank Tujuan Transfer --}}
+                        {{-- Pilih Bank & Bukti Pembayaran (disembunyikan jika GRATIS) --}}
+                        @if (!$isSpesial)
                         <div class="mb-3">
                             <label for="bank_id" class="form-label">Bank Tujuan Transfer <span class="text-danger">*</span></label>
                             <select class="form-select @error('bank_id') is-invalid @enderror"
@@ -185,8 +210,6 @@
                             @error('bank_id')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
-
-                            {{-- Detail bank setelah dipilih --}}
                             <div id="bankDetail" class="mt-2 p-3 border rounded bg-light" style="display:none;">
                                 <div class="d-flex align-items-center gap-2">
                                     <i class="fas fa-university text-warning fs-5"></i>
@@ -211,9 +234,10 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
+                        @endif
 
-                        {{-- Bukti member — ditampilkan hanya jika kategori = member --}}
-                        <div id="wrapBuktiMember" style="display:none;">
+                        {{-- Bukti member — untuk kategori member & spesial --}}
+                        <div id="wrapBuktiMember" style="{{ in_array($kategori, ['member','spesial']) ? '' : 'display:none;' }}">
 
                             {{-- Periode Member --}}
                             <div class="mb-3">
@@ -224,10 +248,10 @@
                                        class="form-control @error('periode_member') is-invalid @enderror"
                                        id="periode_member" name="periode_member"
                                        value="{{ old('periode_member') }}"
-                                       placeholder="Contoh: Januari 2025 - Januari 2026">
+                                       placeholder="Contoh: Juli 2026 - Agustus 2026">
                                 <div class="form-text">
                                     <i class="fas fa-info-circle text-success me-1"></i>
-                                    Masukkan periode aktif keanggotaan Anda (minimal 1 bulan).
+                                    Masukkan periode aktif keanggotaan Anda.
                                 </div>
                                 @error('periode_member')
                                     <div class="invalid-feedback">{{ $message }}</div>

@@ -173,6 +173,14 @@
                 <h3>Member Aktif Brilliant</h3>
                 <span class="pilih1-button" style="background:#28a745;">Rp {{ number_format($pengaturanTiket->harga_member, 0, ',', '.') }}</span>
             </a>
+            <a href="{{ route('tiket-konser.create', ['kategori' => 'spesial']) }}"
+               class="program1-card">
+                <div class="program2-icon" style="background:#cce5ff;padding:16px;border-radius:8px;">
+                    <i class="fas fa-star" style="font-size:3rem;color:#004085;"></i>
+                </div>
+                <h3>{{ $pengaturanTiket->nama_kategori_spesial }}</h3>
+                <span class="pilih1-button" style="background:#004085;">GRATIS 🎉</span>
+            </a>
         </div>
     </div>
 </div>
