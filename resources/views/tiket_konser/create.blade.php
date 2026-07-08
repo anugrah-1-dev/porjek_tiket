@@ -98,9 +98,6 @@
                             <span class="fw-bold text-{{ $badgeClass === 'warning' ? 'dark' : $badgeClass }}" style="font-size:1.1rem;">
                                 Rp {{ number_format($hargaKategori, 0, ',', '.') }} / tiket
                             </span>
-                            <a href="{{ route('tiket-konser.create') }}" class="ms-auto btn btn-sm btn-outline-secondary">
-                                <i class="fas fa-exchange-alt me-1"></i> Ganti
-                            </a>
                         </div>
                         @if ($deskripsiKategori)
                             <ul class="mb-0 ps-3" style="font-size:.92rem;">
