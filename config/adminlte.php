@@ -428,6 +428,12 @@
                 'route'  => 'admin.tiket-konser.index',
                 'active' => ['admin/tiket-konser*'],
             ],
+            [
+                'text'   => 'Harga Tiket',
+                'icon'   => 'fas fa-tags',
+                'route'  => 'admin.pengaturan-tiket.edit',
+                'active' => ['admin/pengaturan-tiket*'],
+            ],
 
             [
                 'header' => 'Add Ons',

@@ -32,6 +32,7 @@ use App\Http\Controllers\Admin\ThumbnailController;
 use App\Http\Controllers\Admin\LogoController;
 use App\Http\Controllers\TiketKonserController;
 use App\Http\Controllers\Admin\TiketKonserController as AdminTiketKonserController;
+use App\Http\Controllers\Admin\PengaturanTiketController;
 
 use App\Http\Controllers\ProgramInggrisController;
 use App\Http\Controllers\ProgramJermanController;
@@ -316,6 +317,10 @@ Route::middleware(['auth', 'role:admin|officer'])->prefix('admin')->name('admin.
     Route::get('/tiket-konser', [AdminTiketKonserController::class, 'index'])->name('tiket-konser.index');
     Route::get('/tiket-konser/{id}', [AdminTiketKonserController::class, 'show'])->name('tiket-konser.show');
     Route::delete('/tiket-konser/{id}', [AdminTiketKonserController::class, 'destroy'])->name('tiket-konser.destroy');
+
+    // ===== PENGATURAN HARGA TIKET (ADMIN) =====
+    Route::get('/pengaturan-tiket', [PengaturanTiketController::class, 'edit'])->name('pengaturan-tiket.edit');
+    Route::put('/pengaturan-tiket', [PengaturanTiketController::class, 'update'])->name('pengaturan-tiket.update');
 
 });
 

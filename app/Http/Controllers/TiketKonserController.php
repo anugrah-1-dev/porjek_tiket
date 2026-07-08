@@ -3,14 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\TiketKonser;
+use App\Models\PengaturanTiket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class TiketKonserController extends Controller
 {
-    // Harga satuan tiket (dalam rupiah) — ubah sesuai kebutuhan
-    const HARGA_PER_TIKET = 100000;
-
     /**
      * Menampilkan form pembelian tiket konser.
      */
@@ -21,7 +19,7 @@ class TiketKonserController extends Controller
             $kategori = 'umum';
         }
 
-        $hargaPerTiket = self::HARGA_PER_TIKET;
+        $hargaPerTiket = PengaturanTiket::get()->harga_per_tiket;
 
         return view('tiket_konser.create', compact('kategori', 'hargaPerTiket'));
     }
@@ -47,7 +45,8 @@ class TiketKonserController extends Controller
         $validated = $request->validate($rules);
 
         $jumlahTiket = (int) $validated['jumlah_tiket'];
-        $totalHarga  = $jumlahTiket * self::HARGA_PER_TIKET;
+        $hargaPerTiket = PengaturanTiket::get()->harga_per_tiket;
+        $totalHarga  = $jumlahTiket * $hargaPerTiket;
 
         // Simpan bukti pembayaran
         $pathBuktiPembayaran = $request->file('bukti_pembayaran')
@@ -81,7 +80,7 @@ class TiketKonserController extends Controller
     public function invoice($id)
     {
         $tiket = TiketKonser::findOrFail($id);
-        $hargaPerTiket = self::HARGA_PER_TIKET;
+        $hargaPerTiket = PengaturanTiket::get()->harga_per_tiket;
 
         return view('tiket_konser.invoice', compact('tiket', 'hargaPerTiket'));
     }
