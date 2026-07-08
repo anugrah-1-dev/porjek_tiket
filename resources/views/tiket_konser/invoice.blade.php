@@ -353,7 +353,15 @@
                     <td>1</td>
                     <td>
                         <strong>Tiket Konser Brilliant</strong><br>
-                        <small>Kategori: {{ $tiket->kategori === 'member' ? 'Member Aktif Brilliant' : 'Umum' }}</small>
+                        @php
+                            $labelKategori = match($tiket->kategori) {
+                                'vip' => 'VIP',
+                                'spesial' => 'Spesial Member Brilliant English Course & BIE Plus ( Bulan Juli - Agustus)',
+                                'member' => 'Spesial Member Brilliant English Course & BIE Plus',
+                                default => 'Umum',
+                            };
+                        @endphp
+                        <small>Kategori: {{ $labelKategori }}</small>
                     </td>
                     <td class="text-right">Rp {{ number_format($hargaPerTiket, 0, ',', '.') }}</td>
                     <td class="text-right">{{ $tiket->jumlah_tiket }}</td>

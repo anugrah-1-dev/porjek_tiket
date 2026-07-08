@@ -66,7 +66,7 @@
                         $namaKategori = match($kategori) {
                             'vip'     => $namaVip,
                             'member'  => 'Spesial Member Brilliant English Course & BIE Plus',
-                            'spesial' => $namaSpesial,
+                            'spesial' => 'Spesial Member Brilliant English Course & BIE Plus ( Bulan Juli - Agustus)',
                             default   => $namaUmum,
                         };
                         $hargaKategori = match($kategori) {

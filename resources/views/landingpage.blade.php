@@ -170,7 +170,7 @@
                 <div class="program2-icon" style="background:#d4edda;padding:16px;border-radius:8px;">
                     <i class="fas fa-id-card" style="font-size:3rem;color:#28a745;"></i>
                 </div>
-                <h3>Spesial Member Brilliant English Course &amp; BIE Plus</h3>
+                <h3>Member Aktif Brilliant English Course &amp; BIE Plus</h3>
                 <span class="pilih1-button" style="background:#28a745;">Rp {{ number_format($pengaturanTiket->harga_member, 0, ',', '.') }}</span>
             </a>
             <a href="{{ route('tiket-konser.create', ['kategori' => 'spesial']) }}"
@@ -178,7 +178,7 @@
                 <div class="program2-icon" style="background:#cce5ff;padding:16px;border-radius:8px;">
                     <i class="fas fa-star" style="font-size:3rem;color:#004085;"></i>
                 </div>
-                <h3>{{ $pengaturanTiket->nama_kategori_spesial }}</h3>
+                <h3>Spesial Member Brilliant English Course &amp; BIE Plus ( Bulan Juli - Agustus)</h3>
                 <span class="pilih1-button" style="background:#004085;">GRATIS 🎉</span>
             </a>
         </div>

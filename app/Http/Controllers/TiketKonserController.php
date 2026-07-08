@@ -25,7 +25,7 @@ class TiketKonserController extends Controller
     private function generateTrxId(string $kategori): string
     {
         $prefix = self::TRX_PREFIX[$kategori] ?? 'YKIU';
-        return $prefix . '_' . now()->format('dmY_His');
+        return $prefix . '-' . now()->format('d_H_i_s');
     }
 
     /**
