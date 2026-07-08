@@ -97,6 +97,113 @@
         .btn-close-custom:hover {
             color: red;
         }
+
+        /* === POPUP TIKET KONSER === */
+        .tiket-popup-backdrop {
+            background: rgba(0, 0, 0, 0.78);
+            backdrop-filter: blur(5px);
+        }
+        .tiket-popup-box {
+            max-width: 640px !important;
+            padding: 2rem !important;
+            max-height: 92vh;
+            overflow-y: auto;
+        }
+        .tiket-popup-head-wrap {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.12);
+        }
+        .tiket-popup-head-wrap h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 0 0 0.25rem 0;
+        }
+        .tiket-popup-head-wrap p {
+            color: rgba(255,255,255,0.55);
+            font-size: 0.82rem;
+            margin: 0;
+        }
+        .tiket-kategori-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+        }
+        .tiket-kategori-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.9rem 1.1rem;
+            border-radius: 14px;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .tiket-kategori-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 8px 22px rgba(0,0,0,0.4);
+        }
+        .tiket-kat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+        .tiket-kat-info { flex: 1; min-width: 0; }
+        .tiket-kat-info h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #fff;
+            margin: 0 0 0.3rem 0;
+            line-height: 1.35;
+        }
+        .tiket-kat-harga {
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 0.18rem 0.65rem;
+            border-radius: 20px;
+            display: inline-block;
+        }
+        .tiket-kat-arrow {
+            color: rgba(255,255,255,0.35);
+            font-size: 0.85rem;
+            flex-shrink: 0;
+            transition: color 0.2s, transform 0.2s;
+        }
+        .tiket-kategori-card:hover .tiket-kat-arrow {
+            color: rgba(255,255,255,0.9);
+            transform: translateX(3px);
+        }
+        /* Umum */
+        .tiket-umum-card  { background: linear-gradient(135deg, rgba(255,161,9,0.18) 0%, rgba(255,161,9,0.04) 100%); }
+        .tiket-umum-card  .tiket-kat-icon  { background: rgba(255,161,9,0.2);  color: #FFC107; }
+        .tiket-umum-card  .tiket-kat-harga { background: rgba(255,161,9,0.2);  color: #FFC107; }
+        /* VIP */
+        .tiket-vip-card   { background: linear-gradient(135deg, rgba(220,53,69,0.22) 0%, rgba(220,53,69,0.04) 100%); }
+        .tiket-vip-card   .tiket-kat-icon  { background: rgba(220,53,69,0.2);  color: #ff7b87; }
+        .tiket-vip-card   .tiket-kat-harga { background: rgba(220,53,69,0.2);  color: #ff7b87; }
+        /* Member */
+        .tiket-member-card { background: linear-gradient(135deg, rgba(40,167,69,0.22) 0%, rgba(40,167,69,0.04) 100%); }
+        .tiket-member-card .tiket-kat-icon  { background: rgba(40,167,69,0.2); color: #5dd879; }
+        .tiket-member-card .tiket-kat-harga { background: rgba(40,167,69,0.2); color: #5dd879; }
+        /* Spesial */
+        .tiket-spesial-card { background: linear-gradient(135deg, rgba(0,123,255,0.22) 0%, rgba(0,64,133,0.04) 100%); }
+        .tiket-spesial-card .tiket-kat-icon  { background: rgba(0,123,255,0.2); color: #74b9ff; }
+        .tiket-gratis-badge { background: linear-gradient(135deg, #28a745, #20c997) !important; color: #fff !important; }
+        @media (max-width: 480px) {
+            .tiket-popup-box { padding: 1.1rem !important; }
+            .tiket-popup-head-wrap h2 { font-size: 1.2rem; }
+            .tiket-kat-info h4 { font-size: 0.82rem; }
+        }
     </style>
 
     <script>
@@ -142,50 +249,70 @@
         </div>
 
         <!-- Popup Tiket Konser: Pilih Kategori -->
-<div id="tiketPopup" class="popup1-overlay">
-    <div class="popup1-content">
-        <div class="popup1-header">
-            <h2>Pilih Kategori Tiket</h2>
-            <button id="closeTiketPopupBtn" class="close1-button">&times;</button>
+<div id="tiketPopup" class="popup1-overlay tiket-popup-backdrop">
+    <div class="popup1-content tiket-popup-box">
+
+        <div class="tiket-popup-head-wrap">
+            <div>
+                <h2><i class="fas fa-music" style="color:#FFA109;margin-right:8px;"></i>Pilih Kategori Tiket</h2>
+                <p>Konser Brilliant English Course 2026</p>
+            </div>
+            <button id="closeTiketPopupBtn" class="close1-button" style="margin-top:-4px;">&times;</button>
         </div>
-        <div class="program-grid">
-            <a href="{{ route('tiket-konser.create', ['kategori' => 'umum']) }}"
-               class="program1-card">
-                <div class="program2-icon" style="background:#fff3cd;padding:16px;border-radius:8px;">
-                    <i class="fas fa-ticket-alt" style="font-size:3rem;color:#FFA109;"></i>
+
+        <div class="tiket-kategori-grid">
+
+            {{-- Umum --}}
+            <a href="{{ route('tiket-konser.create', ['kategori' => 'umum']) }}" class="tiket-kategori-card tiket-umum-card">
+                <div class="tiket-kat-icon">
+                    <i class="fas fa-ticket-alt"></i>
                 </div>
-                <h3>{{ $pengaturanTiket->nama_kategori_umum }}</h3>
-                <span class="pilih1-button">Rp {{ number_format($pengaturanTiket->harga_umum, 0, ',', '.') }}</span>
-            </a>
-            <a href="{{ route('tiket-konser.create', ['kategori' => 'vip']) }}"
-               class="program1-card">
-                <div class="program2-icon" style="background:#f8d7da;padding:16px;border-radius:8px;">
-                    <i class="fas fa-crown" style="font-size:3rem;color:#dc3545;"></i>
+                <div class="tiket-kat-info">
+                    <h4>{{ $pengaturanTiket->nama_kategori_umum }}</h4>
+                    <span class="tiket-kat-harga">Rp {{ number_format($pengaturanTiket->harga_umum, 0, ',', '.') }}</span>
                 </div>
-                <h3>{{ $pengaturanTiket->nama_kategori_vip }}</h3>
-                <span class="pilih1-button" style="background:#dc3545;">Rp {{ number_format($pengaturanTiket->harga_vip, 0, ',', '.') }}</span>
+                <i class="fas fa-chevron-right tiket-kat-arrow"></i>
             </a>
-            <a href="{{ route('tiket-konser.create', ['kategori' => 'member']) }}"
-               class="program1-card">
-                <div class="program2-icon" style="background:#d4edda;padding:16px;border-radius:8px;">
-                    <i class="fas fa-id-card" style="font-size:3rem;color:#28a745;"></i>
+
+            {{-- VIP --}}
+            <a href="{{ route('tiket-konser.create', ['kategori' => 'vip']) }}" class="tiket-kategori-card tiket-vip-card">
+                <div class="tiket-kat-icon">
+                    <i class="fas fa-crown"></i>
                 </div>
-                <h3>Member Aktif Brilliant English Course &amp; BIE Plus</h3>
-                <span class="pilih1-button" style="background:#28a745;">Rp {{ number_format($pengaturanTiket->harga_member, 0, ',', '.') }}</span>
-            </a>
-            <a href="{{ route('tiket-konser.create', ['kategori' => 'spesial']) }}"
-               class="program1-card">
-                <div class="program2-icon" style="background:#cce5ff;padding:16px;border-radius:8px;">
-                    <i class="fas fa-star" style="font-size:3rem;color:#004085;"></i>
+                <div class="tiket-kat-info">
+                    <h4>{{ $pengaturanTiket->nama_kategori_vip }}</h4>
+                    <span class="tiket-kat-harga">Rp {{ number_format($pengaturanTiket->harga_vip, 0, ',', '.') }}</span>
                 </div>
-                <h3>Spesial Member Brilliant English Course &amp; BIE Plus</h3>
-                <span class="pilih1-button" style="background:#004085;">GRATIS 🎉</span>
+                <i class="fas fa-chevron-right tiket-kat-arrow"></i>
             </a>
+
+            {{-- Member --}}
+            <a href="{{ route('tiket-konser.create', ['kategori' => 'member']) }}" class="tiket-kategori-card tiket-member-card">
+                <div class="tiket-kat-icon">
+                    <i class="fas fa-id-card"></i>
+                </div>
+                <div class="tiket-kat-info">
+                    <h4>Member Aktif Brilliant English Course &amp; BIE Plus</h4>
+                    <span class="tiket-kat-harga">Rp {{ number_format($pengaturanTiket->harga_member, 0, ',', '.') }}</span>
+                </div>
+                <i class="fas fa-chevron-right tiket-kat-arrow"></i>
+            </a>
+
+            {{-- Spesial --}}
+            <a href="{{ route('tiket-konser.create', ['kategori' => 'spesial']) }}" class="tiket-kategori-card tiket-spesial-card">
+                <div class="tiket-kat-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="tiket-kat-info">
+                    <h4>Spesial Member Brilliant English Course &amp; BIE Plus</h4>
+                    <span class="tiket-kat-harga tiket-gratis-badge">GRATIS 🎉</span>
+                </div>
+                <i class="fas fa-chevron-right tiket-kat-arrow"></i>
+            </a>
+
         </div>
     </div>
 </div>
-
-</style>
 
     </section>
     <script>
