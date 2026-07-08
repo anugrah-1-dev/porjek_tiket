@@ -61,25 +61,18 @@
             <div class="card form-card border-0">
                 <div class="card-body p-4">
 
-                    {{-- Pilihan kategori --}}
+                    {{-- Kategori Terpilih (Read-only) --}}
                     <div class="mb-4">
-                        <label class="form-label">Kategori Tiket</label>
-                        <div class="d-flex gap-3">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="kategori_pilih" id="cat_umum"
-                                    value="umum" {{ old('kategori', $kategori) === 'umum' ? 'checked' : '' }}>
-                                <label class="form-check-label kategori-badge fw-semibold" for="cat_umum">
-                                    <i class="fas fa-ticket-alt me-1 text-warning"></i> Umum
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="kategori_pilih" id="cat_member"
-                                    value="member" {{ old('kategori', $kategori) === 'member' ? 'checked' : '' }}>
-                                <label class="form-check-label kategori-badge fw-semibold" for="cat_member">
-                                    <i class="fas fa-id-card me-1 text-success"></i> Member Aktif Brilliant
-                                </label>
-                            </div>
-                        </div>
+                        <label class="form-label d-block">Kategori Tiket</label>
+                        @if ($kategori === 'member')
+                            <span class="badge bg-success px-3 py-2 fs-6">
+                                <i class="fas fa-id-card me-1"></i> Member Aktif Brilliant
+                            </span>
+                        @else
+                            <span class="badge bg-warning text-dark px-3 py-2 fs-6">
+                                <i class="fas fa-ticket-alt me-1"></i> Umum
+                            </span>
+                        @endif
                     </div>
 
                     <div class="harga-info mb-4">
@@ -190,10 +183,10 @@
 <script>
     const hargaUmum   = {{ $hargaUmum }};
     const hargaMember = {{ $hargaMember }};
+    const kategori    = "{{ $kategori }}";
 
     function getHargaAktif() {
-        const checked = document.querySelector('input[name="kategori_pilih"]:checked');
-        return checked && checked.value === 'member' ? hargaMember : hargaUmum;
+        return kategori === 'member' ? hargaMember : hargaUmum;
     }
 
     function formatRupiah(angka) {
@@ -205,40 +198,30 @@
         document.getElementById('totalHargaDisplay').textContent = formatRupiah(jumlah * getHargaAktif());
     }
 
-    function toggleBuktiMember(kategori) {
+    function initFormState() {
         const wrap  = document.getElementById('wrapBuktiMember');
         const input = document.getElementById('bukti_member');
         const infoUmum   = document.getElementById('infoHargaUmum');
         const infoMember = document.getElementById('infoHargaMember');
 
         if (kategori === 'member') {
-            wrap.style.display   = 'block';
-            input.required       = true;
+            wrap.style.display       = 'block';
+            input.required           = true;
             infoUmum.style.display   = 'none';
             infoMember.style.display = '';
         } else {
-            wrap.style.display   = 'none';
-            input.required       = false;
-            input.value          = '';
+            wrap.style.display       = 'none';
+            input.required           = false;
             infoUmum.style.display   = '';
             infoMember.style.display = 'none';
         }
-        document.getElementById('inputKategori').value = kategori;
         updateTotal();
     }
 
     document.getElementById('jumlah_tiket').addEventListener('input', updateTotal);
 
-    document.querySelectorAll('input[name="kategori_pilih"]').forEach(function (radio) {
-        radio.addEventListener('change', function () {
-            toggleBuktiMember(this.value);
-        });
-    });
-
     document.addEventListener('DOMContentLoaded', function () {
-        const current = document.querySelector('input[name="kategori_pilih"]:checked');
-        if (current) toggleBuktiMember(current.value);
-        updateTotal();
+        initFormState();
     });
 </script>
 
