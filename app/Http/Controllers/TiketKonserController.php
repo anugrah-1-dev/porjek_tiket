@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\TiketKonser;
 use App\Models\PengaturanTiket;
 use App\Models\Banks;
+use App\Models\Customer_Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -142,6 +143,7 @@ class TiketKonserController extends Controller
     {
         $tiket         = TiketKonser::with('bank')->findOrFail($id);
         $pengaturan    = PengaturanTiket::get();
+        $cs            = Customer_Service::first();
         $hargaPerTiket = match ($tiket->kategori) {
             'member'  => $pengaturan->harga_member,
             'vip'     => $pengaturan->harga_vip,
@@ -149,6 +151,6 @@ class TiketKonserController extends Controller
             default   => $pengaturan->harga_umum,
         };
 
-        return view('tiket_konser.invoice', compact('tiket', 'hargaPerTiket'));
+        return view('tiket_konser.invoice', compact('tiket', 'hargaPerTiket', 'cs'));
     }
 }

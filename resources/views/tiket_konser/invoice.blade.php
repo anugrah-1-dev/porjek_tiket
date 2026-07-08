@@ -38,6 +38,7 @@
         }
         .btn-warning { background-color: #FFA109; }
         .btn-secondary { background-color: #6c757d; }
+        .btn-success { background-color: #25D366; color: #fff; text-decoration: none; }
         .btn:hover { opacity: 0.9; }
 
         .invoice-container {
@@ -226,6 +227,30 @@
         <a href="{{ route('landing') }}" class="btn btn-secondary">&#8592; Kembali ke Beranda</a>
         <button onclick="window.print()" class="btn">&#128438; Print Invoice</button>
         <button onclick="window.print()" class="btn btn-warning">&#11015; Download PDF</button>
+        @if ($cs && $cs->nomor)
+        @php
+            $noWa   = preg_replace('/[^0-9]/', '', $cs->nomor);
+            $noWa   = preg_replace('/^0/', '62', $noWa);
+            $namaKat = match($tiket->kategori) {
+                'vip'     => 'VIP',
+                'member'  => 'Member Aktif',
+                'spesial' => 'Member Spesial (Gratis)',
+                default   => 'Umum',
+            };
+            $pesanWa = "Halo Admin Brilliant, saya ingin konfirmasi pembelian tiket konser.\n\n"
+                . "No. Transaksi : *{$tiket->trx_id}*\n"
+                . "Nama          : {$tiket->nama_lengkap}\n"
+                . "Kategori      : {$namaKat}\n"
+                . "Jumlah Tiket  : {$tiket->jumlah_tiket} tiket\n"
+                . "Total Harga   : Rp " . number_format($tiket->total_harga, 0, ',', '.') . "\n\n"
+                . "Mohon segera diverifikasi. Terima kasih!";
+        @endphp
+        <a href="https://wa.me/{{ $noWa }}?text={{ urlencode($pesanWa) }}"
+           target="_blank"
+           class="btn btn-success">
+            &#128172; Konfirmasi ke Admin (WA)
+        </a>
+        @endif
     </div>
 
     <div class="invoice-container" id="invoice-content">
