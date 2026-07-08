@@ -78,38 +78,9 @@
                             <td>
                                 <div class="btn-group btn-group-sm">
                                     <a href="{{ route('admin.tiket-konser.show', $tiket->id) }}"
-                                       class="btn btn-info" title="Detail">
+                                       class="btn btn-info" title="Detail & Ubah Status">
                                         <i class="fas fa-eye"></i>
                                     </a>
-                                    {{-- Dropdown ubah status --}}
-                                    <div class="btn-group btn-group-sm">
-                                        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
-                                            <i class="fas fa-cog"></i>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <form action="{{ route('admin.tiket-konser.update-status', $tiket->id) }}" method="POST">
-                                                @csrf @method('PUT')
-                                                <input type="hidden" name="status" value="diterima">
-                                                <button class="dropdown-item text-success" type="submit">
-                                                    <i class="fas fa-check mr-1"></i> Terima
-                                                </button>
-                                            </form>
-                                            <form action="{{ route('admin.tiket-konser.update-status', $tiket->id) }}" method="POST">
-                                                @csrf @method('PUT')
-                                                <input type="hidden" name="status" value="pending">
-                                                <button class="dropdown-item text-warning" type="submit">
-                                                    <i class="fas fa-clock mr-1"></i> Pending
-                                                </button>
-                                            </form>
-                                            <form action="{{ route('admin.tiket-konser.update-status', $tiket->id) }}" method="POST">
-                                                @csrf @method('PUT')
-                                                <input type="hidden" name="status" value="ditolak">
-                                                <button class="dropdown-item text-danger" type="submit">
-                                                    <i class="fas fa-times mr-1"></i> Tolak
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
                                     <form action="{{ route('admin.tiket-konser.destroy', $tiket->id) }}"
                                           method="POST"
                                           onsubmit="return confirm('Yakin hapus data ini?');"

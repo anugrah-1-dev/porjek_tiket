@@ -26,6 +26,9 @@ class TiketKonserController extends Controller
         $hargaVip      = $pengaturan->harga_vip;
         $namaUmum      = $pengaturan->nama_kategori_umum;
         $namaVip       = $pengaturan->nama_kategori_vip;
+        $deskripsiUmum   = $pengaturan->deskripsi_umum;
+        $deskripsiVip    = $pengaturan->deskripsi_vip;
+        $deskripsiMember = $pengaturan->deskripsi_member;
 
         $hargaPerTiket = match ($kategori) {
             'member' => $hargaMember,
@@ -37,7 +40,8 @@ class TiketKonserController extends Controller
         return view('tiket_konser.create', compact(
             'kategori', 'hargaPerTiket',
             'hargaUmum', 'hargaMember', 'hargaVip',
-            'namaUmum', 'namaVip', 'banks'
+            'namaUmum', 'namaVip', 'banks',
+            'deskripsiUmum', 'deskripsiVip', 'deskripsiMember'
         ));
     }
 

@@ -61,43 +61,59 @@
             <div class="card form-card border-0">
                 <div class="card-body p-4">
 
-                    {{-- Pilihan Kategori --}}
-                    <div class="mb-4">
-                        <label class="form-label fw-bold">Pilih Kategori Tiket</label>
-                        <div class="row g-2">
-                            <div class="col-12 col-sm-4">
-                                <input type="radio" class="btn-check" name="kategori_pilih" id="cat_umum"
-                                       value="umum" {{ old('kategori', $kategori) === 'umum' ? 'checked' : '' }}>
-                                <label class="btn btn-outline-warning w-100 py-3" for="cat_umum">
-                                    <i class="fas fa-ticket-alt d-block mb-1 fs-4"></i>
-                                    <strong>{{ $namaUmum }}</strong><br>
-                                    <small>Rp {{ number_format($hargaUmum, 0, ',', '.') }}</small>
-                                </label>
-                            </div>
-                            <div class="col-12 col-sm-4">
-                                <input type="radio" class="btn-check" name="kategori_pilih" id="cat_vip"
-                                       value="vip" {{ old('kategori', $kategori) === 'vip' ? 'checked' : '' }}>
-                                <label class="btn btn-outline-danger w-100 py-3" for="cat_vip">
-                                    <i class="fas fa-crown d-block mb-1 fs-4"></i>
-                                    <strong>{{ $namaVip }}</strong><br>
-                                    <small>Rp {{ number_format($hargaVip, 0, ',', '.') }}</small>
-                                </label>
-                            </div>
-                            <div class="col-12 col-sm-4">
-                                <input type="radio" class="btn-check" name="kategori_pilih" id="cat_member"
-                                       value="member" {{ old('kategori', $kategori) === 'member' ? 'checked' : '' }}>
-                                <label class="btn btn-outline-success w-100 py-3" for="cat_member">
-                                    <i class="fas fa-id-card d-block mb-1 fs-4"></i>
-                                    <strong>Member Aktif</strong><br>
-                                    <small>Rp {{ number_format($hargaMember, 0, ',', '.') }}</small>
-                                </label>
-                            </div>
+                    {{-- Kategori terpilih (fixed, tidak bisa diubah) --}}
+                    @php
+                        $namaKategori = match($kategori) {
+                            'vip'    => $namaVip,
+                            'member' => 'Member Aktif Brilliant',
+                            default  => $namaUmum,
+                        };
+                        $hargaKategori = match($kategori) {
+                            'vip'    => $hargaVip,
+                            'member' => $hargaMember,
+                            default  => $hargaUmum,
+                        };
+                        $deskripsiKategori = match($kategori) {
+                            'vip'    => $deskripsiVip,
+                            'member' => $deskripsiMember,
+                            default  => $deskripsiUmum,
+                        };
+                        $badgeClass = match($kategori) {
+                            'vip'    => 'danger',
+                            'member' => 'success',
+                            default  => 'warning',
+                        };
+                        $iconClass = match($kategori) {
+                            'vip'    => 'fas fa-crown',
+                            'member' => 'fas fa-id-card',
+                            default  => 'fas fa-ticket-alt',
+                        };
+                    @endphp
+
+                    <div class="mb-4 p-3 border rounded-3 border-{{ $badgeClass }}" style="background:rgba(0,0,0,.02)">
+                        <div class="d-flex align-items-center gap-3 mb-2">
+                            <span class="badge bg-{{ $badgeClass }} fs-6 px-3 py-2">
+                                <i class="{{ $iconClass }} me-1"></i> {{ $namaKategori }}
+                            </span>
+                            <span class="fw-bold text-{{ $badgeClass === 'warning' ? 'dark' : $badgeClass }}" style="font-size:1.1rem;">
+                                Rp {{ number_format($hargaKategori, 0, ',', '.') }} / tiket
+                            </span>
+                            <a href="{{ route('tiket-konser.create') }}" class="ms-auto btn btn-sm btn-outline-secondary">
+                                <i class="fas fa-exchange-alt me-1"></i> Ganti
+                            </a>
                         </div>
+                        @if ($deskripsiKategori)
+                            <ul class="mb-0 ps-3" style="font-size:.92rem;">
+                                @foreach (array_filter(array_map('trim', explode("\n", $deskripsiKategori))) as $benefit)
+                                    <li>{{ $benefit }}</li>
+                                @endforeach
+                            </ul>
+                        @endif
                     </div>
 
                     <div class="harga-info mb-4">
                         <i class="fas fa-info-circle text-warning me-1"></i>
-                        Harga per tiket: <strong id="infoHargaLabel">—</strong>
+                        Harga per tiket: <strong>Rp {{ number_format($hargaKategori, 0, ',', '.') }}</strong>
                     </div>
 
                     <form action="{{ route('tiket-konser.store') }}" method="POST" enctype="multipart/form-data"
@@ -253,21 +269,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    const hargaMap = {
-        umum:   {{ $hargaUmum }},
-        vip:    {{ $hargaVip }},
-        member: {{ $hargaMember }},
-    };
-    const namaMap = {
-        umum:   '{{ $namaUmum }}',
-        vip:    '{{ $namaVip }}',
-        member: 'Member Aktif Brilliant',
-    };
-
-    function getKategoriAktif() {
-        const checked = document.querySelector('input[name="kategori_pilih"]:checked');
-        return checked ? checked.value : 'umum';
-    }
+    const hargaKategori = {{ $hargaKategori }};
+    const kategoriAktif = '{{ $kategori }}';
 
     function formatRupiah(angka) {
         return 'Rp ' + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
@@ -275,38 +278,28 @@
 
     function updateTotal() {
         const jumlah = parseInt(document.getElementById('jumlah_tiket').value) || 0;
-        const kat    = getKategoriAktif();
-        document.getElementById('totalHargaDisplay').textContent = formatRupiah(jumlah * (hargaMap[kat] || 0));
-        document.getElementById('infoHargaLabel').textContent    = formatRupiah(hargaMap[kat] || 0);
+        document.getElementById('totalHargaDisplay').textContent = formatRupiah(jumlah * hargaKategori);
     }
-
-    function toggleBuktiMember(kategori) {
-        const wrap  = document.getElementById('wrapBuktiMember');
-        const input = document.getElementById('bukti_member');
-
-        if (kategori === 'member') {
-            wrap.style.display = 'block';
-            input.required     = true;
-        } else {
-            wrap.style.display = 'none';
-            input.required     = false;
-            input.value        = '';
-        }
-        document.getElementById('inputKategori').value = kategori;
-        updateTotal();
-    }
-
-    document.querySelectorAll('input[name="kategori_pilih"]').forEach(function (radio) {
-        radio.addEventListener('change', function () { toggleBuktiMember(this.value); });
-    });
 
     document.getElementById('jumlah_tiket').addEventListener('input', updateTotal);
 
     document.addEventListener('DOMContentLoaded', function () {
-        const current = document.querySelector('input[name="kategori_pilih"]:checked');
-        if (current) toggleBuktiMember(current.value);
         updateTotal();
 
+        // Toggle bukti member
+        const wrapMember = document.getElementById('wrapBuktiMember');
+        const inputMember = document.getElementById('bukti_member');
+        if (wrapMember && inputMember) {
+            if (kategoriAktif === 'member') {
+                wrapMember.style.display = 'block';
+                inputMember.required = true;
+            } else {
+                wrapMember.style.display = 'none';
+                inputMember.required = false;
+            }
+        }
+
+        // Tampilkan detail bank jika ada old value (validasi gagal)
         const bankSelect = document.getElementById('bank_id');
         if (bankSelect && bankSelect.value) tampilDetailBank(bankSelect);
     });

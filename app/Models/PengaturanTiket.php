@@ -12,8 +12,11 @@ class PengaturanTiket extends Model
         'harga_umum',
         'harga_member',
         'nama_kategori_umum',
+        'deskripsi_umum',
         'harga_vip',
         'nama_kategori_vip',
+        'deskripsi_vip',
+        'deskripsi_member',
         'gambar_poster',
     ];
 

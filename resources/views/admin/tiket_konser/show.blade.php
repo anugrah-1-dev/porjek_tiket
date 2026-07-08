@@ -12,6 +12,59 @@
 @stop
 
 @section('content')
+@if (session('success'))
+    <div class="alert alert-success alert-dismissible fade show">
+        {{ session('success') }}
+        <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+    </div>
+@endif
+
+{{-- CARD STATUS ACTION --}}
+<div class="card card-outline card-primary mb-3">
+    <div class="card-header">
+        <h3 class="card-title"><i class="fas fa-tasks mr-2"></i>Status Verifikasi</h3>
+    </div>
+    <div class="card-body">
+        <div class="d-flex align-items-center gap-3 flex-wrap">
+            <div class="mr-3">
+                <strong>Status saat ini:</strong>
+                @if ($tiket->status === 'diterima')
+                    <span class="badge badge-success ml-2" style="font-size:.95rem;">&#10003; Diterima</span>
+                @elseif ($tiket->status === 'ditolak')
+                    <span class="badge badge-danger ml-2" style="font-size:.95rem;">&#10007; Ditolak</span>
+                @else
+                    <span class="badge badge-warning ml-2" style="font-size:.95rem;">&#9679; Pending</span>
+                @endif
+            </div>
+            <div class="d-flex gap-2 flex-wrap">
+                <form action="{{ route('admin.tiket-konser.update-status', $tiket->id) }}" method="POST" class="d-inline">
+                    @csrf @method('PUT')
+                    <input type="hidden" name="status" value="diterima">
+                    <button type="submit" class="btn btn-success btn-sm"
+                            onclick="return confirm('Terima pesanan tiket ini?')">
+                        <i class="fas fa-check mr-1"></i> Terima
+                    </button>
+                </form>
+                <form action="{{ route('admin.tiket-konser.update-status', $tiket->id) }}" method="POST" class="d-inline">
+                    @csrf @method('PUT')
+                    <input type="hidden" name="status" value="pending">
+                    <button type="submit" class="btn btn-warning btn-sm">
+                        <i class="fas fa-clock mr-1"></i> Set Pending
+                    </button>
+                </form>
+                <form action="{{ route('admin.tiket-konser.update-status', $tiket->id) }}" method="POST" class="d-inline">
+                    @csrf @method('PUT')
+                    <input type="hidden" name="status" value="ditolak">
+                    <button type="submit" class="btn btn-danger btn-sm"
+                            onclick="return confirm('Tolak pesanan tiket ini?')">
+                        <i class="fas fa-times mr-1"></i> Tolak
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-md-6">
         <div class="card card-outline card-warning">
@@ -25,10 +78,16 @@
                         <td>
                             @if ($tiket->kategori === 'member')
                                 <span class="badge badge-success">Member Aktif Brilliant</span>
+                            @elseif ($tiket->kategori === 'vip')
+                                <span class="badge badge-danger">VIP</span>
                             @else
-                                <span class="badge badge-warning">Umum</span>
+                                <span class="badge badge-warning">{{ $tiket->kategori }}</span>
                             @endif
                         </td>
+                    </tr>
+                    <tr>
+                        <th class="bg-light">ID Transaksi</th>
+                        <td><code>{{ $tiket->trx_id }}</code></td>
                     </tr>
                     <tr>
                         <th class="bg-light">Nama Lengkap</th>

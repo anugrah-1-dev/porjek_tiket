@@ -45,6 +45,11 @@
                             </div>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="deskripsi_umum" class="font-weight-bold">Deskripsi / Benefit <small class="text-muted">(tiap baris = 1 poin)</small></label>
+                        <textarea class="form-control" id="deskripsi_umum" name="deskripsi_umum" rows="3"
+                                  placeholder="Contoh: Kursi reguler&#10;Akses venue umum">{{ old('deskripsi_umum', $pengaturan->deskripsi_umum) }}</textarea>
+                    </div>
 
                     <h6 class="text-muted border-bottom pb-1 mb-3 mt-3">Kategori VIP</h6>
                     <div class="form-row">
@@ -66,6 +71,11 @@
                             </div>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="deskripsi_vip" class="font-weight-bold">Deskripsi / Benefit VIP <small class="text-muted">(tiap baris = 1 poin)</small></label>
+                        <textarea class="form-control" id="deskripsi_vip" name="deskripsi_vip" rows="4"
+                                  placeholder="Contoh: Kursi VIP baris depan&#10;Meet & greet dengan artis&#10;Merchandise eksklusif&#10;Akses area backstage">{{ old('deskripsi_vip', $pengaturan->deskripsi_vip) }}</textarea>
+                    </div>
 
                     <h6 class="text-muted border-bottom pb-1 mb-3 mt-3">Kategori Member Aktif Brilliant</h6>
                     <div class="form-group">
@@ -77,6 +87,11 @@
                                    value="{{ old('harga_member', $pengaturan->harga_member) }}" min="1000" required>
                             @error('harga_member')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="deskripsi_member" class="font-weight-bold">Deskripsi / Benefit Member <small class="text-muted">(tiap baris = 1 poin)</small></label>
+                        <textarea class="form-control" id="deskripsi_member" name="deskripsi_member" rows="3"
+                                  placeholder="Contoh: Harga khusus member aktif&#10;Tunjukkan bukti keanggotaan">{{ old('deskripsi_member', $pengaturan->deskripsi_member) }}</textarea>
                     </div>
 
                     <h6 class="text-muted border-bottom pb-1 mb-3 mt-3">Poster Konser</h6>
