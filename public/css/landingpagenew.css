@@ -1528,16 +1528,18 @@ body {
 .modal-body-area {
     padding: .5rem .6rem .6rem;
     flex: 1;
-    overflow-y: auto;
     display: flex;
     flex-direction: column;
+    min-height: 0;
 }
 
 .modal-slider-wrapper {
     position: relative;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: .5rem;
+    flex: 1;
+    min-height: 0;
 }
 
 .nav-btn {
@@ -1570,24 +1572,30 @@ body {
     border-radius: 8px;
     background: #000;
     min-width: 0;
+    min-height: 0;
+    height: 100%;
 }
 
 .slide-track {
     display: flex;
     transition: transform 0.4s ease;
+    height: 100%;
     will-change: transform;
 }
 
 .slide-item {
     min-width: 100%;
+    flex: 0 0 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #000;
+    padding: 5px 0;
+    height: 100%;
 }
 
 .slide-item img {
     max-width: 100%;
+    max-height: 100%;
     width: auto;
     height: auto;
     object-fit: contain;
@@ -1605,6 +1613,7 @@ body {
 
 .slide-item video {
     max-width: 100%;
+    max-height: 100%;
     width: auto;
     height: auto;
     background: #000;
