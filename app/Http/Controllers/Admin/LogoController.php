@@ -13,7 +13,8 @@ class LogoController extends Controller
     {
         $logo1 = Logo::where('key', 'logo1')->first();
         $logo2 = Logo::where('key', 'logo2')->first();
-        return view('admin.logos.index', compact('logo1', 'logo2'));
+        $logo3 = Logo::where('key', 'logo3')->first();
+        return view('admin.logos.index', compact('logo1', 'logo2', 'logo3'));
     }
 
     public function update(Request $request, string $key)
@@ -36,7 +37,7 @@ class LogoController extends Controller
             Logo::create(['key' => $key, 'image_path' => $path]);
         }
 
-        $label = $key === 'logo1' ? 'Logo 1' : 'Logo 2';
+        $label = match($key) { 'logo1' => 'Logo 1', 'logo2' => 'Logo 2', 'logo3' => 'Logo 3', default => ucfirst($key) };
 
         return redirect()->route('admin.logos.index')->with('alert', [
             'icon'  => 'success',

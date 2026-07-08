@@ -21,6 +21,10 @@
         @if ($navLogo2 && $navLogo2->image_path)
             <img src="{{ asset('storage/' . $navLogo2->image_path) }}" alt="Logo 2" id="navbarLogo2" style="height: 70px;">
         @endif
+
+        @if ($navLogo3 && $navLogo3->image_path)
+            <img src="{{ asset('storage/' . $navLogo3->image_path) }}" alt="Logo 3" id="navbarLogo3" style="height: 70px;">
+        @endif
     </div>
 
     <div class="burger" onclick="toggleNavbar()">

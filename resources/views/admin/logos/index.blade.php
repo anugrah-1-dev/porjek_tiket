@@ -68,6 +68,38 @@
             </x-adminlte-card>
         </div>
     </div>
+
+    {{-- Logo 3 --}}
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <x-adminlte-card title="Logo 3" theme="warning" theme-mode="outline">
+                <div class="text-center mb-3">
+                    @if ($logo3 && $logo3->image_path)
+                        <img src="{{ asset('storage/' . $logo3->image_path) }}" alt="Logo 3"
+                            class="img-fluid img-thumbnail" style="max-height: 200px;">
+                    @else
+                        <img src="{{ asset('asset/img/LogoWebBrillaintPare.png') }}" alt="Logo 3 Default"
+                            class="img-fluid img-thumbnail" style="max-height: 200px;">
+                        <p class="text-muted mt-2"><small>Menggunakan gambar default.</small></p>
+                    @endif
+                </div>
+
+                <form action="{{ route('admin.logos.update', 'logo3') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <x-adminlte-input-file name="image_path" label="Upload Logo 3" id="imageInput3"
+                        placeholder="Pilih gambar..." />
+                    <img id="imagePreview3" src="#" alt="Preview" class="mt-2 d-none img-thumbnail"
+                        style="max-height: 150px;">
+
+                    <div class="d-flex justify-content-end mt-3">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-upload"></i> Simpan
+                        </button>
+                    </div>
+                </form>
+            </x-adminlte-card>
+        </div>
+    </div>
 @stop
 
 @section('js')
@@ -93,6 +125,14 @@
         });
         document.getElementById('imageInput2').addEventListener('change', function (event) {
             const preview = document.getElementById('imagePreview2');
+            if (event.target.files && event.target.files[0]) {
+                const reader = new FileReader();
+                reader.onload = e => { preview.src = e.target.result; preview.classList.remove('d-none'); };
+                reader.readAsDataURL(event.target.files[0]);
+            }
+        });
+        document.getElementById('imageInput3').addEventListener('change', function (event) {
+            const preview = document.getElementById('imagePreview3');
             if (event.target.files && event.target.files[0]) {
                 const reader = new FileReader();
                 reader.onload = e => { preview.src = e.target.result; preview.classList.remove('d-none'); };
