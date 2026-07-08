@@ -325,11 +325,11 @@
     document.addEventListener('DOMContentLoaded', function () {
         updateTotal();
 
-        // Toggle bukti member
+        // Toggle bukti member (tampil untuk kategori 'member' dan 'spesial')
         const wrapMember = document.getElementById('wrapBuktiMember');
         const inputMember = document.getElementById('bukti_member');
         if (wrapMember && inputMember) {
-            if (kategoriAktif === 'member') {
+            if (kategoriAktif === 'member' || kategoriAktif === 'spesial') {
                 wrapMember.style.display = 'block';
                 inputMember.required = true;
             } else {
