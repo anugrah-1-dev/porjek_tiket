@@ -44,6 +44,12 @@
        class="btn btn-sm {{ $status === 'ditolak' ? 'btn-danger' : 'btn-outline-danger' }}">
         <i class="fas fa-times-circle mr-1"></i> Ditolak
     </a>
+    
+    <div class="ml-auto">
+        <a href="{{ route('admin.tiket-konser.export', ['status' => $status]) }}" class="btn btn-sm btn-success">
+            <i class="fas fa-file-excel mr-1"></i> Export Excel
+        </a>
+    </div>
 </div>
 
 <div class="card card-outline card-warning">

@@ -20,6 +20,13 @@ class TiketKonserController extends Controller
         return view('admin.tiket_konser.index', compact('tikets', 'status'));
     }
 
+    public function export(Request $request)
+    {
+        $status = $request->input('status');
+        $fileName = 'Data_Tiket_Konser_' . date('Y-m-d_H-i-s') . '.xlsx';
+        return \Maatwebsite\Excel\Facades\Excel::download(new \App\Exports\TiketKonserExport($status), $fileName);
+    }
+
     public function show($id)
     {
         $tiket = TiketKonser::with('bank')->findOrFail($id);

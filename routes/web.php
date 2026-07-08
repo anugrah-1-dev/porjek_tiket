@@ -314,6 +314,7 @@ Route::middleware(['auth', 'role:admin|officer'])->prefix('admin')->name('admin.
     // Route::post('/upload-bukti', [PembayaranController::class, 'uploadBukti'])->name('bukti.upload');
 
     // ===== TIKET KONSER (ADMIN) =====
+    Route::get('/tiket-konser/export', [AdminTiketKonserController::class, 'export'])->name('tiket-konser.export');
     Route::get('/tiket-konser', [AdminTiketKonserController::class, 'index'])->name('tiket-konser.index');
     Route::get('/tiket-konser/{id}', [AdminTiketKonserController::class, 'show'])->name('tiket-konser.show');
     Route::put('/tiket-konser/{id}/status', [AdminTiketKonserController::class, 'updateStatus'])->name('tiket-konser.update-status');
