@@ -1793,22 +1793,6 @@ html {
     color: #555555;
 }
 
-/* 2. Gallery modal: background putih, teks harus gelap */
-.gallery-modal .modal-content {
-    background: #fff;
-}
-.gallery-modal .modal-content h3 {
-    color: #1a1a2e;
-}
-.gallery-modal .close-btn {
-    color: #333333;
-}
-.gallery-modal .close-btn:hover {
-    color: #e74c3c;
-}
-.gallery-modal .nav-btn {
-    color: #333333;
-}
 
 /* 3. Gallery caption di card (background putih) */
 .gallery-frame {
