@@ -160,6 +160,7 @@ Route::get('/', [LandingPageController::class, 'index'])->name('landing');
 // ===== TIKET KONSER (PUBLIC) =====
 Route::get('/tiket-konser', [TiketKonserController::class, 'create'])->name('tiket-konser.create');
 Route::post('/tiket-konser', [TiketKonserController::class, 'store'])->name('tiket-konser.store');
+Route::get('/tiket-konser/invoice/{id}', [TiketKonserController::class, 'invoice'])->name('tiket-konser.invoice');
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 

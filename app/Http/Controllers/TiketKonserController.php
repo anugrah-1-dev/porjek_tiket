@@ -59,7 +59,7 @@ class TiketKonserController extends Controller
                 ->store('tiket_konser', 'public');
         }
 
-        TiketKonser::create([
+        $tiket = TiketKonser::create([
             'kategori'         => $validated['kategori'],
             'nama_lengkap'     => $validated['nama_lengkap'],
             'ttl'              => $validated['ttl'],
@@ -70,7 +70,17 @@ class TiketKonserController extends Controller
             'bukti_member'     => $pathBuktiMember,
         ]);
 
-        return redirect()->route('tiket-konser.create')
-            ->with('success', 'Pembelian tiket berhasil! Kami akan segera memverifikasi pembayaran Anda.');
+        return redirect()->route('tiket-konser.invoice', $tiket->id);
+    }
+
+    /**
+     * Menampilkan halaman invoice setelah pembelian tiket berhasil.
+     */
+    public function invoice($id)
+    {
+        $tiket = TiketKonser::findOrFail($id);
+        $hargaPerTiket = self::HARGA_PER_TIKET;
+
+        return view('tiket_konser.invoice', compact('tiket', 'hargaPerTiket'));
     }
 }
