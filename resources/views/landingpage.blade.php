@@ -242,8 +242,8 @@
                     sekarang dan wujudkan potensi terbaik Anda bersama kami!
                 </p>
 
-                <a href="#" id="openPopupBtn" class="cta-button" data-aos="fade-up" data-aos-delay="200">
-                    BELI TIKET KONSER
+                <a href="#" id="openComingSoonBtn" class="cta-button cta-coming-soon-btn" data-aos="fade-up" data-aos-delay="200">
+                    <i class="fas fa-ticket-alt" style="margin-right:8px;"></i>BELI TIKET KONSER
                 </a>
             </div>
         </div>
@@ -1054,6 +1054,91 @@
 
         @include('partials.whatsapp-floating')
 
+
+    {{-- ===== COMING SOON MODAL ===== --}}
+    <div id="comingSoonModal" class="cs-overlay">
+        <div class="cs-box">
+            {{-- Animated background particles --}}
+            <div class="cs-particles">
+                <span></span><span></span><span></span>
+                <span></span><span></span><span></span>
+            </div>
+
+            {{-- Close button --}}
+            <button class="cs-close-btn" id="closeComingSoon" title="Tutup">
+                <i class="fas fa-times"></i>
+            </button>
+
+            {{-- Icon ring --}}
+            <div class="cs-icon-ring">
+                <div class="cs-icon-ring-inner">
+                    <i class="fas fa-ticket-alt"></i>
+                </div>
+            </div>
+
+            {{-- Badge --}}
+            <div class="cs-badge">
+                <i class="fas fa-bolt"></i> Segera Hadir
+            </div>
+
+            {{-- Title --}}
+            <h2 class="cs-title">Pembelian Tiket<br><span>Segera Dibuka!</span></h2>
+
+            {{-- Description --}}
+            <p class="cs-desc">
+                Tiket konser <strong>For Revenge</strong> di Brilliant English Course<br>
+                akan segera tersedia. Nantikan pengumuman resmi dari kami!
+            </p>
+
+            {{-- Event Info Cards --}}
+            <div class="cs-info-row">
+                <div class="cs-info-card">
+                    <i class="fas fa-calendar-alt"></i>
+                    <div>
+                        <span class="cs-info-label">Tanggal</span>
+                        <span class="cs-info-val">21 Agustus 2026</span>
+                    </div>
+                </div>
+                <div class="cs-info-card">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <span class="cs-info-label">Lokasi</span>
+                        <span class="cs-info-val">Kampung Inggris Pare</span>
+                    </div>
+                </div>
+                <div class="cs-info-card">
+                    <i class="fas fa-music"></i>
+                    <div>
+                        <span class="cs-info-label">Artist</span>
+                        <span class="cs-info-val">For Revenge</span>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Countdown --}}
+            <div class="cs-countdown-wrap">
+                <div class="cs-countdown-label">Hitung Mundur Hari Konser</div>
+                <div class="cs-countdown" id="csCountdown">
+                    <div class="cs-count-block"><span id="csDays">00</span><small>Hari</small></div>
+                    <div class="cs-count-sep">:</div>
+                    <div class="cs-count-block"><span id="csHours">00</span><small>Jam</small></div>
+                    <div class="cs-count-sep">:</div>
+                    <div class="cs-count-block"><span id="csMins">00</span><small>Menit</small></div>
+                    <div class="cs-count-sep">:</div>
+                    <div class="cs-count-block"><span id="csSecs">00</span><small>Detik</small></div>
+                </div>
+            </div>
+
+            {{-- Notify CTA --}}
+            <a href="https://wa.me/6282130203020?text=Halo%2C+saya+ingin+mendapatkan+info+tiket+konser+For+Revenge+di+Kampung+Inggris+Pare!" target="_blank" class="cs-notify-btn">
+                <i class="fab fa-whatsapp"></i> Beritahu Saya via WhatsApp
+            </a>
+
+            <p class="cs-footnote">Pantau terus info terbaru di media sosial kami ✨</p>
+        </div>
+    </div>
+    {{-- ===== END COMING SOON MODAL ===== --}}
+
     </body>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 
@@ -1062,6 +1147,44 @@
             duration: 800,
             once: true,
         });
+    </script>
+
+    <script>
+    // ===== Coming Soon Modal =====
+    (function() {
+        const modal   = document.getElementById('comingSoonModal');
+        const closBtn = document.getElementById('closeComingSoon');
+        const openers = ['openComingSoonBtn', 'navBeliTiketBtn'];
+
+        function openCS(e) { if(e) e.preventDefault(); modal.classList.add('cs-active'); document.body.style.overflow='hidden'; }
+        function closeCS() { modal.classList.remove('cs-active'); document.body.style.overflow=''; }
+
+        openers.forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) el.addEventListener('click', openCS);
+        });
+        if (closBtn) closBtn.addEventListener('click', closeCS);
+        modal.addEventListener('click', function(e) { if(e.target === modal) closeCS(); });
+        document.addEventListener('keydown', function(e) { if(e.key==='Escape') closeCS(); });
+
+        // Countdown to 21 August 2026
+        var target = new Date('2026-08-21T00:00:00+07:00').getTime();
+        function tick() {
+            var now  = new Date().getTime();
+            var diff = target - now;
+            if (diff <= 0) { document.getElementById('csCountdown').innerHTML = '<span style="color:#ffd700;font-size:1.1rem;">Konser Hari Ini! 🎉</span>'; return; }
+            var d = Math.floor(diff / (1000*60*60*24));
+            var h = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+            var m = Math.floor((diff % (1000*60*60)) / (1000*60));
+            var s = Math.floor((diff % (1000*60)) / 1000);
+            document.getElementById('csDays').textContent  = String(d).padStart(2,'0');
+            document.getElementById('csHours').textContent = String(h).padStart(2,'0');
+            document.getElementById('csMins').textContent  = String(m).padStart(2,'0');
+            document.getElementById('csSecs').textContent  = String(s).padStart(2,'0');
+        }
+        tick();
+        setInterval(tick, 1000);
+    })();
     </script>
 
     </html>

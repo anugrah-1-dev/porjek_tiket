@@ -82,6 +82,7 @@
         <a href="{{ url('/#sosmed') }}">SOSMED</a> --}}
         <a href="{{ url('/#kontak') }}">KONTAK</a>
         <a href="{{ url('/#tentang') }}">TENTANG KAMI</a>
+        <a href="#" id="navBeliTiketBtn" class="btn btn-tiket-nav">🎟️ Beli Tiket Konser</a>
         <a href="{{ route('tracking.index') }}" class="btn">Tracking Transaksi</a>
     </div>
 </nav>
