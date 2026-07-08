@@ -65,8 +65,8 @@
                     @php
                         $namaKategori = match($kategori) {
                             'vip'     => $namaVip,
-                            'member'  => 'Spesial Member Brilliant English Course & BIE Plus',
-                            'spesial' => 'Spesial Member Brilliant English Course & BIE Plus ( Bulan Juli - Agustus)',
+                            'member'  => 'Spesial Member Aktif Brilliant English Course & BIE Plus',
+                            'spesial' => 'Spesial Member Brilliant English Course & BIE Plus',
                             default   => $namaUmum,
                         };
                         $hargaKategori = match($kategori) {
@@ -128,7 +128,7 @@
                         @if ($isSpesial)
                             <div class="alert alert-warning mt-2 mb-0 py-2 px-3" style="font-size:.88rem;">
                                 <i class="fas fa-exclamation-triangle me-1"></i>
-                                <strong>Syarat:</strong> Khusus member aktif Brilliant <strong>minimal 1 bulan</strong> (periode Juli–Agustus 2026). Bukti keanggotaan wajib diunggah.
+                                <strong>Syarat:</strong> Khusus member aktif Brilliant minimal 1 bulan (mulai dari periode 10 Juli–Agustus 2026). Bukti keanggotaan wajib diunggah.
                             </div>
                         @endif
                     </div>

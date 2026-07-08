@@ -356,8 +356,8 @@
                         @php
                             $labelKategori = match($tiket->kategori) {
                                 'vip' => 'VIP',
-                                'spesial' => 'Spesial Member Brilliant English Course & BIE Plus ( Bulan Juli - Agustus)',
-                                'member' => 'Spesial Member Brilliant English Course & BIE Plus',
+                                'spesial' => 'Spesial Member Brilliant English Course & BIE Plus',
+                                'member' => 'Spesial Member Aktif Brilliant English Course & BIE Plus',
                                 default => 'Umum',
                             };
                         @endphp
