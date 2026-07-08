@@ -1431,15 +1431,12 @@ body {
     border-radius: 18px;
     padding: 0;
     max-width: 900px;
-    width: 100%;
-    height: 90vh;
-    max-height: 90vh;
+    width: 95vw;
+    max-height: 92vh;
     overflow: hidden;
     position: relative;
     border: 1px solid rgba(255,255,255,.1);
     box-shadow: 0 28px 80px rgba(0,0,0,.85);
-    display: flex;
-    flex-direction: column;
 }
 
 .close-btn {
@@ -1525,12 +1522,7 @@ body {
 
 /* Modal body area */
 .modal-body-area {
-    flex: 1;
-    min-height: 0;
-    overflow: hidden;
-    display: flex;
-    align-items: stretch;
-    padding: .6rem;
+    padding: .5rem .6rem .6rem;
 }
 
 .modal-slider-wrapper {
@@ -1538,9 +1530,6 @@ body {
     display: flex;
     align-items: center;
     gap: .5rem;
-    flex: 1;
-    min-height: 0;
-    width: 100%;
 }
 
 .nav-btn {
@@ -1571,31 +1560,25 @@ body {
     position: relative;
     border-radius: 8px;
     background: #000;
-    min-height: 0;
-    align-self: stretch;
-    display: flex;
-    align-items: center;
+    min-width: 0;
 }
 
 .slide-track {
     display: flex;
-    height: 100%;
     transition: transform 0.4s ease;
     will-change: transform;
 }
 
 .slide-item {
     min-width: 100%;
-    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     background: #000;
-    overflow: hidden;
 }
 
 .slide-item img {
-    max-height: 100%;
+    max-height: calc(90vh - 95px);
     max-width: 100%;
     width: auto;
     height: auto;
@@ -1605,14 +1588,14 @@ body {
 
 .slide-item iframe {
     width: 100%;
-    height: 100%;
+    aspect-ratio: 16 / 9;
+    height: auto;
     border: none;
     display: block;
-    aspect-ratio: unset;
 }
 
 .slide-item video {
-    max-height: 100%;
+    max-height: calc(90vh - 95px);
     max-width: 100%;
     width: auto;
     height: auto;
@@ -1695,7 +1678,6 @@ body {
 
     .modal-content {
         max-width: 95%;
-        height: 90vh;
     }
 }
 
