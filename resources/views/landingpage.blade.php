@@ -662,6 +662,11 @@
                                         <h5>{{ $gallery->title }}</h5>
                                         <p>{{ Str::limit($gallery->deskripsi ?? '', 60) }}</p>
                                     </div>
+                                    @if ($gallery->images->count() > 1)
+                                        <span class="gallery-count-badge">
+                                            <i class="fas fa-images"></i> {{ $gallery->images->count() }}
+                                        </span>
+                                    @endif
                                 </div>
                                 @php $index++; @endphp
                             @endif
@@ -670,45 +675,73 @@
                         </div>{{-- end .gallery-carousel-wrap --}}
                         <button class="carousel-nav-btn carousel-next" id="bie-next">&#8594;</button>
                     </div>{{-- end .gallery-carousel-outer --}}
-                    {{-- Modal BIE di luar gallery-grid --}}
+                    {{-- Modals --}}
                     @foreach ($galleries as $gallery)
                         @if ($gallery->images->isNotEmpty())
-                            <div id="modal-{{ $gallery->id }}" class="gallery-modal">
+                            <div id="modal-{{ $gallery->id }}" class="gallery-modal"
+                                 onclick="closeModalOnBackdrop(event, {{ $gallery->id }})">
                                 <div class="modal-content">
-                                    <span class="close-btn"
-                                        onclick="closeGalleryModal({{ $gallery->id }})">&times;</span>
-                                    <h3>{{ $gallery->title }}</h3>
-                                    <div class="modal-slider-wrapper">
-                                        <button class="nav-btn left"
-                                            onclick="slideGallery({{ $gallery->id }}, -1)">&#8592;</button>
-                                        <div class="modal-slider" id="slider-{{ $gallery->id }}">
-                                            <div class="slide-track">
-                                                @foreach ($gallery->images as $image)
-                                                    <div class="slide-item">
-                                                        @if ($image->isYoutubeVideo() && $image->getYoutubeEmbedUrl())
-                                                            <iframe
-                                                                src="{{ $image->getYoutubeEmbedUrl() }}"
-                                                                frameborder="0"
-                                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                                allowfullscreen
-                                                                style="width:100%; height:400px; border-radius:8px;">
-                                                            </iframe>
-                                                        @elseif ($image->isLocalVideo())
-                                                            <video controls style="max-width:100%; max-height:65vh; border-radius:8px; background:#000;">
-                                                                <source src="{{ asset('storage/' . $image->image_path) }}">
-                                                                Browser Anda tidak mendukung pemutaran video.
-                                                            </video>
-                                                        @elseif ($image->image_path)
-                                                            <img src="{{ asset('storage/' . $image->image_path) }}"
-                                                                alt="Foto Galeri">
-                                                        @endif
-                                                    </div>
-                                                @endforeach
-                                            </div>
+
+                                    {{-- Header bar --}}
+                                    <div class="modal-head-bar">
+                                        <div class="modal-head-left">
+                                            <i class="fas fa-images" style="color:#FFA109;font-size:.82rem;flex-shrink:0;"></i>
+                                            <h3>{{ $gallery->title }}</h3>
                                         </div>
-                                        <button class="nav-btn right"
-                                            onclick="slideGallery({{ $gallery->id }}, 1)">&#8594;</button>
+                                        <div class="modal-head-right">
+                                            @if ($gallery->images->count() > 1)
+                                                <span class="modal-slide-counter" id="counter-{{ $gallery->id }}">
+                                                    1 / {{ $gallery->images->count() }}
+                                                </span>
+                                            @endif
+                                            <button class="modal-close-btn"
+                                                    onclick="closeGalleryModal({{ $gallery->id }})"
+                                                    title="Tutup">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
                                     </div>
+
+                                    {{-- Slider body --}}
+                                    <div class="modal-body-area">
+                                        <div class="modal-slider-wrapper">
+                                            @if ($gallery->images->count() > 1)
+                                                <button class="nav-btn left"
+                                                        onclick="slideGallery({{ $gallery->id }}, -1)">&#8592;</button>
+                                            @endif
+
+                                            <div class="modal-slider" id="slider-{{ $gallery->id }}">
+                                                <div class="slide-track">
+                                                    @foreach ($gallery->images as $image)
+                                                        <div class="slide-item">
+                                                            @if ($image->isYoutubeVideo() && $image->getYoutubeEmbedUrl())
+                                                                <iframe
+                                                                    src="{{ $image->getYoutubeEmbedUrl() }}"
+                                                                    frameborder="0"
+                                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                                    allowfullscreen>
+                                                                </iframe>
+                                                            @elseif ($image->isLocalVideo())
+                                                                <video controls>
+                                                                    <source src="{{ asset('storage/' . $image->image_path) }}">
+                                                                    Browser Anda tidak mendukung pemutaran video.
+                                                                </video>
+                                                            @elseif ($image->image_path)
+                                                                <img src="{{ asset('storage/' . $image->image_path) }}"
+                                                                     alt="Foto {{ $gallery->title }}">
+                                                            @endif
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+
+                                            @if ($gallery->images->count() > 1)
+                                                <button class="nav-btn right"
+                                                        onclick="slideGallery({{ $gallery->id }}, 1)">&#8594;</button>
+                                            @endif
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         @endif
@@ -723,10 +756,18 @@
 
         <script>
 
-            // Galeri BIE â€” modal & slider
+            // Active modal tracker
+            let activeGalleryModalId = null;
+
             function openGalleryModal(id) {
                 document.getElementById('modal-' + id).classList.add('active');
                 document.body.style.overflow = 'hidden';
+                activeGalleryModalId = id;
+                const counter = document.getElementById('counter-' + id);
+                if (counter) {
+                    const parts = counter.textContent.trim().split('/');
+                    if (parts.length === 2) counter.textContent = '1 / ' + parts[1].trim();
+                }
             }
             function closeGalleryModal(id) {
                 const modal = document.getElementById('modal-' + id);
@@ -735,7 +776,17 @@
                 const track = modal.querySelector('.slide-track');
                 if (track) track.style.transform = 'translateX(0)';
                 if (gallerySlidePos[id] !== undefined) gallerySlidePos[id] = 0;
-                modal.querySelectorAll('video').forEach(v => v.pause());
+                modal.querySelectorAll('video').forEach(v => { v.pause(); v.currentTime = 0; });
+                modal.querySelectorAll('iframe').forEach(fr => { const s = fr.src; fr.src = ''; fr.src = s; });
+                const counter = document.getElementById('counter-' + id);
+                if (counter) {
+                    const parts = counter.textContent.trim().split('/');
+                    if (parts.length === 2) counter.textContent = '1 / ' + parts[1].trim();
+                }
+                activeGalleryModalId = null;
+            }
+            function closeModalOnBackdrop(event, id) {
+                if (event.target === event.currentTarget) closeGalleryModal(id);
             }
             const gallerySlidePos = {};
             function slideGallery(id, direction) {
@@ -745,13 +796,24 @@
                 const items = track.querySelectorAll('.slide-item');
                 if (!items.length) return;
                 if (gallerySlidePos[id] === undefined) gallerySlidePos[id] = 0;
+                const cur = items[gallerySlidePos[id]];
+                if (cur) cur.querySelectorAll('video').forEach(v => v.pause());
                 gallerySlidePos[id] = (gallerySlidePos[id] + direction + items.length) % items.length;
                 track.style.transform = `translateX(-${gallerySlidePos[id] * 100}%)`;
+                const counter = document.getElementById('counter-' + id);
+                if (counter) counter.textContent = (gallerySlidePos[id] + 1) + ' / ' + items.length;
             }
             function slideGalleryGrid(direction) {
                 const slider = document.getElementById('gallerySlider');
                 if (slider) slider.scrollBy({ left: 320 * direction, behavior: 'smooth' });
             }
+            // Keyboard navigation
+            document.addEventListener('keydown', function (e) {
+                if (!activeGalleryModalId) return;
+                if (e.key === 'ArrowRight') slideGallery(activeGalleryModalId,  1);
+                if (e.key === 'ArrowLeft')  slideGallery(activeGalleryModalId, -1);
+                if (e.key === 'Escape')     closeGalleryModal(activeGalleryModalId);
+            });
 
             // ===== BIE Gallery Carousel Auto-Slide =====
             (function () {
@@ -829,17 +891,8 @@
             <div class="container">
                 <h2 class="section-title">Kontak Kami</h2>
                 <p class="kontak-subtitle">
-                    Ingin terhubung dengan kami? Silakan hubungi lewat email atau sosial media berikut.
+                    Ingin terhubung dengan kami? Hubungi kami langsung via WhatsApp atau kunjungi lokasi kami.
                 </p>
-
-                <div class="kontak-info">
-                    <p><strong>Instagram:</strong> <a
-                            href="https://www.instagram.com/kekampunginggrisbrilliant"
-                            target="_blank">kekampunginggrisbrilliant</a></p>
-                    <p><strong>TikTok:</strong> <a
-                            href="https://www.tiktok.com/@kekampunginggris"
-                            target="_blank">kekampunginggris</a></p>
-                </div>
 
                 <div class="kontak-maps">
                     <iframe

@@ -42,15 +42,7 @@
             </button>
         </div>
 
-        <div class="dropdown" id="galleryDropdown">
-            <button class="dropbtn">
-                GALERI <span class="arrow">▼</span>
-            </button>
-            <div class="dropdown-content">
-                <a href="#galeri">Galeri</a>
-                <a href="#sosmed">Social Media</a>
-            </div>
-        </div>
+        <a href="{{ route('landing') }}#galeri" class="nav-link-direct" style="font-weight:600;letter-spacing:.05em;color:inherit;text-decoration:none;">GALERI</a>
 
         {{-- <a href="#galeri">GALLERI</a>
         <a href="#sosmed">SOSMED</a> --}}
