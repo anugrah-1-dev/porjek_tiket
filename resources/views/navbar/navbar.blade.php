@@ -62,31 +62,7 @@
             navbar.classList.remove('scrolled');
         }
     });
-    document.addEventListener("DOMContentLoaded", function () {
-        const openBtn = document.getElementById("openKursusPopupBtn");
-        const popup = document.getElementById("tiketPopup");
-        const closeBtn = document.getElementById("closeTiketPopupBtn");
-
-        if (openBtn && popup) {
-            openBtn.addEventListener("click", function () {
-                popup.classList.add("show");
-            });
-        }
-
-        if (closeBtn && popup) {
-            closeBtn.addEventListener("click", function () {
-                popup.classList.remove("show");
-            });
-        }
-
-        if (popup) {
-            popup.addEventListener("click", function (e) {
-                if (e.target === popup) {
-                    popup.classList.remove("show");
-                }
-            });
-        }
-    })
+    // Tombol BELI TIKET KONSER di navbar ditangani oleh script coming soon modal di landing page
     // Dropdown functionality (support multiple dropdowns)
     document.addEventListener('DOMContentLoaded', function () {
         const dropdowns = document.querySelectorAll('.dropdown');

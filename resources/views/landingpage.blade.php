@@ -1115,19 +1115,6 @@
                 </div>
             </div>
 
-            {{-- Countdown --}}
-            <div class="cs-countdown-wrap">
-                <div class="cs-countdown-label">Hitung Mundur Hari Konser</div>
-                <div class="cs-countdown" id="csCountdown">
-                    <div class="cs-count-block"><span id="csDays">00</span><small>Hari</small></div>
-                    <div class="cs-count-sep">:</div>
-                    <div class="cs-count-block"><span id="csHours">00</span><small>Jam</small></div>
-                    <div class="cs-count-sep">:</div>
-                    <div class="cs-count-block"><span id="csMins">00</span><small>Menit</small></div>
-                    <div class="cs-count-sep">:</div>
-                    <div class="cs-count-block"><span id="csSecs">00</span><small>Detik</small></div>
-                </div>
-            </div>
 
             {{-- Notify CTA --}}
             <a href="https://wa.me/6282130203020?text=Halo%2C+saya+ingin+mendapatkan+info+tiket+konser+For+Revenge+di+Kampung+Inggris+Pare!" target="_blank" class="cs-notify-btn">
@@ -1154,7 +1141,7 @@
     (function() {
         const modal   = document.getElementById('comingSoonModal');
         const closBtn = document.getElementById('closeComingSoon');
-        const openers = ['openComingSoonBtn', 'navBeliTiketBtn'];
+        const openers = ['openComingSoonBtn', 'navBeliTiketBtn', 'openKursusPopupBtn'];
 
         function openCS(e) { if(e) e.preventDefault(); modal.classList.add('cs-active'); document.body.style.overflow='hidden'; }
         function closeCS() { modal.classList.remove('cs-active'); document.body.style.overflow=''; }
@@ -1167,23 +1154,6 @@
         modal.addEventListener('click', function(e) { if(e.target === modal) closeCS(); });
         document.addEventListener('keydown', function(e) { if(e.key==='Escape') closeCS(); });
 
-        // Countdown to 21 August 2026
-        var target = new Date('2026-08-21T00:00:00+07:00').getTime();
-        function tick() {
-            var now  = new Date().getTime();
-            var diff = target - now;
-            if (diff <= 0) { document.getElementById('csCountdown').innerHTML = '<span style="color:#ffd700;font-size:1.1rem;">Konser Hari Ini! 🎉</span>'; return; }
-            var d = Math.floor(diff / (1000*60*60*24));
-            var h = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
-            var m = Math.floor((diff % (1000*60*60)) / (1000*60));
-            var s = Math.floor((diff % (1000*60)) / 1000);
-            document.getElementById('csDays').textContent  = String(d).padStart(2,'0');
-            document.getElementById('csHours').textContent = String(h).padStart(2,'0');
-            document.getElementById('csMins').textContent  = String(m).padStart(2,'0');
-            document.getElementById('csSecs').textContent  = String(s).padStart(2,'0');
-        }
-        tick();
-        setInterval(tick, 1000);
     })();
     </script>
 
