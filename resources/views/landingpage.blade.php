@@ -686,48 +686,7 @@
 
         </section>
 
-        <link rel="stylesheet" href="{{ asset('css/sosmed.css') }}">
 
-        <section id="sosmed" class="sosmed-section">
-            <div class="container">
-                <h2 class="section-title">Sosial Media Kami</h2>
-                @if (!$hasSosmed)
-                    <p class="text-center">Belum ada data yang ditambahkan. Stay tuned!</p>
-                @else
-                    @foreach ($groupedSosmed as $platform => $items)
-                        @if (count($items) > 0)
-                            <div class="mb-5">
-                                <h4 class="section-subtitle fw-semibold mb-4">{{ $platform }}</h4>
-                                <div class="sosmed-grid">
-                                    @foreach ($items as $item)
-                                        <div class="sosmed-card" data-platform="{{ strtolower($platform) }}">
-                                            <div class="sosmed-card-image">
-                                                @if (strtolower($platform) === 'youtube')
-                                                    <div class="sosmed-card-video">
-                                                        <iframe width="100%" height="200"
-                                                            src="https://www.youtube.com/embed/{{ getYoutubeVideoId($item->url) }}"
-                                                            title="YouTube video player" frameborder="0"
-                                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                            allowfullscreen>
-                                                        </iframe>
-                                                    </div>
-                                                @elseif (strtolower($platform) === 'instagram')
-                                                    <a href="{{ $item->url }}" target="_blank"
-                                                        rel="noopener noreferrer">
-                                                        <img src="{{ asset('storage/' . $item->image_path) }}"
-                                                            alt="Instagram Image">
-                                                    </a>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        @endif
-                    @endforeach
-                @endif
-            </div>
-        </section>
 
         <link rel="stylesheet" href="{{ asset('css/kontak.css') }}">
 

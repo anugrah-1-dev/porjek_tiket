@@ -481,11 +481,7 @@
                         'icon' => 'fas fa-images',
                     ],
 
-                    [
-                        'text' => 'Sosmed',
-                        'url'  => '/admin/sosmed',
-                        'icon' => 'fas fa-globe',
-                    ],
+
 
                     [
                         'text' => 'Bank',
