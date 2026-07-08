@@ -620,7 +620,7 @@
             <div class="container" data-aos="fade-up">
                 <h2 class="section-title">GALERI</h2>
                 <p class="section-subtitle text-center mb-4" style="color: #ffffff;">
-                    Dokumentasi kegiatan dan momen-momen seru bersama Brilliant International Education PLUS.
+                    Dokumentasi kegiatan dan momen-momen seru bersama Brilliant International Education PLUS Dan Brilliant English Course.
                 </p>
 
                 <div class="gallery-carousel-outer" id="bie-carousel">
