@@ -678,7 +678,63 @@
             </div>
         </section>
 
-                    
+                    {{-- Modals --}}
+                    @foreach ($galleries as $gallery)
+                        @if ($gallery->images->isNotEmpty())
+                            <div id="modal-{{ $gallery->id }}" class="gallery-modal"
+                                 onclick="closeModalOnBackdrop(event, {{ $gallery->id }})">
+                                <div class="modal-content">
+
+                                    {{-- Header bar --}}
+                                    <div class="modal-head-bar">
+                                        <div class="modal-head-left">
+                                            <i class="fas fa-images" style="color:#FFA109;font-size:.82rem;flex-shrink:0;"></i>
+                                            <h3>{{ $gallery->title }}</h3>
+                                        </div>
+                                        <div class="modal-head-right">
+                                            @if ($gallery->images->count() > 1)
+                                                <span class="modal-slide-counter" id="counter-{{ $gallery->id }}">
+                                                    1 / {{ $gallery->images->count() }}
+                                                </span>
+                                            @endif
+                                            <button class="modal-close-btn"
+                                                    onclick="closeGalleryModal({{ $gallery->id }})"
+                                                    title="Tutup">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {{-- Slider body --}}
+                                    <div class="modal-body-area">
+                                        <div class="modal-slider-wrapper">
+                                            @if ($gallery->images->count() > 1)
+                                                <button class="nav-btn left"
+                                                        onclick="slideGallery({{ $gallery->id }}, -1)">&#8592;</button>
+                                            @endif
+
+                                            <div class="modal-slider" id="slider-{{ $gallery->id }}">
+                                                <div class="slide-track">
+                                                    @foreach ($gallery->images as $image)
+                                                        <div class="slide-item">
+                                                            @if ($image->isYoutubeVideo() && $image->getYoutubeEmbedUrl())
+                                                                <iframe
+                                                                    src="{{ $image->getYoutubeEmbedUrl() }}"
+                                                                    frameborder="0"
+                                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                                    allowfullscreen>
+                                                                </iframe>
+                                                            @elseif ($image->isLocalVideo())
+                                                                <video controls>
+                                                                    <source src="{{ asset('storage/' . $image->image_path) }}">
+                                                                    Browser Anda tidak mendukung pemutaran video.
+                                                                </video>
+                                                            @elseif ($image->image_path)
+                                                                <img src="{{ asset('storage/' . $image->image_path) }}"
+                                                                     alt="Foto {{ $gallery->title }}">
+                                                            @endif
+                                                        </div>
+                                                    @endforeach
                                                 </div>
                                             </div>
 
@@ -820,83 +876,6 @@
 
         </section>
 
-                    
-                                                </div>
-                                            </div>
-
-                                            @if ($gallery->images->count() > 1)
-                                                <button class="nav-btn right"
-                                                        onclick="slideGallery({{ $gallery->id }}, 1)">&#8594;</button>
-                                            @endif
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        @endif
-                    @endforeach
-
-
-
-        <link rel="stylesheet" href="{{ asset('css/kontak.css') }}">
-
-        <div class="wave-dividerkontak">
-            <svg viewBox="0 0 1440 320" preserveAspectRatio="none">
-                <path class="shape-fillkontak"
-                    d="M0,224L48,208C96,192,192,160,288,154.7C384,149,480,171,576,186.7C672,203,768,213,864,197.3C960,181,1056,139,1152,122.7C1248,107,1344,117,1392,122.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
-                </path>
-            </svg>
-        </div>
-
-        <section id="kontak" class="kontak-section">
-            <div class="container">
-                <h2 class="section-title">Kontak Kami</h2>
-                <p class="kontak-subtitle">
-                    Ingin terhubung dengan kami? Hubungi kami langsung via WhatsApp atau kunjungi lokasi kami.
-                </p>
-
-                <div class="kontak-maps">
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3953.299223137717!2d112.1899974!3d-7.758055899999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e785db5d1b27adb%3A0xa8f77ed278eedc6!2sBrilliant%20English%20Course%20Kampung%20Inggris%20Pare!5e0!3m2!1sen!2sid!4v1753597882357!5m2!1sen!2sid"
-                        width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy">
-                    </iframe>
-                </div>
-            </div>
-        </section>
-
-                    
-                                                </div>
-                                            </div>
-
-                                            @if ($gallery->images->count() > 1)
-                                                <button class="nav-btn right"
-                                                        onclick="slideGallery({{ $gallery->id }}, 1)">&#8594;</button>
-                                            @endif
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        @endif
-                    @endforeach
-
-        <footer>
-            &copy; 2025 Brilliant International Education PLUS. Hak Cipta Dilindungi Oleh Undang-Undang
-        </footer>
-
-        @include('partials.whatsapp-floating')
-
-    </body>
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-
-    <script>
-        AOS.init({
-            duration: 800,
-            once: true,
-        });
-    </script>
-
-    
                     {{-- Modals --}}
                     @foreach ($galleries as $gallery)
                         @if ($gallery->images->isNotEmpty())
@@ -968,7 +947,122 @@
                             </div>
                         @endif
                     @endforeach
-</html>
 
 
+
+        <link rel="stylesheet" href="{{ asset('css/kontak.css') }}">
+
+        <div class="wave-dividerkontak">
+            <svg viewBox="0 0 1440 320" preserveAspectRatio="none">
+                <path class="shape-fillkontak"
+                    d="M0,224L48,208C96,192,192,160,288,154.7C384,149,480,171,576,186.7C672,203,768,213,864,197.3C960,181,1056,139,1152,122.7C1248,107,1344,117,1392,122.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
+                </path>
+            </svg>
+        </div>
+
+        <section id="kontak" class="kontak-section">
+            <div class="container">
+                <h2 class="section-title">Kontak Kami</h2>
+                <p class="kontak-subtitle">
+                    Ingin terhubung dengan kami? Hubungi kami langsung via WhatsApp atau kunjungi lokasi kami.
+                </p>
+
+                <div class="kontak-maps">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3953.299223137717!2d112.1899974!3d-7.758055899999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e785db5d1b27adb%3A0xa8f77ed278eedc6!2sBrilliant%20English%20Course%20Kampung%20Inggris%20Pare!5e0!3m2!1sen!2sid!4v1753597882357!5m2!1sen!2sid"
+                        width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy">
+                    </iframe>
+                </div>
+            </div>
+        </section>
+
+                    {{-- Modals --}}
+                    @foreach ($galleries as $gallery)
+                        @if ($gallery->images->isNotEmpty())
+                            <div id="modal-{{ $gallery->id }}" class="gallery-modal"
+                                 onclick="closeModalOnBackdrop(event, {{ $gallery->id }})">
+                                <div class="modal-content">
+
+                                    {{-- Header bar --}}
+                                    <div class="modal-head-bar">
+                                        <div class="modal-head-left">
+                                            <i class="fas fa-images" style="color:#FFA109;font-size:.82rem;flex-shrink:0;"></i>
+                                            <h3>{{ $gallery->title }}</h3>
+                                        </div>
+                                        <div class="modal-head-right">
+                                            @if ($gallery->images->count() > 1)
+                                                <span class="modal-slide-counter" id="counter-{{ $gallery->id }}">
+                                                    1 / {{ $gallery->images->count() }}
+                                                </span>
+                                            @endif
+                                            <button class="modal-close-btn"
+                                                    onclick="closeGalleryModal({{ $gallery->id }})"
+                                                    title="Tutup">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {{-- Slider body --}}
+                                    <div class="modal-body-area">
+                                        <div class="modal-slider-wrapper">
+                                            @if ($gallery->images->count() > 1)
+                                                <button class="nav-btn left"
+                                                        onclick="slideGallery({{ $gallery->id }}, -1)">&#8592;</button>
+                                            @endif
+
+                                            <div class="modal-slider" id="slider-{{ $gallery->id }}">
+                                                <div class="slide-track">
+                                                    @foreach ($gallery->images as $image)
+                                                        <div class="slide-item">
+                                                            @if ($image->isYoutubeVideo() && $image->getYoutubeEmbedUrl())
+                                                                <iframe
+                                                                    src="{{ $image->getYoutubeEmbedUrl() }}"
+                                                                    frameborder="0"
+                                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                                    allowfullscreen>
+                                                                </iframe>
+                                                            @elseif ($image->isLocalVideo())
+                                                                <video controls>
+                                                                    <source src="{{ asset('storage/' . $image->image_path) }}">
+                                                                    Browser Anda tidak mendukung pemutaran video.
+                                                                </video>
+                                                            @elseif ($image->image_path)
+                                                                <img src="{{ asset('storage/' . $image->image_path) }}"
+                                                                     alt="Foto {{ $gallery->title }}">
+                                                            @endif
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+
+                                            @if ($gallery->images->count() > 1)
+                                                <button class="nav-btn right"
+                                                        onclick="slideGallery({{ $gallery->id }}, 1)">&#8594;</button>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        @endif
+                    @endforeach
+
+        <footer>
+            &copy; 2025 Brilliant International Education PLUS. Hak Cipta Dilindungi Oleh Undang-Undang
+        </footer>
+
+        @include('partials.whatsapp-floating')
+
+    </body>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true,
+        });
+    </script>
+
+    </html>
 
