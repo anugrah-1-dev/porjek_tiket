@@ -84,7 +84,13 @@
 
                     <div class="harga-info mb-4">
                         <i class="fas fa-info-circle text-warning me-1"></i>
-                        Harga per tiket: <strong>Rp {{ number_format($hargaPerTiket, 0, ',', '.') }}</strong>
+                        Harga per tiket:
+                        <span id="infoHargaUmum" {{ old('kategori', $kategori) === 'umum' ? '' : 'style=display:none' }}>
+                            Umum — <strong>Rp {{ number_format($hargaUmum, 0, ',', '.') }}</strong>
+                        </span>
+                        <span id="infoHargaMember" {{ old('kategori', $kategori) === 'member' ? '' : 'style=display:none' }}>
+                            Member Aktif — <strong>Rp {{ number_format($hargaMember, 0, ',', '.') }}</strong>
+                        </span>
                     </div>
 
                     <form action="{{ route('tiket-konser.store') }}" method="POST" enctype="multipart/form-data"
@@ -182,7 +188,13 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    const hargaPerTiket = {{ $hargaPerTiket }};
+    const hargaUmum   = {{ $hargaUmum }};
+    const hargaMember = {{ $hargaMember }};
+
+    function getHargaAktif() {
+        const checked = document.querySelector('input[name="kategori_pilih"]:checked');
+        return checked && checked.value === 'member' ? hargaMember : hargaUmum;
+    }
 
     function formatRupiah(angka) {
         return 'Rp ' + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
@@ -190,21 +202,29 @@
 
     function updateTotal() {
         const jumlah = parseInt(document.getElementById('jumlah_tiket').value) || 0;
-        document.getElementById('totalHargaDisplay').textContent = formatRupiah(jumlah * hargaPerTiket);
+        document.getElementById('totalHargaDisplay').textContent = formatRupiah(jumlah * getHargaAktif());
     }
 
     function toggleBuktiMember(kategori) {
-        const wrap = document.getElementById('wrapBuktiMember');
+        const wrap  = document.getElementById('wrapBuktiMember');
         const input = document.getElementById('bukti_member');
+        const infoUmum   = document.getElementById('infoHargaUmum');
+        const infoMember = document.getElementById('infoHargaMember');
+
         if (kategori === 'member') {
-            wrap.style.display = 'block';
-            input.required = true;
+            wrap.style.display   = 'block';
+            input.required       = true;
+            infoUmum.style.display   = 'none';
+            infoMember.style.display = '';
         } else {
-            wrap.style.display = 'none';
-            input.required = false;
-            input.value = '';
+            wrap.style.display   = 'none';
+            input.required       = false;
+            input.value          = '';
+            infoUmum.style.display   = '';
+            infoMember.style.display = 'none';
         }
         document.getElementById('inputKategori').value = kategori;
+        updateTotal();
     }
 
     document.getElementById('jumlah_tiket').addEventListener('input', updateTotal);
@@ -215,7 +235,6 @@
         });
     });
 
-    // Inisialisasi saat halaman load
     document.addEventListener('DOMContentLoaded', function () {
         const current = document.querySelector('input[name="kategori_pilih"]:checked');
         if (current) toggleBuktiMember(current.value);

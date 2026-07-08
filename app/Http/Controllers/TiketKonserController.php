@@ -19,9 +19,12 @@ class TiketKonserController extends Controller
             $kategori = 'umum';
         }
 
-        $hargaPerTiket = PengaturanTiket::get()->harga_per_tiket;
+        $pengaturan    = PengaturanTiket::get();
+        $hargaUmum     = $pengaturan->harga_umum;
+        $hargaMember   = $pengaturan->harga_member;
+        $hargaPerTiket = $kategori === 'member' ? $hargaMember : $hargaUmum;
 
-        return view('tiket_konser.create', compact('kategori', 'hargaPerTiket'));
+        return view('tiket_konser.create', compact('kategori', 'hargaPerTiket', 'hargaUmum', 'hargaMember'));
     }
 
     /**
@@ -44,9 +47,12 @@ class TiketKonserController extends Controller
 
         $validated = $request->validate($rules);
 
-        $jumlahTiket = (int) $validated['jumlah_tiket'];
-        $hargaPerTiket = PengaturanTiket::get()->harga_per_tiket;
-        $totalHarga  = $jumlahTiket * $hargaPerTiket;
+        $jumlahTiket   = (int) $validated['jumlah_tiket'];
+        $pengaturan    = PengaturanTiket::get();
+        $hargaPerTiket = $validated['kategori'] === 'member'
+            ? $pengaturan->harga_member
+            : $pengaturan->harga_umum;
+        $totalHarga    = $jumlahTiket * $hargaPerTiket;
 
         // Simpan bukti pembayaran
         $pathBuktiPembayaran = $request->file('bukti_pembayaran')
@@ -79,8 +85,11 @@ class TiketKonserController extends Controller
      */
     public function invoice($id)
     {
-        $tiket = TiketKonser::findOrFail($id);
-        $hargaPerTiket = PengaturanTiket::get()->harga_per_tiket;
+        $tiket         = TiketKonser::findOrFail($id);
+        $pengaturan    = PengaturanTiket::get();
+        $hargaPerTiket = $tiket->kategori === 'member'
+            ? $pengaturan->harga_member
+            : $pengaturan->harga_umum;
 
         return view('tiket_konser.invoice', compact('tiket', 'hargaPerTiket'));
     }

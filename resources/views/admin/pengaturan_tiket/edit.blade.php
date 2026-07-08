@@ -26,28 +26,52 @@
                     @method('PUT')
 
                     <div class="form-group">
-                        <label for="harga_per_tiket" class="font-weight-bold">Harga Per Tiket (Rp)</label>
+                        <label for="harga_umum" class="font-weight-bold">
+                            <i class="fas fa-ticket-alt text-secondary mr-1"></i> Harga Tiket — Umum (Rp)
+                        </label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Rp</span>
                             </div>
                             <input type="number"
-                                   class="form-control form-control-lg @error('harga_per_tiket') is-invalid @enderror"
-                                   id="harga_per_tiket"
-                                   name="harga_per_tiket"
-                                   value="{{ old('harga_per_tiket', $pengaturan->harga_per_tiket) }}"
+                                   class="form-control form-control-lg @error('harga_umum') is-invalid @enderror"
+                                   id="harga_umum"
+                                   name="harga_umum"
+                                   value="{{ old('harga_umum', $pengaturan->harga_umum) }}"
                                    min="1000"
                                    required>
-                            @error('harga_per_tiket')
+                            @error('harga_umum')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-                        <small class="text-muted">Harga ini akan otomatis ditampilkan di form pembelian tiket dan dikalikan dengan jumlah tiket.</small>
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label for="harga_member" class="font-weight-bold">
+                            <i class="fas fa-id-card text-success mr-1"></i> Harga Tiket — Member Aktif Brilliant (Rp)
+                        </label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Rp</span>
+                            </div>
+                            <input type="number"
+                                   class="form-control form-control-lg @error('harga_member') is-invalid @enderror"
+                                   id="harga_member"
+                                   name="harga_member"
+                                   value="{{ old('harga_member', $pengaturan->harga_member) }}"
+                                   min="1000"
+                                   required>
+                            @error('harga_member')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
                     </div>
 
                     <div class="alert alert-info mt-3 mb-3">
                         <i class="fas fa-info-circle mr-1"></i>
-                        Harga saat ini: <strong>Rp {{ number_format($pengaturan->harga_per_tiket, 0, ',', '.') }}</strong> per tiket
+                        Harga saat ini:<br>
+                        <strong>Umum:</strong> Rp {{ number_format($pengaturan->harga_umum, 0, ',', '.') }} per tiket<br>
+                        <strong>Member Aktif:</strong> Rp {{ number_format($pengaturan->harga_member, 0, ',', '.') }} per tiket
                     </div>
 
                     <button type="submit" class="btn btn-warning btn-lg">

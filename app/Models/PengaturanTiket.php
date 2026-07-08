@@ -9,7 +9,8 @@ class PengaturanTiket extends Model
     protected $table = 'pengaturan_tiket';
 
     protected $fillable = [
-        'harga_per_tiket',
+        'harga_umum',
+        'harga_member',
     ];
 
     /**
@@ -17,6 +18,9 @@ class PengaturanTiket extends Model
      */
     public static function get(): self
     {
-        return static::firstOrCreate([], ['harga_per_tiket' => 100000]);
+        return static::firstOrCreate([], [
+            'harga_umum'   => 150000,
+            'harga_member' => 100000,
+        ]);
     }
 }

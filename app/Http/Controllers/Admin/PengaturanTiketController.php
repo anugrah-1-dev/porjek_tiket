@@ -18,15 +18,17 @@ class PengaturanTiketController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'harga_per_tiket' => 'required|integer|min:1000',
+            'harga_umum'   => 'required|integer|min:1000',
+            'harga_member' => 'required|integer|min:1000',
         ]);
 
         $pengaturan = PengaturanTiket::get();
         $pengaturan->update([
-            'harga_per_tiket' => $request->harga_per_tiket,
+            'harga_umum'   => $request->harga_umum,
+            'harga_member' => $request->harga_member,
         ]);
 
         return redirect()->route('admin.pengaturan-tiket.edit')
-            ->with('success', 'Harga tiket berhasil diperbarui menjadi Rp ' . number_format($request->harga_per_tiket, 0, ',', '.'));
+            ->with('success', 'Harga tiket berhasil diperbarui.');
     }
 }
