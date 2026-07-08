@@ -37,6 +37,14 @@
             font-size: 13px;
         }
         .btn-success { background-color: #198754; }
+        .btn-wa {
+            background-color: #25D366;
+            color: #fff;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-wa img { width: 18px; height: 18px; }
         .btn:hover { opacity: 0.9; }
 
         .invoice-container {
@@ -254,6 +262,28 @@
     <div class="action-buttons">
         <button onclick="window.print()" class="btn">&#128438; Print Invoice</button>
         <button onclick="downloadPDF()" id="btn-download" class="btn btn-success">&#11015; Download PDF</button>
+        @php
+            use App\Models\Customer_Service;
+            $csInv = Customer_Service::first();
+        @endphp
+        @if ($csInv && $csInv->nomor)
+        @php
+            $noWaInv = preg_replace('/^0/', '62', preg_replace('/[^0-9]/', '', $csInv->nomor));
+            $pesanInv = urlencode(
+                "Halo Admin Brilliant, saya ingin konfirmasi pembayaran.\n\n"
+                . "No. Transaksi : *{$pendaftaran->trx_id}*\n"
+                . "Nama          : {$customer['nama']}\n"
+                . "Total Bayar   : Rp " . number_format($subtotal, 0, ',', '.') . "\n\n"
+                . "Mohon segera diverifikasi. Terima kasih!"
+            );
+        @endphp
+        <a href="https://wa.me/{{ $noWaInv }}?text={{ $pesanInv }}"
+           target="_blank"
+           class="btn btn-wa">
+            <img src="{{ asset('asset/wa/WhatsApp.svg') }}" alt="WhatsApp">
+            Konfirmasi Admin
+        </a>
+        @endif
     </div>
 
     <div class="invoice-container" id="invoice-content">

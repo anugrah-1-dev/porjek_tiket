@@ -112,13 +112,26 @@
 
                             </div>
                             {{-- Tombol Invoice Camp --}}
-                            <div class="mt-3 d-flex gap-2 flex-wrap">
+                            <div class="mt-3 d-flex gap-2 flex-wrap align-items-center">
                                 <a href="{{ route('invoice.cetak', $camp->trx_id) }}" target="_blank" class="btn btn-primary btn-sm">
                                     <i class="bi bi-printer-fill me-1"></i> Cetak Invoice
                                 </a>
                                 <a href="{{ route('invoice.cetak', $camp->trx_id) }}" target="_blank" class="btn btn-success btn-sm" id="btn-download-camp">
                                     <i class="bi bi-download me-1"></i> Download Invoice PDF
                                 </a>
+                                @if ($cs)
+                                @php
+                                    $noWaCamp = preg_replace('/^0/', '62', preg_replace('/[^0-9]/', '', $cs->nomor));
+                                    $pesanCamp = urlencode("Halo Admin Brilliant, saya ingin konfirmasi pendaftaran Program Camp.\n\nNo. Transaksi : *{$camp->trx_id}*\nNama          : {$camp->nama_lengkap}\nProgram       : " . ($camp->program->nama ?? '-') . "\n\nMohon segera diverifikasi. Terima kasih!");
+                                @endphp
+                                <a href="https://wa.me/{{ $noWaCamp }}?text={{ $pesanCamp }}"
+                                   target="_blank"
+                                   class="btn btn-sm d-inline-flex align-items-center gap-1"
+                                   style="background-color:#25D366;color:#fff;border:none;">
+                                    <img src="{{ asset('asset/wa/WhatsApp.svg') }}" alt="WA" style="width:18px;height:18px;">
+                                    Konfirmasi Admin
+                                </a>
+                                @endif
                             </div>
                         </div>
 
@@ -318,13 +331,20 @@
                                 </div>
 
                                 @if ($cs)
-                                    <div class="text-end">
-                                        <h6 class="text-muted mb-1">Hubungi CS</h6>
-                                        <a href="https://wa.me/+62{{ preg_replace('/[^0-9]/', '', $cs->nomor) }}"
-                                            class="btn btn-success btn-sm" target="_blank">
-                                            <i class="bi bi-whatsapp"></i> {{ $cs->nama }}
-                                        </a>
-                                    </div>
+                                @php
+                                    $noWaOffline = preg_replace('/^0/', '62', preg_replace('/[^0-9]/', '', $cs->nomor));
+                                    $pesanOffline = urlencode("Halo Admin Brilliant, saya ingin konfirmasi pendaftaran Program Offline.\n\nNo. Transaksi : *{$offline->trx_id}*\nNama          : {$offline->nama_lengkap}\nProgram       : " . ($offline->program->nama ?? '-') . "\nTotal         : Rp " . number_format($offline->subtotal, 0, ',', '.') . "\n\nMohon segera diverifikasi. Terima kasih!");
+                                @endphp
+                                <div class="text-end mt-2">
+                                    <h6 class="text-muted mb-1">Konfirmasi / Hubungi Admin</h6>
+                                    <a href="https://wa.me/{{ $noWaOffline }}?text={{ $pesanOffline }}"
+                                       target="_blank"
+                                       class="btn btn-sm d-inline-flex align-items-center gap-1"
+                                       style="background-color:#25D366;color:#fff;border:none;">
+                                        <img src="{{ asset('asset/wa/WhatsApp.svg') }}" alt="WA" style="width:18px;height:18px;">
+                                        {{ $cs->nama }}
+                                    </a>
+                                </div>
                                 @endif
                             </div>
 
@@ -342,7 +362,7 @@
                             @endif
 
                             {{-- Tombol Invoice Offline --}}
-                            <div class="mt-3 d-flex gap-2 flex-wrap">
+                            <div class="mt-3 d-flex gap-2 flex-wrap align-items-center">
                                 <a href="{{ route('invoice.cetak', $offline->trx_id) }}" target="_blank" class="btn btn-primary btn-sm">
                                     <i class="bi bi-printer-fill me-1"></i> Cetak Invoice
                                 </a>
@@ -407,13 +427,26 @@
                         @endif
 
                         {{-- Tombol Invoice Online --}}
-                        <div class="mt-3 d-flex gap-2 flex-wrap">
+                        <div class="mt-3 d-flex gap-2 flex-wrap align-items-center">
                             <a href="{{ route('invoice.cetak', $online->trx_id) }}" target="_blank" class="btn btn-primary btn-sm">
                                 <i class="bi bi-printer-fill me-1"></i> Cetak Invoice
                             </a>
                             <a href="{{ route('invoice.cetak', $online->trx_id) }}" target="_blank" class="btn btn-success btn-sm">
                                 <i class="bi bi-download me-1"></i> Download Invoice PDF
                             </a>
+                            @if ($cs)
+                            @php
+                                $noWaOnline = preg_replace('/^0/', '62', preg_replace('/[^0-9]/', '', $cs->nomor));
+                                $pesanOnline = urlencode("Halo Admin Brilliant, saya ingin konfirmasi pendaftaran Program Online.\n\nNo. Transaksi : *{$online->trx_id}*\nNama          : {$online->nama_lengkap}\nProgram       : " . ($online->program->nama ?? '-') . "\nTotal         : Rp " . number_format($online->subtotal, 0, ',', '.') . "\n\nMohon segera diverifikasi. Terima kasih!");
+                            @endphp
+                            <a href="https://wa.me/{{ $noWaOnline }}?text={{ $pesanOnline }}"
+                               target="_blank"
+                               class="btn btn-sm d-inline-flex align-items-center gap-1"
+                               style="background-color:#25D366;color:#fff;border:none;">
+                                <img src="{{ asset('asset/wa/WhatsApp.svg') }}" alt="WA" style="width:18px;height:18px;">
+                                Konfirmasi Admin
+                            </a>
+                            @endif
                         </div>
 
                     </div>
@@ -498,15 +531,34 @@
                         </div>
 
                         {{-- Tombol Invoice Tiket Konser --}}
-                        <div class="mt-3 d-flex gap-2 flex-wrap">
+                        <div class="mt-3 d-flex gap-2 flex-wrap align-items-center">
                             <a href="{{ route('tiket-konser.invoice', $tiketKonser->id) }}" target="_blank"
                                class="btn btn-warning btn-sm text-dark fw-bold">
                                 <i class="bi bi-printer-fill me-1"></i> Cetak Invoice
                             </a>
                             <a href="{{ route('tiket-konser.invoice', $tiketKonser->id) }}" target="_blank"
-                               class="btn btn-success btn-sm">
+                               class="btn btn-warning btn-sm text-dark fw-bold">
                                 <i class="bi bi-download me-1"></i> Download Invoice PDF
                             </a>
+                            @if ($cs)
+                            @php
+                                $noWaTiket = preg_replace('/^0/', '62', preg_replace('/[^0-9]/', '', $cs->nomor));
+                                $namaKatTrk = match($tiketKonser->kategori) {
+                                    'vip'     => 'VIP',
+                                    'member'  => 'Member Aktif',
+                                    'spesial' => 'Member Spesial (Gratis)',
+                                    default   => 'Umum',
+                                };
+                                $pesanTiket = urlencode("Halo Admin Brilliant, saya ingin konfirmasi pembelian tiket konser.\n\nNo. Transaksi : *{$tiketKonser->trx_id}*\nNama          : {$tiketKonser->nama_lengkap}\nKategori      : {$namaKatTrk}\nJumlah Tiket  : {$tiketKonser->jumlah_tiket} tiket\nTotal Harga   : Rp " . number_format($tiketKonser->total_harga, 0, ',', '.') . "\n\nMohon segera diverifikasi. Terima kasih!");
+                            @endphp
+                            <a href="https://wa.me/{{ $noWaTiket }}?text={{ $pesanTiket }}"
+                               target="_blank"
+                               class="btn btn-sm d-inline-flex align-items-center gap-1"
+                               style="background-color:#25D366;color:#fff;border:none;">
+                                <img src="{{ asset('asset/wa/WhatsApp.svg') }}" alt="WA" style="width:18px;height:18px;">
+                                Konfirmasi Admin
+                            </a>
+                            @endif
                         </div>
                     </div>
                 </div>

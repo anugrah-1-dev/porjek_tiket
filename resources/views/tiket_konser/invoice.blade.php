@@ -247,8 +247,10 @@
         @endphp
         <a href="https://wa.me/{{ $noWa }}?text={{ urlencode($pesanWa) }}"
            target="_blank"
-           class="btn btn-success">
-            &#128172; Konfirmasi ke Admin (WA)
+           class="btn btn-success"
+           style="display:inline-flex;align-items:center;gap:6px;">
+            <img src="{{ asset('asset/wa/WhatsApp.svg') }}" alt="WhatsApp" style="width:18px;height:18px;">
+            Konfirmasi ke Admin (WA)
         </a>
         @endif
     </div>
