@@ -1432,7 +1432,8 @@ body {
     padding: 0;
     max-width: 900px;
     width: 100%;
-    max-height: 92vh;
+    height: 90vh;
+    max-height: 90vh;
     overflow: hidden;
     position: relative;
     border: 1px solid rgba(255,255,255,.1);
@@ -1528,8 +1529,8 @@ body {
     min-height: 0;
     overflow: hidden;
     display: flex;
-    flex-direction: column;
-    padding: .75rem;
+    align-items: stretch;
+    padding: .6rem;
 }
 
 .modal-slider-wrapper {
@@ -1539,6 +1540,7 @@ body {
     gap: .5rem;
     flex: 1;
     min-height: 0;
+    width: 100%;
 }
 
 .nav-btn {
@@ -1567,53 +1569,53 @@ body {
     flex: 1;
     overflow: hidden;
     position: relative;
-    border-radius: 10px;
+    border-radius: 8px;
     background: #000;
     min-height: 0;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
 }
 
 .slide-track {
     display: flex;
+    height: 100%;
     transition: transform 0.4s ease;
     will-change: transform;
 }
 
 .slide-item {
     min-width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     background: #000;
-    min-height: 240px;
-    padding: 0;
+    overflow: hidden;
 }
 
 .slide-item img {
-    max-height: 68vh;
+    max-height: 100%;
     max-width: 100%;
     width: auto;
     height: auto;
     object-fit: contain;
-    border-radius: 0;
     display: block;
 }
 
 .slide-item iframe {
     width: 100%;
-    aspect-ratio: 16 / 9;
-    height: auto;
-    max-height: 68vh;
-    border-radius: 0;
+    height: 100%;
     border: none;
     display: block;
+    aspect-ratio: unset;
 }
 
 .slide-item video {
-    max-height: 68vh;
+    max-height: 100%;
     max-width: 100%;
     width: auto;
     height: auto;
-    border-radius: 0;
     background: #000;
     display: block;
 }
@@ -1693,6 +1695,7 @@ body {
 
     .modal-content {
         max-width: 95%;
+        height: 90vh;
     }
 }
 
@@ -1754,18 +1757,19 @@ body {
     }
 
     .modal-slider-wrapper {
-        flex-direction: column;
+        flex-direction: row;
     }
 
     .nav-btn {
-        width: 35px;
-        height: 35px;
-        font-size: 1rem;
+        width: 32px;
+        height: 32px;
+        font-size: .9rem;
+        flex-shrink: 0;
     }
 
     .modal-slider {
-        order: -1;
-        margin-bottom: 1rem;
+        order: 0;
+        margin-bottom: 0;
     }
 }
 
