@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TiketKonser;
 use App\Models\PengaturanTiket;
+use App\Models\Banks;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -23,8 +24,9 @@ class TiketKonserController extends Controller
         $hargaUmum     = $pengaturan->harga_umum;
         $hargaMember   = $pengaturan->harga_member;
         $hargaPerTiket = $kategori === 'member' ? $hargaMember : $hargaUmum;
+        $banks         = Banks::where('status', 'active')->get();
 
-        return view('tiket_konser.create', compact('kategori', 'hargaPerTiket', 'hargaUmum', 'hargaMember'));
+        return view('tiket_konser.create', compact('kategori', 'hargaPerTiket', 'hargaUmum', 'hargaMember', 'banks'));
     }
 
     /**
@@ -38,6 +40,7 @@ class TiketKonserController extends Controller
             'ttl'              => 'required|string|max:255',
             'no_hp'            => 'required|string|max:20',
             'jumlah_tiket'     => 'required|integer|min:1|max:100',
+            'bank_id'          => 'required|exists:banks,id',
             'bukti_pembayaran' => 'required|image|mimes:jpg,jpeg,png,webp|max:5120',
         ];
 
@@ -74,6 +77,7 @@ class TiketKonserController extends Controller
             'no_hp'            => $validated['no_hp'],
             'jumlah_tiket'     => $jumlahTiket,
             'total_harga'      => $totalHarga,
+            'bank_id'          => $validated['bank_id'],
             'bukti_pembayaran' => $pathBuktiPembayaran,
             'bukti_member'     => $pathBuktiMember,
             'periode_member'   => $request->input('periode_member'),

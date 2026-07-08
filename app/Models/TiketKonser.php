@@ -19,8 +19,14 @@ class TiketKonser extends Model
         'no_hp',
         'jumlah_tiket',
         'total_harga',
+        'bank_id',
         'bukti_pembayaran',
         'bukti_member',
         'periode_member',
     ];
+
+    public function bank()
+    {
+        return $this->belongsTo(Banks::class, 'bank_id');
+    }
 }

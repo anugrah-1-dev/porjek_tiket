@@ -51,6 +51,18 @@
                         <td><strong>Rp {{ number_format($tiket->total_harga, 0, ',', '.') }}</strong></td>
                     </tr>
                     <tr>
+                        <th class="bg-light">Bank Tujuan</th>
+                        <td>
+                            @if ($tiket->bank)
+                                <strong>{{ $tiket->bank->name }}</strong><br>
+                                a.n. {{ $tiket->bank->owner }}<br>
+                                {{ $tiket->bank->number }}
+                            @else
+                                -
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
                         <th class="bg-light">Tanggal Pesan</th>
                         <td>{{ $tiket->created_at->format('d F Y, H:i') }}</td>
                     </tr>

@@ -138,6 +138,40 @@
                             </div>
                         </div>
 
+                        {{-- Pilih Bank Tujuan Transfer --}}
+                        <div class="mb-3">
+                            <label for="bank_id" class="form-label">Bank Tujuan Transfer <span class="text-danger">*</span></label>
+                            <select class="form-select @error('bank_id') is-invalid @enderror"
+                                    id="bank_id" name="bank_id" required
+                                    onchange="tampilDetailBank(this)">
+                                <option value="">-- Pilih Bank --</option>
+                                @foreach ($banks as $bank)
+                                    <option value="{{ $bank->id }}"
+                                            data-name="{{ $bank->name }}"
+                                            data-owner="{{ $bank->owner }}"
+                                            data-number="{{ $bank->number }}"
+                                            {{ old('bank_id') == $bank->id ? 'selected' : '' }}>
+                                        {{ $bank->name }} — {{ $bank->owner }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('bank_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+
+                            {{-- Detail bank setelah dipilih --}}
+                            <div id="bankDetail" class="mt-2 p-3 border rounded bg-light" style="display:none;">
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="fas fa-university text-warning fs-5"></i>
+                                    <div>
+                                        <div class="fw-bold" id="bankDetailName"></div>
+                                        <div class="text-muted small">a.n. <span id="bankDetailOwner"></span></div>
+                                        <div class="fw-semibold text-dark" id="bankDetailNumber" style="font-size:1.05rem;letter-spacing:1px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="mb-3">
                             <label for="bukti_pembayaran" class="form-label">
                                 Foto Bukti Pembayaran / Transfer <span class="text-danger">*</span>
@@ -246,7 +280,21 @@
 
     document.addEventListener('DOMContentLoaded', function () {
         initFormState();
+
+        // Tampilkan detail bank jika ada old value (validasi gagal)
+        const bankSelect = document.getElementById('bank_id');
+        if (bankSelect && bankSelect.value) tampilDetailBank(bankSelect);
     });
+
+    function tampilDetailBank(select) {
+        const opt    = select.options[select.selectedIndex];
+        const detail = document.getElementById('bankDetail');
+        if (!opt || !opt.value) { detail.style.display = 'none'; return; }
+        document.getElementById('bankDetailName').textContent   = opt.getAttribute('data-name');
+        document.getElementById('bankDetailOwner').textContent  = opt.getAttribute('data-owner');
+        document.getElementById('bankDetailNumber').textContent = opt.getAttribute('data-number');
+        detail.style.display = 'block';
+    }
 </script>
 
 </body>

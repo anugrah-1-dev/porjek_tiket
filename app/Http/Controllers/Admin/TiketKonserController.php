@@ -22,7 +22,7 @@ class TiketKonserController extends Controller
      */
     public function show($id)
     {
-        $tiket = TiketKonser::findOrFail($id);
+        $tiket = TiketKonser::with('bank')->findOrFail($id);
 
         return view('admin.tiket_konser.show', compact('tiket'));
     }

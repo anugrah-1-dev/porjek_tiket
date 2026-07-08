@@ -257,11 +257,13 @@
                 No HP: {{ $tiket->no_hp }}
             </div>
             <div class="inv-info-right">
-                <strong>KATEGORI TIKET:</strong><br>
-                @if ($tiket->kategori === 'member')
-                    <span class="kategori-badge kategori-member">&#10003; Member Aktif Brilliant</span>
+                <strong>BANK TUJUAN TRANSFER:</strong><br>
+                @if ($tiket->bank)
+                    {{ $tiket->bank->name }}<br>
+                    a.n. {{ $tiket->bank->owner }}<br>
+                    <strong>{{ $tiket->bank->number }}</strong>
                 @else
-                    <span class="kategori-badge kategori-umum">Umum</span>
+                    -
                 @endif
                 <br><br>
                 <strong>Waktu Pesan:</strong><br>
