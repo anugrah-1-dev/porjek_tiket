@@ -34,7 +34,7 @@
 
         <div class="dropdown" id="programDropdown">
             <button class="dropbtn" id="openKursusPopupBtn">
-                PROGRAM
+                BELI TIKET KONSER
             </button>
         </div>
 
@@ -68,21 +68,22 @@
     });
     document.addEventListener("DOMContentLoaded", function () {
         const openBtn = document.getElementById("openKursusPopupBtn");
-        const popup = document.getElementById("kursusPopup");
-        const closeBtn = document.getElementById("closeKursusPopupBtn");
+        const popup = document.getElementById("tiketPopup");
+        const closeBtn = document.getElementById("closeTiketPopupBtn");
 
-        if (openBtn && popup && closeBtn) {
-            // buka popup
+        if (openBtn && popup) {
             openBtn.addEventListener("click", function () {
                 popup.classList.add("show");
             });
+        }
 
-            // tutup popup
+        if (closeBtn && popup) {
             closeBtn.addEventListener("click", function () {
                 popup.classList.remove("show");
             });
+        }
 
-            // tutup popup kalau klik luar area
+        if (popup) {
             popup.addEventListener("click", function (e) {
                 if (e.target === popup) {
                     popup.classList.remove("show");
