@@ -30,6 +30,8 @@ use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\TrackingController;
 use App\Http\Controllers\Admin\ThumbnailController;
 use App\Http\Controllers\Admin\LogoController;
+use App\Http\Controllers\TiketKonserController;
+use App\Http\Controllers\Admin\TiketKonserController as AdminTiketKonserController;
 
 use App\Http\Controllers\ProgramInggrisController;
 use App\Http\Controllers\ProgramJermanController;
@@ -155,6 +157,9 @@ Route::get('/invoice/cetak/{trx_id}', [App\Http\Controllers\InvoiceController::c
 
 Route::get('/', [LandingPageController::class, 'index'])->name('landing');
 
+// ===== TIKET KONSER (PUBLIC) =====
+Route::get('/tiket-konser', [TiketKonserController::class, 'create'])->name('tiket-konser.create');
+Route::post('/tiket-konser', [TiketKonserController::class, 'store'])->name('tiket-konser.store');
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
@@ -305,6 +310,11 @@ Route::middleware(['auth', 'role:admin|officer'])->prefix('admin')->name('admin.
     // Pembayaran
     // Route::post('/pembayaran', [PembayaranController::class, 'store'])->name('pembayaran.store');
     // Route::post('/upload-bukti', [PembayaranController::class, 'uploadBukti'])->name('bukti.upload');
+
+    // ===== TIKET KONSER (ADMIN) =====
+    Route::get('/tiket-konser', [AdminTiketKonserController::class, 'index'])->name('tiket-konser.index');
+    Route::get('/tiket-konser/{id}', [AdminTiketKonserController::class, 'show'])->name('tiket-konser.show');
+    Route::delete('/tiket-konser/{id}', [AdminTiketKonserController::class, 'destroy'])->name('tiket-konser.destroy');
 
 });
 

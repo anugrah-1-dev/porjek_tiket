@@ -1,0 +1,104 @@
+@extends('adminlte::page')
+
+@section('title', 'Detail Tiket Konser')
+
+@section('content_header')
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="m-0">Detail Pemesan Tiket</h1>
+    <a href="{{ route('admin.tiket-konser.index') }}" class="btn btn-secondary btn-sm">
+        <i class="fas fa-arrow-left mr-1"></i> Kembali
+    </a>
+</div>
+@stop
+
+@section('content')
+<div class="row">
+    <div class="col-md-6">
+        <div class="card card-outline card-warning">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-user mr-2"></i>Data Pemesan</h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-sm">
+                    <tr>
+                        <th class="bg-light" width="40%">Kategori</th>
+                        <td>
+                            @if ($tiket->kategori === 'member')
+                                <span class="badge badge-success">Member Aktif Brilliant</span>
+                            @else
+                                <span class="badge badge-warning">Umum</span>
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="bg-light">Nama Lengkap</th>
+                        <td>{{ $tiket->nama_lengkap }}</td>
+                    </tr>
+                    <tr>
+                        <th class="bg-light">TTL</th>
+                        <td>{{ $tiket->ttl }}</td>
+                    </tr>
+                    <tr>
+                        <th class="bg-light">No HP</th>
+                        <td>{{ $tiket->no_hp }}</td>
+                    </tr>
+                    <tr>
+                        <th class="bg-light">Jumlah Tiket</th>
+                        <td>{{ $tiket->jumlah_tiket }} tiket</td>
+                    </tr>
+                    <tr>
+                        <th class="bg-light">Total Harga</th>
+                        <td><strong>Rp {{ number_format($tiket->total_harga, 0, ',', '.') }}</strong></td>
+                    </tr>
+                    <tr>
+                        <th class="bg-light">Tanggal Pesan</th>
+                        <td>{{ $tiket->created_at->format('d F Y, H:i') }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card card-outline card-info">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-image mr-2"></i>Bukti Pembayaran</h3>
+            </div>
+            <div class="card-body text-center">
+                @if ($tiket->bukti_pembayaran)
+                    <a href="{{ asset('storage/' . $tiket->bukti_pembayaran) }}" target="_blank">
+                        <img src="{{ asset('storage/' . $tiket->bukti_pembayaran) }}"
+                             alt="Bukti Pembayaran"
+                             class="img-fluid rounded shadow"
+                             style="max-height: 350px;">
+                    </a>
+                    <p class="mt-2 text-muted small">Klik gambar untuk memperbesar</p>
+                @else
+                    <p class="text-muted">Belum ada bukti pembayaran.</p>
+                @endif
+            </div>
+        </div>
+
+        @if ($tiket->kategori === 'member')
+        <div class="card card-outline card-success mt-3">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-id-card mr-2"></i>Bukti Member Aktif</h3>
+            </div>
+            <div class="card-body text-center">
+                @if ($tiket->bukti_member)
+                    <a href="{{ asset('storage/' . $tiket->bukti_member) }}" target="_blank">
+                        <img src="{{ asset('storage/' . $tiket->bukti_member) }}"
+                             alt="Bukti Member"
+                             class="img-fluid rounded shadow"
+                             style="max-height: 350px;">
+                    </a>
+                    <p class="mt-2 text-muted small">Klik gambar untuk memperbesar</p>
+                @else
+                    <p class="text-muted">Bukti member tidak ditemukan.</p>
+                @endif
+            </div>
+        </div>
+        @endif
+    </div>
+</div>
+@stop

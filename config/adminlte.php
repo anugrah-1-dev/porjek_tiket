@@ -423,24 +423,10 @@
 
             ['header' => 'DATA PENDAFTAR'],
             [
-                'text' => 'Pendaftar Program',
-                'icon' => 'fas fa-user-friends',
-                'submenu' => [
-
-                    [
-                        'text' => 'Pendaftar Offline',
-                        'route'  => 'admin.pendaftaran.offline.index',
-                        'icon'   => 'fas fa-user',
-                        'active' => ['admin/pendaftaran/offline*'],
-                    ],
-                    [
-                        'text' => 'Pendaftar Online',
-                        'route'  => 'admin.pendaftaran.online.index',
-                        'icon'   => 'fas fa-laptop',
-                        'active' => ['admin/pendaftaran/online*'],
-                    ],
-
-                ],
+                'text'   => 'Data Tiket Konser',
+                'icon'   => 'fas fa-ticket-alt',
+                'route'  => 'admin.tiket-konser.index',
+                'active' => ['admin/tiket-konser*'],
             ],
 
             [
