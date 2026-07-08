@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TiketKonser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class TiketKonserController extends Controller
 {
@@ -60,6 +61,7 @@ class TiketKonserController extends Controller
         }
 
         $tiket = TiketKonser::create([
+            'trx_id'           => 'TIK-' . strtoupper(Str::random(8)),
             'kategori'         => $validated['kategori'],
             'nama_lengkap'     => $validated['nama_lengkap'],
             'ttl'              => $validated['ttl'],

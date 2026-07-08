@@ -12,6 +12,7 @@ class TiketKonser extends Model
     protected $table = 'tiket_konsers';
 
     protected $fillable = [
+        'trx_id',
         'kategori',
         'nama_lengkap',
         'ttl',

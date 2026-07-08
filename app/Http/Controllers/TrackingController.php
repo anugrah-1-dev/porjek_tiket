@@ -10,6 +10,7 @@ use App\Models\Customer_Service;
 use App\Models\PendaftaranCatering;
 use App\Models\PendaftaranLaundry;
 use App\Models\PendaftaranHoliday;
+use App\Models\TiketKonser;
 
 class TrackingController extends Controller
 {
@@ -26,10 +27,11 @@ class TrackingController extends Controller
 
         $trx_id = $request->trx_id;
 
-        $camp = PendaftaranProgramCamp::where('trx_id', $trx_id)->first();
+        $camp    = PendaftaranProgramCamp::where('trx_id', $trx_id)->first();
         $offline = PendaftaranProgramOffline::where('trx_id', $trx_id)->first();
-        $online = PendaftaranProgramOnline::where('trx_id', $trx_id)->first();
-        $cs = Customer_Service::first();
+        $online  = PendaftaranProgramOnline::where('trx_id', $trx_id)->first();
+        $tiketKonser = TiketKonser::where('trx_id', $trx_id)->first();
+        $cs      = Customer_Service::first();
 
         $caterings = PendaftaranCatering::with('cateringPackage')
             ->when($offline, function ($query) use ($offline) {
@@ -49,10 +51,10 @@ class TrackingController extends Controller
             })
             ->get();
             
-        if (!$camp && !$offline && !$online) {
+        if (!$camp && !$offline && !$online && !$tiketKonser) {
             return back()->with('error', 'Transaksi tidak ditemukan.');
         }
 
-        return view('tracking.index', compact('camp', 'offline', 'online', 'trx_id', 'cs', 'caterings', 'laundries', 'holidays'));
+        return view('tracking.index', compact('camp', 'offline', 'online', 'tiketKonser', 'trx_id', 'cs', 'caterings', 'laundries', 'holidays'));
     }
 }

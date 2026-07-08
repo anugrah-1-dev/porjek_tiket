@@ -242,7 +242,7 @@
             </div>
             <div class="inv-header-right">
                 <div class="inv-title">INVOICE</div>
-                <p><strong>Nomor:</strong> INV-TIKET-{{ str_pad($tiket->id, 5, '0', STR_PAD_LEFT) }}</p>
+                <p><strong>Nomor Transaksi:</strong> {{ $tiket->trx_id }}</p>
                 <p><strong>Tanggal:</strong> {{ $tiket->created_at->format('d F Y') }}</p>
                 <p><strong>Status:</strong> <span class="status-badge status-pending">MENUNGGU VERIFIKASI</span></p>
             </div>

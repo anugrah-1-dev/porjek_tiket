@@ -420,7 +420,91 @@
                 </div>
             @endisset
 
-            @if (isset($camp) || isset($offline) || isset($online))
+            @isset($tiketKonser)
+                <div class="card shadow-sm mb-4 border-warning">
+                    <div class="card-header fw-bold text-dark" style="background:#FFA109;">
+                        <i class="bi bi-ticket-perforated me-2"></i> Tiket Konser
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <h5 class="text-muted">Nama Pemesan</h5>
+                                <p class="fs-5">{{ $tiketKonser->nama_lengkap }}</p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <h5 class="text-muted">Status</h5>
+                                <span class="badge bg-warning text-dark fs-6">Menunggu Verifikasi</span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <h5 class="text-muted">Kategori Tiket</h5>
+                                <p class="fs-5">
+                                    @if ($tiketKonser->kategori === 'member')
+                                        <span class="badge bg-success">Member Aktif Brilliant</span>
+                                    @else
+                                        <span class="badge bg-secondary">Umum</span>
+                                    @endif
+                                </p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <h5 class="text-muted">TTL</h5>
+                                <p class="fs-5">{{ $tiketKonser->ttl }}</p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <h5 class="text-muted">No HP</h5>
+                                <p class="fs-5">{{ $tiketKonser->no_hp }}</p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <h5 class="text-muted">Jumlah Tiket</h5>
+                                <p class="fs-5">{{ $tiketKonser->jumlah_tiket }} tiket</p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <h5 class="text-muted">Total Harga</h5>
+                                <p class="fs-5 fw-bold text-success">Rp {{ number_format($tiketKonser->total_harga, 0, ',', '.') }}</p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <h5 class="text-muted">Tanggal Pesan</h5>
+                                <p class="fs-5">{{ $tiketKonser->created_at->format('d F Y, H:i') }} WIB</p>
+                            </div>
+
+                            @if ($tiketKonser->bukti_pembayaran)
+                                <div class="col-md-12 mb-3">
+                                    <h5 class="text-muted">Bukti Pembayaran</h5>
+                                    <a href="{{ asset('storage/' . $tiketKonser->bukti_pembayaran) }}" target="_blank">
+                                        <img src="{{ asset('storage/' . $tiketKonser->bukti_pembayaran) }}"
+                                            alt="Bukti Pembayaran" class="img-fluid rounded shadow-sm"
+                                            style="max-height: 300px;">
+                                    </a>
+                                </div>
+                            @endif
+
+                            @if ($tiketKonser->kategori === 'member' && $tiketKonser->bukti_member)
+                                <div class="col-md-12 mb-3">
+                                    <h5 class="text-muted">Bukti Member Aktif</h5>
+                                    <a href="{{ asset('storage/' . $tiketKonser->bukti_member) }}" target="_blank">
+                                        <img src="{{ asset('storage/' . $tiketKonser->bukti_member) }}"
+                                            alt="Bukti Member" class="img-fluid rounded shadow-sm"
+                                            style="max-height: 300px;">
+                                    </a>
+                                </div>
+                            @endif
+                        </div>
+
+                        {{-- Tombol Invoice Tiket Konser --}}
+                        <div class="mt-3 d-flex gap-2 flex-wrap">
+                            <a href="{{ route('tiket-konser.invoice', $tiketKonser->id) }}" target="_blank"
+                               class="btn btn-warning btn-sm text-dark fw-bold">
+                                <i class="bi bi-printer-fill me-1"></i> Cetak Invoice
+                            </a>
+                            <a href="{{ route('tiket-konser.invoice', $tiketKonser->id) }}" target="_blank"
+                               class="btn btn-success btn-sm">
+                                <i class="bi bi-download me-1"></i> Download Invoice PDF
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            @endisset
+
+            @if (isset($camp) || isset($offline) || isset($online) || isset($tiketKonser))
                 <div class="text-center mt-4">
                     <a href="{{ route('tracking.index') }}" class="btn btn-outline-secondary">
                         <i class="bi bi-arrow-left me-2"></i> Cari Transaksi Lain
