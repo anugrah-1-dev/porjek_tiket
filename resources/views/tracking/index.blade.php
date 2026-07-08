@@ -433,15 +433,23 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <h5 class="text-muted">Status</h5>
-                                <span class="badge bg-warning text-dark fs-6">Menunggu Verifikasi</span>
+                                @if ($tiketKonser->status === 'diterima')
+                                    <span class="badge bg-success fs-6">&#10003; Diterima</span>
+                                @elseif ($tiketKonser->status === 'ditolak')
+                                    <span class="badge bg-danger fs-6">&#10007; Ditolak</span>
+                                @else
+                                    <span class="badge bg-warning text-dark fs-6">&#9679; Menunggu Verifikasi</span>
+                                @endif
                             </div>
                             <div class="col-md-6 mb-3">
                                 <h5 class="text-muted">Kategori Tiket</h5>
                                 <p class="fs-5">
                                     @if ($tiketKonser->kategori === 'member')
                                         <span class="badge bg-success">Member Aktif Brilliant</span>
+                                    @elseif ($tiketKonser->kategori === 'vip')
+                                        <span class="badge bg-danger">VIP</span>
                                     @else
-                                        <span class="badge bg-secondary">Umum</span>
+                                        <span class="badge bg-secondary">{{ $tiketKonser->kategori }}</span>
                                     @endif
                                 </p>
                             </div>

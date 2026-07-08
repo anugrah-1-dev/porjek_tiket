@@ -244,7 +244,15 @@
                 <div class="inv-title">INVOICE</div>
                 <p><strong>Nomor Transaksi:</strong> {{ $tiket->trx_id }}</p>
                 <p><strong>Tanggal:</strong> {{ $tiket->created_at->format('d F Y') }}</p>
-                <p><strong>Status:</strong> <span class="status-badge status-pending">MENUNGGU VERIFIKASI</span></p>
+                <p><strong>Status:</strong>
+                @if ($tiket->status === 'diterima')
+                    <span class="status-badge status-success">DITERIMA</span>
+                @elseif ($tiket->status === 'ditolak')
+                    <span class="status-badge status-failed">DITOLAK</span>
+                @else
+                    <span class="status-badge status-pending">MENUNGGU VERIFIKASI</span>
+                @endif
+                </p>
             </div>
         </div>
 
