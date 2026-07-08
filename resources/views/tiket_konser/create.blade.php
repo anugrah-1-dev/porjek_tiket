@@ -269,12 +269,22 @@
                             {{-- Bukti Member --}}
                             <div class="mb-3">
                                 <label for="bukti_member" class="form-label">
-                                    Foto Bukti Member Aktif <span class="text-danger">*</span>
+                                    @if ($isSpesial)
+                                        Foto Kuitansi / Bukti Resmi Keanggotaan <span class="text-danger">*</span>
+                                    @else
+                                        Foto Bukti Member Aktif <span class="text-danger">*</span>
+                                    @endif
                                 </label>
                                 <input type="file" class="form-control @error('bukti_member') is-invalid @enderror"
                                        id="bukti_member" name="bukti_member"
                                        accept="image/jpg,image/jpeg,image/png,image/webp">
-                                <div class="form-text">Contoh: kuitansi atau dokumen resmi member. Maks 5 MB.</div>
+                                <div class="form-text">
+                                    @if ($isSpesial)
+                                        Upload foto kuitansi pendaftaran atau dokumen resmi keanggotaan periode Juli–Agustus. Maks 5 MB.
+                                    @else
+                                        Contoh: kuitansi atau dokumen resmi member. Maks 5 MB.
+                                    @endif
+                                </div>
                                 @error('bukti_member')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
