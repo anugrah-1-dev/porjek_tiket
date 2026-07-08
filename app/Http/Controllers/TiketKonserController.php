@@ -16,7 +16,7 @@ class TiketKonserController extends Controller
     public function create(Request $request)
     {
         $kategori = $request->query('kategori', 'umum');
-        if (!in_array($kategori, ['umum', 'member'])) {
+        if (!in_array($kategori, ['umum', 'member', 'vip'])) {
             $kategori = 'umum';
         }
 
