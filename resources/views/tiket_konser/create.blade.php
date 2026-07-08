@@ -152,17 +152,41 @@
                         </div>
 
                         {{-- Bukti member — ditampilkan hanya jika kategori = member --}}
-                        <div class="mb-3" id="wrapBuktiMember" style="display:none;">
-                            <label for="bukti_member" class="form-label">
-                                Foto Bukti Member Aktif <span class="text-danger">*</span>
-                            </label>
-                            <input type="file" class="form-control @error('bukti_member') is-invalid @enderror"
-                                   id="bukti_member" name="bukti_member"
-                                   accept="image/jpg,image/jpeg,image/png,image/webp">
-                            <div class="form-text">Contoh: kuitansi atau dokumen resmi member. Maks 5 MB.</div>
-                            @error('bukti_member')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                        <div id="wrapBuktiMember" style="display:none;">
+
+                            {{-- Periode Member --}}
+                            <div class="mb-3">
+                                <label for="periode_member" class="form-label">
+                                    Periode Member Aktif <span class="text-danger">*</span>
+                                </label>
+                                <input type="text"
+                                       class="form-control @error('periode_member') is-invalid @enderror"
+                                       id="periode_member" name="periode_member"
+                                       value="{{ old('periode_member') }}"
+                                       placeholder="Contoh: Januari 2025 - Januari 2026">
+                                <div class="form-text">
+                                    <i class="fas fa-info-circle text-success me-1"></i>
+                                    Masukkan periode aktif keanggotaan Anda (minimal 1 bulan).
+                                </div>
+                                @error('periode_member')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Bukti Member --}}
+                            <div class="mb-3">
+                                <label for="bukti_member" class="form-label">
+                                    Foto Bukti Member Aktif <span class="text-danger">*</span>
+                                </label>
+                                <input type="file" class="form-control @error('bukti_member') is-invalid @enderror"
+                                       id="bukti_member" name="bukti_member"
+                                       accept="image/jpg,image/jpeg,image/png,image/webp">
+                                <div class="form-text">Contoh: kuitansi atau dokumen resmi member. Maks 5 MB.</div>
+                                @error('bukti_member')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                         </div>
 
                         <div class="d-grid mt-4">

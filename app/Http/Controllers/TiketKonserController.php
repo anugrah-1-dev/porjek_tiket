@@ -42,7 +42,8 @@ class TiketKonserController extends Controller
         ];
 
         if ($request->input('kategori') === 'member') {
-            $rules['bukti_member'] = 'required|image|mimes:jpg,jpeg,png,webp|max:5120';
+            $rules['bukti_member']    = 'required|image|mimes:jpg,jpeg,png,webp|max:5120';
+            $rules['periode_member']  = 'required|string|max:255';
         }
 
         $validated = $request->validate($rules);
@@ -75,6 +76,7 @@ class TiketKonserController extends Controller
             'total_harga'      => $totalHarga,
             'bukti_pembayaran' => $pathBuktiPembayaran,
             'bukti_member'     => $pathBuktiMember,
+            'periode_member'   => $request->input('periode_member'),
         ]);
 
         return redirect()->route('tiket-konser.invoice', $tiket->id);

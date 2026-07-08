@@ -21,5 +21,6 @@ class TiketKonser extends Model
         'total_harga',
         'bukti_pembayaran',
         'bukti_member',
+        'periode_member',
     ];
 }
