@@ -117,7 +117,7 @@
                     <div class="form-group">
                         <label for="deskripsi_spesial" class="font-weight-bold">Deskripsi / Benefit <small class="text-muted">(tiap baris = 1 poin)</small></label>
                         <textarea class="form-control" id="deskripsi_spesial" name="deskripsi_spesial" rows="3"
-                                  placeholder="Contoh: Tiket GRATIS untuk member Juli-Agustus&#10;Daftar 10 Juli - 31 Agustus&#10;Tunjukkan bukti keanggotaan periode ini">{{ old('deskripsi_spesial', $pengaturan->deskripsi_spesial) }}</textarea>
+                                  placeholder="Contoh: Tiket GRATIS untuk member Juli-Agustus&#10;Khusus member aktif minimal 1 bulan&#10;Daftar 10 Juli - 31 Agustus&#10;Tunjukkan bukti keanggotaan periode ini">{{ old('deskripsi_spesial', $pengaturan->deskripsi_spesial) }}</textarea>
                     </div>
 
                     <h6 class="text-muted border-bottom pb-1 mb-3 mt-3">Poster Konser</h6>

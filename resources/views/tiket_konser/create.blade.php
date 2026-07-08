@@ -125,6 +125,12 @@
                                 Selamat! Kamu mendapatkan tiket <strong>GRATIS</strong>. Cukup upload bukti keanggotaan periode Juli-Agustus.
                             </div>
                         @endif
+                        @if ($isSpesial)
+                            <div class="alert alert-warning mt-2 mb-0 py-2 px-3" style="font-size:.88rem;">
+                                <i class="fas fa-exclamation-triangle me-1"></i>
+                                <strong>Syarat:</strong> Khusus member aktif Brilliant <strong>minimal 1 bulan</strong> (periode Juli–Agustus 2026). Bukti keanggotaan wajib diunggah.
+                            </div>
+                        @endif
                     </div>
 
                     <div class="harga-info mb-4">
@@ -248,10 +254,12 @@
                                        class="form-control @error('periode_member') is-invalid @enderror"
                                        id="periode_member" name="periode_member"
                                        value="{{ old('periode_member') }}"
-                                       placeholder="Contoh: Juli 2026 - Agustus 2026">
+                                       placeholder="{{ $isSpesial ? 'Contoh: Juli 2026 - Agustus 2026' : 'Contoh: Januari 2025 - Januari 2026' }}">
                                 <div class="form-text">
                                     <i class="fas fa-info-circle text-success me-1"></i>
-                                    Masukkan periode aktif keanggotaan Anda.
+                                    {{ $isSpesial
+                                        ? 'Masukkan periode keanggotaan aktif kamu (minimal 1 bulan, Juli–Agustus 2026).'
+                                        : 'Masukkan periode aktif keanggotaan Anda.' }}
                                 </div>
                                 @error('periode_member')
                                     <div class="invalid-feedback">{{ $message }}</div>
