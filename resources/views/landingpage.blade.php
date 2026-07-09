@@ -242,7 +242,7 @@
                     sekarang dan wujudkan potensi terbaik Anda bersama kami!
                 </p>
 
-                <a href="#" id="openComingSoonBtn" class="cta-button cta-coming-soon-btn" data-aos="fade-up" data-aos-delay="200">
+                <a href="https://www.celestix.id/event/brilliant-kampung-inggris-pare-hari-ini/501" target="_blank" rel="noopener noreferrer" class="cta-button" data-aos="fade-up" data-aos-delay="200">
                     <i class="fas fa-ticket-alt" style="margin-right:8px;"></i>BELI TIKET KONSER
                 </a>
             </div>

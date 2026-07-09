@@ -36,11 +36,9 @@
     <div class="nav-links" id="navLinks">
 
 
-        <div class="dropdown" id="programDropdown">
-            <button class="dropbtn" id="openKursusPopupBtn">
-                BELI TIKET KONSER
-            </button>
-        </div>
+        <a href="https://www.celestix.id/event/brilliant-kampung-inggris-pare-hari-ini/501" target="_blank" rel="noopener noreferrer" class="dropbtn" style="text-decoration:none;">
+            BELI TIKET KONSER
+        </a>
 
         <a href="{{ route('landing') }}#galeri" class="nav-link-direct" style="font-weight:600;letter-spacing:.05em;color:inherit;text-decoration:none;">GALERI</a>
 
@@ -62,7 +60,7 @@
             navbar.classList.remove('scrolled');
         }
     });
-    // Tombol BELI TIKET KONSER di navbar ditangani oleh script coming soon modal di landing page
+    // Tombol BELI TIKET KONSER di navbar langsung mengarah ke link celestix.id
     // Dropdown functionality (support multiple dropdowns)
     document.addEventListener('DOMContentLoaded', function () {
         const dropdowns = document.querySelectorAll('.dropdown');
