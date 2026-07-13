@@ -23,5 +23,5 @@ class AdminUserSeeder extends Seeder
 
         // Assign role admin ke user
         $admin->assignRole($role);
-    }com
+    }
 }
