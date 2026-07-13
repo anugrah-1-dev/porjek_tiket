@@ -476,11 +476,10 @@
                 <h3 class="konser-sub-title"><i class="fas fa-ticket-alt"></i> KATEGORI TIKET</h3>
                 <div class="konser-tiket-grid">
 
-                    {{-- Umum --}}
+                    {{-- 1. Umum (Presale 1) --}}
                     <div class="konser-tiket-card kt-umum">
                         <div class="kt-accent"></div>
                         <div class="kt-header">
-                            <div class="kt-icon"><i class="fas fa-ticket-alt"></i></div>
                             <h4>{{ $pengaturanTiket->nama_kategori_umum }}</h4>
                         </div>
                         <div class="kt-price">Rp {{ number_format($pengaturanTiket->harga_umum, 0, ',', '.') }}</div>
@@ -502,38 +501,35 @@
                         @endif
                     </div>
 
-                    {{-- VIP --}}
-                    <div class="konser-tiket-card kt-vip">
+                    {{-- 2. Spesial (Presale 2) --}}
+                    <div class="konser-tiket-card kt-spesial">
                         <div class="kt-accent"></div>
-                        <div class="kt-badge">POPULER</div>
                         <div class="kt-header">
-                            <div class="kt-icon"><i class="fas fa-crown"></i></div>
-                            <h4>{{ $pengaturanTiket->nama_kategori_vip }}</h4>
+                            <h4>{{ $pengaturanTiket->nama_kategori_spesial }}</h4>
                         </div>
-                        <div class="kt-price">Rp {{ number_format($pengaturanTiket->harga_vip, 0, ',', '.') }}</div>
-                        @if ($pengaturanTiket->deskripsi_vip)
+                        <div class="kt-price">Rp {{ number_format($pengaturanTiket->harga_spesial, 0, ',', '.') }}</div>
+                        @if ($pengaturanTiket->deskripsi_spesial)
                             <ul class="kt-benefits">
-                                @foreach (explode("\n", $pengaturanTiket->deskripsi_vip) as $benefit)
+                                @foreach (explode("\n", $pengaturanTiket->deskripsi_spesial) as $benefit)
                                     @if (trim($benefit))
                                         <li><i class="fas fa-check"></i> {{ trim($benefit) }}</li>
                                     @endif
                                 @endforeach
                             </ul>
                         @endif
-                        @if (($pengaturanTiket->status_vip ?? 'tersedia') == 'tersedia')
-                            <div class="kt-btn kt-btn-vip" style="cursor:default; pointer-events:none;">Tersedia</div>
-                        @elseif (($pengaturanTiket->status_vip ?? 'tersedia') == 'sold_out')
-                            <div class="kt-btn kt-btn-vip" style="cursor:default; pointer-events:none; opacity:0.6;">Sold Out</div>
+                        @if (($pengaturanTiket->status_spesial ?? 'tersedia') == 'tersedia')
+                            <div class="kt-btn kt-btn-spesial" style="cursor:default; pointer-events:none;">Tersedia</div>
+                        @elseif (($pengaturanTiket->status_spesial ?? 'tersedia') == 'sold_out')
+                            <div class="kt-btn kt-btn-spesial" style="cursor:default; pointer-events:none; opacity:0.6;">Sold Out</div>
                         @else
-                            <div class="kt-btn kt-btn-vip" style="cursor:default; pointer-events:none; opacity:0.6;">Coming Soon</div>
+                            <div class="kt-btn kt-btn-spesial" style="cursor:default; pointer-events:none; opacity:0.6;">Coming Soon</div>
                         @endif
                     </div>
 
-                    {{-- Member --}}
+                    {{-- 3. Member (Warga Pare) --}}
                     <div class="konser-tiket-card kt-member">
                         <div class="kt-accent"></div>
                         <div class="kt-header">
-                            <div class="kt-icon"><i class="fas fa-id-card"></i></div>
                             <h4>{{ $pengaturanTiket->nama_kategori_member ?? 'Tiket - WARGA PARE' }}</h4>
                         </div>
                         <div class="kt-price">Rp {{ number_format($pengaturanTiket->harga_member, 0, ',', '.') }}</div>
@@ -555,29 +551,29 @@
                         @endif
                     </div>
 
-                    {{-- Spesial --}}
-                    <div class="konser-tiket-card kt-spesial">
+                    {{-- 4. VIP --}}
+                    <div class="konser-tiket-card kt-vip">
                         <div class="kt-accent"></div>
+                        <div class="kt-badge">POPULER</div>
                         <div class="kt-header">
-                            <div class="kt-icon"><i class="fas fa-star"></i></div>
-                            <h4>{{ $pengaturanTiket->nama_kategori_spesial }}</h4>
+                            <h4>{{ $pengaturanTiket->nama_kategori_vip }}</h4>
                         </div>
-                        <div class="kt-price">Rp {{ number_format($pengaturanTiket->harga_spesial, 0, ',', '.') }}</div>
-                        @if ($pengaturanTiket->deskripsi_spesial)
+                        <div class="kt-price">Rp {{ number_format($pengaturanTiket->harga_vip, 0, ',', '.') }}</div>
+                        @if ($pengaturanTiket->deskripsi_vip)
                             <ul class="kt-benefits">
-                                @foreach (explode("\n", $pengaturanTiket->deskripsi_spesial) as $benefit)
+                                @foreach (explode("\n", $pengaturanTiket->deskripsi_vip) as $benefit)
                                     @if (trim($benefit))
                                         <li><i class="fas fa-check"></i> {{ trim($benefit) }}</li>
                                     @endif
                                 @endforeach
                             </ul>
                         @endif
-                        @if (($pengaturanTiket->status_spesial ?? 'tersedia') == 'tersedia')
-                            <div class="kt-btn kt-btn-spesial" style="cursor:default; pointer-events:none;">Tersedia</div>
-                        @elseif (($pengaturanTiket->status_spesial ?? 'tersedia') == 'sold_out')
-                            <div class="kt-btn kt-btn-spesial" style="cursor:default; pointer-events:none; opacity:0.6;">Sold Out</div>
+                        @if (($pengaturanTiket->status_vip ?? 'tersedia') == 'tersedia')
+                            <div class="kt-btn kt-btn-vip" style="cursor:default; pointer-events:none;">Tersedia</div>
+                        @elseif (($pengaturanTiket->status_vip ?? 'tersedia') == 'sold_out')
+                            <div class="kt-btn kt-btn-vip" style="cursor:default; pointer-events:none; opacity:0.6;">Sold Out</div>
                         @else
-                            <div class="kt-btn kt-btn-spesial" style="cursor:default; pointer-events:none; opacity:0.6;">Coming Soon</div>
+                            <div class="kt-btn kt-btn-vip" style="cursor:default; pointer-events:none; opacity:0.6;">Coming Soon</div>
                         @endif
                     </div>
 
