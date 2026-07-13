@@ -493,7 +493,13 @@
                                 @endforeach
                             </ul>
                         @endif
-                        <a href="{{ route('tiket-konser.create', ['kategori' => 'umum']) }}" class="kt-btn kt-btn-umum">Beli Tiket</a>
+                        @if (($pengaturanTiket->status_umum ?? 'tersedia') == 'tersedia')
+                            <a href="{{ route('tiket-konser.create', ['kategori' => 'umum']) }}" class="kt-btn kt-btn-umum">Pilih Tiket</a>
+                        @elseif (($pengaturanTiket->status_umum ?? 'tersedia') == 'sold_out')
+                            <button class="kt-btn kt-btn-umum" disabled style="opacity:0.6; cursor:not-allowed;">Sold Out</button>
+                        @else
+                            <button class="kt-btn kt-btn-umum" disabled style="opacity:0.6; cursor:not-allowed;">Coming Soon</button>
+                        @endif
                     </div>
 
                     {{-- VIP --}}
@@ -514,7 +520,13 @@
                                 @endforeach
                             </ul>
                         @endif
-                        <a href="{{ route('tiket-konser.create', ['kategori' => 'vip']) }}" class="kt-btn kt-btn-vip">Beli Tiket</a>
+                        @if (($pengaturanTiket->status_vip ?? 'tersedia') == 'tersedia')
+                            <a href="{{ route('tiket-konser.create', ['kategori' => 'vip']) }}" class="kt-btn kt-btn-vip">Pilih Tiket</a>
+                        @elseif (($pengaturanTiket->status_vip ?? 'tersedia') == 'sold_out')
+                            <button class="kt-btn kt-btn-vip" disabled style="opacity:0.6; cursor:not-allowed;">Sold Out</button>
+                        @else
+                            <button class="kt-btn kt-btn-vip" disabled style="opacity:0.6; cursor:not-allowed;">Coming Soon</button>
+                        @endif
                     </div>
 
                     {{-- Member --}}
@@ -522,7 +534,7 @@
                         <div class="kt-accent"></div>
                         <div class="kt-header">
                             <div class="kt-icon"><i class="fas fa-id-card"></i></div>
-                            <h4>Member Aktif BEC & BIE Plus</h4>
+                            <h4>{{ $pengaturanTiket->nama_kategori_member ?? 'Tiket - WARGA PARE' }}</h4>
                         </div>
                         <div class="kt-price">Rp {{ number_format($pengaturanTiket->harga_member, 0, ',', '.') }}</div>
                         @if ($pengaturanTiket->deskripsi_member)
@@ -534,7 +546,13 @@
                                 @endforeach
                             </ul>
                         @endif
-                        <a href="{{ route('tiket-konser.create', ['kategori' => 'member']) }}" class="kt-btn kt-btn-member">Beli Tiket</a>
+                        @if (($pengaturanTiket->status_member ?? 'tersedia') == 'tersedia')
+                            <a href="{{ route('tiket-konser.create', ['kategori' => 'member']) }}" class="kt-btn kt-btn-member">Pilih Tiket</a>
+                        @elseif (($pengaturanTiket->status_member ?? 'tersedia') == 'sold_out')
+                            <button class="kt-btn kt-btn-member" disabled style="opacity:0.6; cursor:not-allowed;">Sold Out</button>
+                        @else
+                            <button class="kt-btn kt-btn-member" disabled style="opacity:0.6; cursor:not-allowed;">Coming Soon</button>
+                        @endif
                     </div>
 
                     {{-- Spesial --}}
@@ -544,7 +562,7 @@
                             <div class="kt-icon"><i class="fas fa-star"></i></div>
                             <h4>{{ $pengaturanTiket->nama_kategori_spesial }}</h4>
                         </div>
-                        <div class="kt-price kt-price-free">GRATIS 🎉</div>
+                        <div class="kt-price">Rp {{ number_format($pengaturanTiket->harga_spesial, 0, ',', '.') }}</div>
                         @if ($pengaturanTiket->deskripsi_spesial)
                             <ul class="kt-benefits">
                                 @foreach (explode("\n", $pengaturanTiket->deskripsi_spesial) as $benefit)
@@ -554,7 +572,13 @@
                                 @endforeach
                             </ul>
                         @endif
-                        <a href="{{ route('tiket-konser.create', ['kategori' => 'spesial']) }}" class="kt-btn kt-btn-spesial">Daftar Sekarang</a>
+                        @if (($pengaturanTiket->status_spesial ?? 'tersedia') == 'tersedia')
+                            <a href="{{ route('tiket-konser.create', ['kategori' => 'spesial']) }}" class="kt-btn kt-btn-spesial">Pilih Tiket</a>
+                        @elseif (($pengaturanTiket->status_spesial ?? 'tersedia') == 'sold_out')
+                            <button class="kt-btn kt-btn-spesial" disabled style="opacity:0.6; cursor:not-allowed;">Sold Out</button>
+                        @else
+                            <button class="kt-btn kt-btn-spesial" disabled style="opacity:0.6; cursor:not-allowed;">Coming Soon</button>
+                        @endif
                     </div>
 
                 </div>

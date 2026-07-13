@@ -30,6 +30,7 @@ use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\TrackingController;
 use App\Http\Controllers\Admin\ThumbnailController;
 use App\Http\Controllers\Admin\LogoController;
+use App\Http\Controllers\Admin\KonserInfoController;
 use App\Http\Controllers\TiketKonserController;
 use App\Http\Controllers\Admin\TiketKonserController as AdminTiketKonserController;
 use App\Http\Controllers\Admin\PengaturanTiketController;
@@ -323,7 +324,11 @@ Route::middleware(['auth', 'role:admin|officer'])->prefix('admin')->name('admin.
     // ===== PENGATURAN HARGA TIKET (ADMIN) =====
     Route::get('/pengaturan-tiket', [PengaturanTiketController::class, 'edit'])->name('pengaturan-tiket.edit');
     Route::put('/pengaturan-tiket', [PengaturanTiketController::class, 'update'])->name('pengaturan-tiket.update');
-    Route::delete('/pengaturan-tiket/gambar-konser/{id}', [PengaturanTiketController::class, 'deleteGambarKonser'])->name('pengaturan-tiket.delete-gambar-konser');
+
+    // ===== PENGATURAN INFO KONSER (ADMIN) =====
+    Route::get('/konser-info', [KonserInfoController::class, 'edit'])->name('konser-info.edit');
+    Route::put('/konser-info', [KonserInfoController::class, 'update'])->name('konser-info.update');
+    Route::delete('/konser-info/gambar/{id}', [KonserInfoController::class, 'deleteGambar'])->name('konser-info.delete-gambar');
 
 
 });

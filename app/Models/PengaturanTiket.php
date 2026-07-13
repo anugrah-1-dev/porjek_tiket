@@ -13,13 +13,18 @@ class PengaturanTiket extends Model
         'harga_member',
         'nama_kategori_umum',
         'deskripsi_umum',
+        'status_umum',
         'harga_vip',
         'nama_kategori_vip',
         'deskripsi_vip',
+        'status_vip',
+        'nama_kategori_member',
         'deskripsi_member',
+        'status_member',
         'nama_kategori_spesial',
         'harga_spesial',
         'deskripsi_spesial',
+        'status_spesial',
         'gambar_poster',
         'tanggal_event',
         'lokasi_event',
@@ -40,13 +45,25 @@ class PengaturanTiket extends Model
     public static function get(): self
     {
         return static::firstOrCreate([], [
+            'nama_kategori_umum'    => 'Tiket - Presale 1',
             'harga_umum'            => 150000,
-            'harga_member'          => 100000,
-            'nama_kategori_umum'    => 'Sales 1',
-            'harga_vip'             => 350000,
-            'nama_kategori_vip'     => 'VIP',
-            'nama_kategori_spesial' => 'Member Juli-Agustus',
-            'harga_spesial'         => 0,
+            'status_umum'           => 'tersedia',
+            'deskripsi_umum'        => '',
+            
+            'nama_kategori_vip'     => 'Tiket - Presale 2',
+            'harga_vip'             => 210000,
+            'status_vip'            => 'sold_out',
+            'deskripsi_vip'         => '',
+            
+            'nama_kategori_member'  => 'Tiket - WARGA PARE',
+            'harga_member'          => 275000,
+            'status_member'         => 'coming_soon',
+            'deskripsi_member'      => 'KHUSUS WARGA BER-KTP KECAMATAN PARE',
+            
+            'nama_kategori_spesial' => 'Tiket - VIP',
+            'harga_spesial'         => 350000,
+            'status_spesial'        => 'tersedia',
+            'deskripsi_spesial'     => "Kaos Eksklusif (Briliant Kampung Inggris Pare Hari Ini)\nAir Mineral & Snack\nFast Track",
         ]);
     }
 

@@ -434,6 +434,12 @@
                 'route'  => 'admin.pengaturan-tiket.edit',
                 'active' => ['admin/pengaturan-tiket*'],
             ],
+            [
+                'text'   => 'Info Konser',
+                'icon'   => 'fas fa-music',
+                'route'  => 'admin.konser-info.edit',
+                'active' => ['admin/konser-info*'],
+            ],
 
             [
                 'header' => 'Add Ons',
