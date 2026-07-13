@@ -321,9 +321,7 @@ Route::middleware(['auth', 'role:admin|officer'])->prefix('admin')->name('admin.
     Route::put('/tiket-konser/{id}/status', [AdminTiketKonserController::class, 'updateStatus'])->name('tiket-konser.update-status');
     Route::delete('/tiket-konser/{id}', [AdminTiketKonserController::class, 'destroy'])->name('tiket-konser.destroy');
 
-    // ===== PENGATURAN HARGA TIKET (ADMIN) =====
-    Route::get('/pengaturan-tiket', [PengaturanTiketController::class, 'edit'])->name('pengaturan-tiket.edit');
-    Route::put('/pengaturan-tiket', [PengaturanTiketController::class, 'update'])->name('pengaturan-tiket.update');
+
 
     // ===== PENGATURAN INFO KONSER (ADMIN) =====
     Route::get('/konser-info', [KonserInfoController::class, 'edit'])->name('konser-info.edit');

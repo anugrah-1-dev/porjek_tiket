@@ -33,6 +33,27 @@ class KonserInfoController extends Controller
             'gambar_konser.*'           => 'image|mimes:jpg,jpeg,png,webp|max:5120',
             'caption_konser'            => 'nullable|array',
             'caption_konser.*'          => 'nullable|string|max:255',
+            
+            // Kategori Tiket
+            'harga_umum'                => 'required|integer|min:0',
+            'nama_kategori_umum'        => 'required|string|max:100',
+            'deskripsi_umum'            => 'nullable|string|max:1000',
+            'status_umum'               => 'required|string|in:tersedia,sold_out,coming_soon',
+            
+            'harga_vip'                 => 'required|integer|min:0',
+            'nama_kategori_vip'         => 'required|string|max:100',
+            'deskripsi_vip'             => 'nullable|string|max:1000',
+            'status_vip'                => 'required|string|in:tersedia,sold_out,coming_soon',
+            
+            'nama_kategori_member'      => 'required|string|max:100',
+            'harga_member'              => 'required|integer|min:0',
+            'deskripsi_member'          => 'nullable|string|max:1000',
+            'status_member'             => 'required|string|in:tersedia,sold_out,coming_soon',
+            
+            'nama_kategori_spesial'     => 'required|string|max:100',
+            'harga_spesial'             => 'required|integer|min:0',
+            'deskripsi_spesial'         => 'nullable|string|max:1000',
+            'status_spesial'            => 'required|string|in:tersedia,sold_out,coming_soon',
         ]);
 
         $pengaturan = PengaturanTiket::get();
@@ -44,6 +65,26 @@ class KonserInfoController extends Controller
             'deskripsi_artis'           => $request->deskripsi_artis,
             'fasilitas_venue'           => $request->fasilitas_venue,
             'deskripsi_section_konser'  => $request->deskripsi_section_konser,
+            
+            'harga_umum'                => $request->harga_umum,
+            'nama_kategori_umum'        => $request->nama_kategori_umum,
+            'deskripsi_umum'            => $request->deskripsi_umum,
+            'status_umum'               => $request->status_umum,
+            
+            'harga_vip'                 => $request->harga_vip,
+            'nama_kategori_vip'         => $request->nama_kategori_vip,
+            'deskripsi_vip'             => $request->deskripsi_vip,
+            'status_vip'                => $request->status_vip,
+            
+            'nama_kategori_member'      => $request->nama_kategori_member,
+            'harga_member'              => $request->harga_member,
+            'deskripsi_member'          => $request->deskripsi_member,
+            'status_member'             => $request->status_member,
+            
+            'nama_kategori_spesial'     => $request->nama_kategori_spesial,
+            'harga_spesial'             => $request->harga_spesial,
+            'deskripsi_spesial'         => $request->deskripsi_spesial,
+            'status_spesial'            => $request->status_spesial,
         ];
 
         // Upload gambar artis
@@ -76,12 +117,9 @@ class KonserInfoController extends Controller
         }
 
         return redirect()->route('admin.konser-info.edit')
-            ->with('success', 'Info konser berhasil diperbarui.');
+            ->with('success', 'Data Konser Brilliant 2026 berhasil diperbarui.');
     }
 
-    /**
-     * Hapus gambar konser individual.
-     */
     public function deleteGambar($id)
     {
         $gambar = GambarKonser::findOrFail($id);

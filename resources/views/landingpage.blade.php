@@ -494,11 +494,11 @@
                             </ul>
                         @endif
                         @if (($pengaturanTiket->status_umum ?? 'tersedia') == 'tersedia')
-                            <a href="{{ route('tiket-konser.create', ['kategori' => 'umum']) }}" class="kt-btn kt-btn-umum">Pilih Tiket</a>
+                            <div class="kt-btn kt-btn-umum" style="cursor:default; pointer-events:none;">Tersedia</div>
                         @elseif (($pengaturanTiket->status_umum ?? 'tersedia') == 'sold_out')
-                            <button class="kt-btn kt-btn-umum" disabled style="opacity:0.6; cursor:not-allowed;">Sold Out</button>
+                            <div class="kt-btn kt-btn-umum" style="cursor:default; pointer-events:none; opacity:0.6;">Sold Out</div>
                         @else
-                            <button class="kt-btn kt-btn-umum" disabled style="opacity:0.6; cursor:not-allowed;">Coming Soon</button>
+                            <div class="kt-btn kt-btn-umum" style="cursor:default; pointer-events:none; opacity:0.6;">Coming Soon</div>
                         @endif
                     </div>
 
@@ -521,11 +521,11 @@
                             </ul>
                         @endif
                         @if (($pengaturanTiket->status_vip ?? 'tersedia') == 'tersedia')
-                            <a href="{{ route('tiket-konser.create', ['kategori' => 'vip']) }}" class="kt-btn kt-btn-vip">Pilih Tiket</a>
+                            <div class="kt-btn kt-btn-vip" style="cursor:default; pointer-events:none;">Tersedia</div>
                         @elseif (($pengaturanTiket->status_vip ?? 'tersedia') == 'sold_out')
-                            <button class="kt-btn kt-btn-vip" disabled style="opacity:0.6; cursor:not-allowed;">Sold Out</button>
+                            <div class="kt-btn kt-btn-vip" style="cursor:default; pointer-events:none; opacity:0.6;">Sold Out</div>
                         @else
-                            <button class="kt-btn kt-btn-vip" disabled style="opacity:0.6; cursor:not-allowed;">Coming Soon</button>
+                            <div class="kt-btn kt-btn-vip" style="cursor:default; pointer-events:none; opacity:0.6;">Coming Soon</div>
                         @endif
                     </div>
 
@@ -547,11 +547,11 @@
                             </ul>
                         @endif
                         @if (($pengaturanTiket->status_member ?? 'tersedia') == 'tersedia')
-                            <a href="{{ route('tiket-konser.create', ['kategori' => 'member']) }}" class="kt-btn kt-btn-member">Pilih Tiket</a>
+                            <div class="kt-btn kt-btn-member" style="cursor:default; pointer-events:none;">Tersedia</div>
                         @elseif (($pengaturanTiket->status_member ?? 'tersedia') == 'sold_out')
-                            <button class="kt-btn kt-btn-member" disabled style="opacity:0.6; cursor:not-allowed;">Sold Out</button>
+                            <div class="kt-btn kt-btn-member" style="cursor:default; pointer-events:none; opacity:0.6;">Sold Out</div>
                         @else
-                            <button class="kt-btn kt-btn-member" disabled style="opacity:0.6; cursor:not-allowed;">Coming Soon</button>
+                            <div class="kt-btn kt-btn-member" style="cursor:default; pointer-events:none; opacity:0.6;">Coming Soon</div>
                         @endif
                     </div>
 
@@ -573,11 +573,11 @@
                             </ul>
                         @endif
                         @if (($pengaturanTiket->status_spesial ?? 'tersedia') == 'tersedia')
-                            <a href="{{ route('tiket-konser.create', ['kategori' => 'spesial']) }}" class="kt-btn kt-btn-spesial">Pilih Tiket</a>
+                            <div class="kt-btn kt-btn-spesial" style="cursor:default; pointer-events:none;">Tersedia</div>
                         @elseif (($pengaturanTiket->status_spesial ?? 'tersedia') == 'sold_out')
-                            <button class="kt-btn kt-btn-spesial" disabled style="opacity:0.6; cursor:not-allowed;">Sold Out</button>
+                            <div class="kt-btn kt-btn-spesial" style="cursor:default; pointer-events:none; opacity:0.6;">Sold Out</div>
                         @else
-                            <button class="kt-btn kt-btn-spesial" disabled style="opacity:0.6; cursor:not-allowed;">Coming Soon</button>
+                            <div class="kt-btn kt-btn-spesial" style="cursor:default; pointer-events:none; opacity:0.6;">Coming Soon</div>
                         @endif
                     </div>
 
