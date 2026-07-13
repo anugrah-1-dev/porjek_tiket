@@ -21,6 +21,17 @@ class PengaturanTiket extends Model
         'harga_spesial',
         'deskripsi_spesial',
         'gambar_poster',
+        'tanggal_event',
+        'lokasi_event',
+        'nama_artis',
+        'deskripsi_artis',
+        'gambar_artis',
+        'fasilitas_venue',
+        'deskripsi_section_konser',
+    ];
+
+    protected $casts = [
+        'tanggal_event' => 'date',
     ];
 
     /**
@@ -37,5 +48,13 @@ class PengaturanTiket extends Model
             'nama_kategori_spesial' => 'Member Juli-Agustus',
             'harga_spesial'         => 0,
         ]);
+    }
+
+    /**
+     * Relasi ke gambar-gambar konser (stage, venue, suasana, dll).
+     */
+    public function gambarKonser()
+    {
+        return $this->hasMany(GambarKonser::class, 'pengaturan_tiket_id')->orderBy('urutan');
     }
 }

@@ -344,6 +344,357 @@
     </script>
 
 
+    {{-- ====================================================================
+         SECTION INFO KONSER — tepat di bawah Hero, sebelum Tentang Kami
+         ==================================================================== --}}
+    <section class="konser-section" id="info-konser">
+        <div class="container">
+
+            {{-- Section Header --}}
+            <div class="konser-section-header" data-aos="fade-up">
+                <span class="konser-label"><i class="fas fa-music"></i> LIVE EVENT</span>
+                <h2 class="konser-section-title">KONSER BRILLIANT 2026</h2>
+                @if ($pengaturanTiket->deskripsi_section_konser)
+                    <p class="konser-section-desc">{{ $pengaturanTiket->deskripsi_section_konser }}</p>
+                @endif
+            </div>
+
+            {{-- ===== BARIS 1: Gambar Konser (Carousel) + Info Artis + Countdown ===== --}}
+            <div class="konser-hero-grid">
+
+                {{-- Gambar Konser Carousel --}}
+                @if ($pengaturanTiket->gambarKonser && $pengaturanTiket->gambarKonser->count() > 0)
+                <div class="konser-carousel-wrapper" data-aos="fade-right" data-aos-delay="200">
+                    <div class="konser-carousel" id="konserCarousel">
+                        <div class="konser-carousel-track" id="konserTrack">
+                            @foreach ($pengaturanTiket->gambarKonser as $gk)
+                                <div class="konser-slide">
+                                    <img src="{{ asset('storage/' . $gk->image_path) }}"
+                                         alt="{{ $gk->caption ?? 'Konser Brilliant' }}">
+                                    @if ($gk->caption)
+                                        <div class="konser-slide-caption">{{ $gk->caption }}</div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        </div>
+                        @if ($pengaturanTiket->gambarKonser->count() > 1)
+                            <button class="konser-nav-btn konser-prev" id="konserPrev">&#8592;</button>
+                            <button class="konser-nav-btn konser-next" id="konserNext">&#8594;</button>
+                            <div class="konser-dots" id="konserDots">
+                                @foreach ($pengaturanTiket->gambarKonser as $idx => $gk)
+                                    <span class="konser-dot {{ $idx === 0 ? 'active' : '' }}" data-index="{{ $idx }}"></span>
+                                @endforeach
+                            </div>
+                        @endif
+                    </div>
+                </div>
+                @endif
+
+                {{-- Info Artis + Countdown --}}
+                <div class="konser-info-panel" data-aos="fade-left" data-aos-delay="300">
+
+                    {{-- Artis Card --}}
+                    @if ($pengaturanTiket->nama_artis)
+                    <div class="artis-card">
+                        <div class="artis-card-header">
+                            <i class="fas fa-microphone-alt"></i>
+                            <span>ARTIST / LINEUP</span>
+                        </div>
+                        <div class="artis-card-body">
+                            @if ($pengaturanTiket->gambar_artis)
+                                <div class="artis-img-wrap">
+                                    <img src="{{ asset('storage/' . $pengaturanTiket->gambar_artis) }}"
+                                         alt="{{ $pengaturanTiket->nama_artis }}">
+                                </div>
+                            @endif
+                            <div class="artis-text">
+                                <h3 class="artis-name">{{ $pengaturanTiket->nama_artis }}</h3>
+                                @if ($pengaturanTiket->deskripsi_artis)
+                                    <p class="artis-desc">{{ $pengaturanTiket->deskripsi_artis }}</p>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    @endif
+
+                    {{-- Event Details --}}
+                    <div class="event-details-card">
+                        @if ($pengaturanTiket->tanggal_event)
+                        <div class="event-detail-row">
+                            <div class="event-detail-icon"><i class="far fa-calendar-alt"></i></div>
+                            <div>
+                                <span class="event-detail-label">Tanggal</span>
+                                <span class="event-detail-value">{{ $pengaturanTiket->tanggal_event->translatedFormat('d F Y') }}</span>
+                            </div>
+                        </div>
+                        @endif
+                        @if ($pengaturanTiket->lokasi_event)
+                        <div class="event-detail-row">
+                            <div class="event-detail-icon"><i class="fas fa-map-marker-alt"></i></div>
+                            <div>
+                                <span class="event-detail-label">Lokasi</span>
+                                <span class="event-detail-value">{{ $pengaturanTiket->lokasi_event }}</span>
+                            </div>
+                        </div>
+                        @endif
+                    </div>
+
+                    {{-- Countdown Timer --}}
+                    @if ($pengaturanTiket->tanggal_event && $pengaturanTiket->tanggal_event->isFuture())
+                    <div class="countdown-card">
+                        <div class="countdown-label"><i class="fas fa-hourglass-half"></i> HITUNG MUNDUR</div>
+                        <div class="countdown-grid" id="konserCountdown"
+                             data-target="{{ $pengaturanTiket->tanggal_event->format('Y-m-d') }}T00:00:00">
+                            <div class="countdown-item">
+                                <span class="countdown-num" id="cdDays">--</span>
+                                <span class="countdown-unit">Hari</span>
+                            </div>
+                            <div class="countdown-sep">:</div>
+                            <div class="countdown-item">
+                                <span class="countdown-num" id="cdHours">--</span>
+                                <span class="countdown-unit">Jam</span>
+                            </div>
+                            <div class="countdown-sep">:</div>
+                            <div class="countdown-item">
+                                <span class="countdown-num" id="cdMins">--</span>
+                                <span class="countdown-unit">Menit</span>
+                            </div>
+                            <div class="countdown-sep">:</div>
+                            <div class="countdown-item">
+                                <span class="countdown-num" id="cdSecs">--</span>
+                                <span class="countdown-unit">Detik</span>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
+
+                </div>
+            </div>
+
+            {{-- ===== BARIS 2: Kategori Tiket ===== --}}
+            <div class="konser-tiket-section" data-aos="fade-up" data-aos-delay="200">
+                <h3 class="konser-sub-title"><i class="fas fa-ticket-alt"></i> KATEGORI TIKET</h3>
+                <div class="konser-tiket-grid">
+
+                    {{-- Umum --}}
+                    <div class="konser-tiket-card kt-umum">
+                        <div class="kt-accent"></div>
+                        <div class="kt-header">
+                            <div class="kt-icon"><i class="fas fa-ticket-alt"></i></div>
+                            <h4>{{ $pengaturanTiket->nama_kategori_umum }}</h4>
+                        </div>
+                        <div class="kt-price">Rp {{ number_format($pengaturanTiket->harga_umum, 0, ',', '.') }}</div>
+                        @if ($pengaturanTiket->deskripsi_umum)
+                            <ul class="kt-benefits">
+                                @foreach (explode("\n", $pengaturanTiket->deskripsi_umum) as $benefit)
+                                    @if (trim($benefit))
+                                        <li><i class="fas fa-check"></i> {{ trim($benefit) }}</li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        @endif
+                        <a href="{{ route('tiket-konser.create', ['kategori' => 'umum']) }}" class="kt-btn kt-btn-umum">Beli Tiket</a>
+                    </div>
+
+                    {{-- VIP --}}
+                    <div class="konser-tiket-card kt-vip">
+                        <div class="kt-accent"></div>
+                        <div class="kt-badge">POPULER</div>
+                        <div class="kt-header">
+                            <div class="kt-icon"><i class="fas fa-crown"></i></div>
+                            <h4>{{ $pengaturanTiket->nama_kategori_vip }}</h4>
+                        </div>
+                        <div class="kt-price">Rp {{ number_format($pengaturanTiket->harga_vip, 0, ',', '.') }}</div>
+                        @if ($pengaturanTiket->deskripsi_vip)
+                            <ul class="kt-benefits">
+                                @foreach (explode("\n", $pengaturanTiket->deskripsi_vip) as $benefit)
+                                    @if (trim($benefit))
+                                        <li><i class="fas fa-check"></i> {{ trim($benefit) }}</li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        @endif
+                        <a href="{{ route('tiket-konser.create', ['kategori' => 'vip']) }}" class="kt-btn kt-btn-vip">Beli Tiket</a>
+                    </div>
+
+                    {{-- Member --}}
+                    <div class="konser-tiket-card kt-member">
+                        <div class="kt-accent"></div>
+                        <div class="kt-header">
+                            <div class="kt-icon"><i class="fas fa-id-card"></i></div>
+                            <h4>Member Aktif BEC & BIE Plus</h4>
+                        </div>
+                        <div class="kt-price">Rp {{ number_format($pengaturanTiket->harga_member, 0, ',', '.') }}</div>
+                        @if ($pengaturanTiket->deskripsi_member)
+                            <ul class="kt-benefits">
+                                @foreach (explode("\n", $pengaturanTiket->deskripsi_member) as $benefit)
+                                    @if (trim($benefit))
+                                        <li><i class="fas fa-check"></i> {{ trim($benefit) }}</li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        @endif
+                        <a href="{{ route('tiket-konser.create', ['kategori' => 'member']) }}" class="kt-btn kt-btn-member">Beli Tiket</a>
+                    </div>
+
+                    {{-- Spesial --}}
+                    <div class="konser-tiket-card kt-spesial">
+                        <div class="kt-accent"></div>
+                        <div class="kt-header">
+                            <div class="kt-icon"><i class="fas fa-star"></i></div>
+                            <h4>{{ $pengaturanTiket->nama_kategori_spesial }}</h4>
+                        </div>
+                        <div class="kt-price kt-price-free">GRATIS 🎉</div>
+                        @if ($pengaturanTiket->deskripsi_spesial)
+                            <ul class="kt-benefits">
+                                @foreach (explode("\n", $pengaturanTiket->deskripsi_spesial) as $benefit)
+                                    @if (trim($benefit))
+                                        <li><i class="fas fa-check"></i> {{ trim($benefit) }}</li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        @endif
+                        <a href="{{ route('tiket-konser.create', ['kategori' => 'spesial']) }}" class="kt-btn kt-btn-spesial">Daftar Sekarang</a>
+                    </div>
+
+                </div>
+            </div>
+
+            {{-- ===== BARIS 3: Fasilitas Venue ===== --}}
+            @if ($pengaturanTiket->fasilitas_venue)
+            <div class="konser-fasilitas-section" data-aos="fade-up" data-aos-delay="300">
+                <h3 class="konser-sub-title"><i class="fas fa-concierge-bell"></i> FASILITAS VENUE</h3>
+                <div class="fasilitas-grid">
+                    @php
+                        $fasilitasIcons = [
+                            'parkir'         => 'fas fa-parking',
+                            'toilet'         => 'fas fa-restroom',
+                            'food'           => 'fas fa-utensils',
+                            'mushola'        => 'fas fa-mosque',
+                            'p3k'            => 'fas fa-first-aid',
+                            'sound'          => 'fas fa-volume-up',
+                            'lighting'       => 'fas fa-lightbulb',
+                            'security'       => 'fas fa-shield-alt',
+                            'wifi'           => 'fas fa-wifi',
+                            'atm'            => 'fas fa-credit-card',
+                            'smoking'        => 'fas fa-smoking',
+                            'charging'       => 'fas fa-charging-station',
+                            'merchandise'    => 'fas fa-tshirt',
+                            'photo'          => 'fas fa-camera',
+                        ];
+                        $defaultIcon = 'fas fa-check-circle';
+                    @endphp
+                    @foreach (explode("\n", $pengaturanTiket->fasilitas_venue) as $fasilitas)
+                        @if (trim($fasilitas))
+                            @php
+                                $fasLower = strtolower(trim($fasilitas));
+                                $matchedIcon = $defaultIcon;
+                                foreach ($fasilitasIcons as $keyword => $icon) {
+                                    if (str_contains($fasLower, $keyword)) {
+                                        $matchedIcon = $icon;
+                                        break;
+                                    }
+                                }
+                            @endphp
+                            <div class="fasilitas-item">
+                                <div class="fasilitas-icon"><i class="{{ $matchedIcon }}"></i></div>
+                                <span>{{ trim($fasilitas) }}</span>
+                            </div>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+            @endif
+
+        </div>
+    </section>
+
+    {{-- ===== Konser Carousel + Countdown JavaScript ===== --}}
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // ===== KONSER IMAGE CAROUSEL =====
+        (function() {
+            const track = document.getElementById('konserTrack');
+            const prevBtn = document.getElementById('konserPrev');
+            const nextBtn = document.getElementById('konserNext');
+            const dotsContainer = document.getElementById('konserDots');
+            if (!track) return;
+
+            const slides = track.querySelectorAll('.konser-slide');
+            const total = slides.length;
+            if (total <= 1) return;
+
+            let current = 0;
+            let autoTimer;
+
+            function goTo(idx) {
+                current = ((idx % total) + total) % total;
+                track.style.transform = 'translateX(-' + (current * 100) + '%)';
+                // Update dots
+                if (dotsContainer) {
+                    dotsContainer.querySelectorAll('.konser-dot').forEach(function(d, i) {
+                        d.classList.toggle('active', i === current);
+                    });
+                }
+            }
+
+            if (prevBtn) prevBtn.addEventListener('click', function() { goTo(current - 1); resetAuto(); });
+            if (nextBtn) nextBtn.addEventListener('click', function() { goTo(current + 1); resetAuto(); });
+            if (dotsContainer) {
+                dotsContainer.querySelectorAll('.konser-dot').forEach(function(dot) {
+                    dot.addEventListener('click', function() {
+                        goTo(parseInt(this.dataset.index));
+                        resetAuto();
+                    });
+                });
+            }
+
+            function startAuto() { autoTimer = setInterval(function() { goTo(current + 1); }, 4000); }
+            function resetAuto() { clearInterval(autoTimer); startAuto(); }
+
+            track.parentElement.addEventListener('mouseenter', function() { clearInterval(autoTimer); });
+            track.parentElement.addEventListener('mouseleave', startAuto);
+
+            startAuto();
+        })();
+
+        // ===== COUNTDOWN TIMER =====
+        (function() {
+            var container = document.getElementById('konserCountdown');
+            if (!container) return;
+
+            var target = new Date(container.dataset.target).getTime();
+
+            function update() {
+                var now = new Date().getTime();
+                var diff = target - now;
+
+                if (diff <= 0) {
+                    document.getElementById('cdDays').textContent = '0';
+                    document.getElementById('cdHours').textContent = '0';
+                    document.getElementById('cdMins').textContent = '0';
+                    document.getElementById('cdSecs').textContent = '0';
+                    return;
+                }
+
+                var days  = Math.floor(diff / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var mins  = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                var secs  = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById('cdDays').textContent  = String(days).padStart(2, '0');
+                document.getElementById('cdHours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('cdMins').textContent  = String(mins).padStart(2, '0');
+                document.getElementById('cdSecs').textContent  = String(secs).padStart(2, '0');
+            }
+
+            update();
+            setInterval(update, 1000);
+        })();
+    });
+    </script>
+
+
     {{-- ✅ Section "Tentang Kami" dengan animasi --}}
     <section class="about-us-section" id="tentang" data-aos="fade-up">
         <div class="container" data-aos="fade-up" data-aos-delay="100">

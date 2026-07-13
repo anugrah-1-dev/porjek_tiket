@@ -28,6 +28,7 @@ class LandingPageController extends Controller
         $contactServices = Customer_Service::all();
         $programsgambar  = Program::where('status', 'aktif')->first();
         $pengaturanTiket = PengaturanTiket::get();
+        $pengaturanTiket->load('gambarKonser');
 
         // Kelompokkan berdasarkan platform sosial media
         $groupedSosmed = [

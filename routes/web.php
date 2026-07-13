@@ -323,6 +323,8 @@ Route::middleware(['auth', 'role:admin|officer'])->prefix('admin')->name('admin.
     // ===== PENGATURAN HARGA TIKET (ADMIN) =====
     Route::get('/pengaturan-tiket', [PengaturanTiketController::class, 'edit'])->name('pengaturan-tiket.edit');
     Route::put('/pengaturan-tiket', [PengaturanTiketController::class, 'update'])->name('pengaturan-tiket.update');
+    Route::delete('/pengaturan-tiket/gambar-konser/{id}', [PengaturanTiketController::class, 'deleteGambarKonser'])->name('pengaturan-tiket.delete-gambar-konser');
+
 
 });
 
