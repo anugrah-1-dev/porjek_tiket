@@ -121,13 +121,13 @@
                         <label for="nama_kategori_umum" class="font-weight-bold">Nama Kategori</label>
                         <input type="text" class="form-control @error('nama_kategori_umum') is-invalid @enderror"
                                id="nama_kategori_umum" name="nama_kategori_umum"
-                               value="{{ old('nama_kategori_umum', $pengaturan->nama_kategori_umum) }}" required>
+                               value="{{ old('nama_kategori_umum', $pengaturan->nama_kategori_umum) }}">
                     </div>
                     <div class="form-group col-md-4">
                         <label for="harga_umum" class="font-weight-bold">Harga (Rp)</label>
                         <input type="number" class="form-control @error('harga_umum') is-invalid @enderror"
                                id="harga_umum" name="harga_umum"
-                               value="{{ old('harga_umum', $pengaturan->harga_umum) }}" min="0" required>
+                               value="{{ old('harga_umum', $pengaturan->harga_umum) }}" min="0">
                     </div>
                     <div class="form-group col-md-4">
                         <label for="status_umum" class="font-weight-bold">Status</label>
@@ -150,13 +150,13 @@
                         <label for="nama_kategori_vip" class="font-weight-bold">Nama Kategori</label>
                         <input type="text" class="form-control @error('nama_kategori_vip') is-invalid @enderror"
                                id="nama_kategori_vip" name="nama_kategori_vip"
-                               value="{{ old('nama_kategori_vip', $pengaturan->nama_kategori_vip) }}" required>
+                               value="{{ old('nama_kategori_vip', $pengaturan->nama_kategori_vip) }}">
                     </div>
                     <div class="form-group col-md-4">
                         <label for="harga_vip" class="font-weight-bold">Harga (Rp)</label>
                         <input type="number" class="form-control @error('harga_vip') is-invalid @enderror"
                                id="harga_vip" name="harga_vip"
-                               value="{{ old('harga_vip', $pengaturan->harga_vip) }}" min="0" required>
+                               value="{{ old('harga_vip', $pengaturan->harga_vip) }}" min="0">
                     </div>
                     <div class="form-group col-md-4">
                         <label for="status_vip" class="font-weight-bold">Status</label>
@@ -179,13 +179,13 @@
                         <label for="nama_kategori_member" class="font-weight-bold">Nama Kategori</label>
                         <input type="text" class="form-control @error('nama_kategori_member') is-invalid @enderror"
                                id="nama_kategori_member" name="nama_kategori_member"
-                               value="{{ old('nama_kategori_member', $pengaturan->nama_kategori_member) }}" required>
+                               value="{{ old('nama_kategori_member', $pengaturan->nama_kategori_member) }}">
                     </div>
                     <div class="form-group col-md-4">
                         <label for="harga_member" class="font-weight-bold">Harga (Rp)</label>
                         <input type="number" class="form-control @error('harga_member') is-invalid @enderror"
                                id="harga_member" name="harga_member"
-                               value="{{ old('harga_member', $pengaturan->harga_member) }}" min="0" required>
+                               value="{{ old('harga_member', $pengaturan->harga_member) }}" min="0">
                     </div>
                     <div class="form-group col-md-4">
                         <label for="status_member" class="font-weight-bold">Status</label>
@@ -208,13 +208,13 @@
                         <label for="nama_kategori_spesial" class="font-weight-bold">Nama Kategori</label>
                         <input type="text" class="form-control @error('nama_kategori_spesial') is-invalid @enderror"
                                id="nama_kategori_spesial" name="nama_kategori_spesial"
-                               value="{{ old('nama_kategori_spesial', $pengaturan->nama_kategori_spesial) }}" required>
+                               value="{{ old('nama_kategori_spesial', $pengaturan->nama_kategori_spesial) }}">
                     </div>
                     <div class="form-group col-md-4">
                         <label for="harga_spesial" class="font-weight-bold">Harga (Rp)</label>
                         <input type="number" class="form-control @error('harga_spesial') is-invalid @enderror"
                                id="harga_spesial" name="harga_spesial"
-                               value="{{ old('harga_spesial', $pengaturan->harga_spesial ?? 0) }}" min="0" required>
+                               value="{{ old('harga_spesial', $pengaturan->harga_spesial ?? 0) }}" min="0">
                     </div>
                     <div class="form-group col-md-4">
                         <label for="status_spesial" class="font-weight-bold">Status</label>
