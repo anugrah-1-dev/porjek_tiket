@@ -57,6 +57,33 @@
             </div>
         </div>
 
+        {{-- Card: Poster Popup --}}
+        <div class="card card-outline card-danger">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-image mr-2"></i>Poster Popup (Landing Page)</h3>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    @if ($pengaturan->gambar_poster)
+                        <div class="mb-2">
+                            <img src="{{ asset('storage/' . $pengaturan->gambar_poster) }}"
+                                 alt="Poster Saat Ini" class="img-thumbnail" style="max-height:200px;">
+                            <p class="text-muted small mt-1">Poster popup saat ini.</p>
+                            <div class="custom-control custom-checkbox mt-1">
+                                <input type="checkbox" class="custom-control-input" id="hapus_poster" name="hapus_poster" value="1">
+                                <label class="custom-control-label text-danger" for="hapus_poster">Hapus Poster (Nonaktifkan Popup)</label>
+                            </div>
+                        </div>
+                    @endif
+                    <label for="gambar_poster" class="font-weight-bold">Upload Poster Baru</label>
+                    <input type="file" class="form-control-file @error('gambar_poster') is-invalid @enderror"
+                           id="gambar_poster" name="gambar_poster" accept="image/*">
+                    <small class="text-muted">Format JPG/PNG/WEBP, maks 5MB. Gambar ini akan otomatis muncul saat website dibuka.</small>
+                    @error('gambar_poster')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
+                </div>
+            </div>
+        </div>
+
         {{-- Card: Info Artis --}}
         <div class="card card-outline card-purple">
             <div class="card-header">

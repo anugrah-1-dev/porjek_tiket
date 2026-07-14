@@ -28,6 +28,8 @@ class KonserInfoController extends Controller
             'gambar_artis'              => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
             'fasilitas_venue'           => 'nullable|string|max:3000',
             'deskripsi_section_konser'  => 'nullable|string|max:2000',
+            'gambar_poster'             => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+            'hapus_poster'              => 'nullable|boolean',
             // Gambar konser (multiple)
             'gambar_konser'             => 'nullable|array|max:10',
             'gambar_konser.*'           => 'image|mimes:jpg,jpeg,png,webp|max:5120',
@@ -98,6 +100,20 @@ class KonserInfoController extends Controller
             
             'status_tampil_konser'      => $request->has('status_tampil_konser') ? true : false,
         ];
+
+        // Hapus poster popup jika dicentang
+        if ($request->hapus_poster && $pengaturan->gambar_poster) {
+            Storage::disk('public')->delete($pengaturan->gambar_poster);
+            $data['gambar_poster'] = null;
+        }
+
+        // Upload poster popup
+        if ($request->hasFile('gambar_poster')) {
+            if ($pengaturan->gambar_poster) {
+                Storage::disk('public')->delete($pengaturan->gambar_poster);
+            }
+            $data['gambar_poster'] = $request->file('gambar_poster')->store('gambar_poster', 'public');
+        }
 
         // Upload gambar artis
         if ($request->hasFile('gambar_artis')) {
