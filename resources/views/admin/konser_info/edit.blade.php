@@ -147,7 +147,7 @@
                                 <div class="position-relative" style="display:inline-block;">
                                     <img src="{{ asset('storage/' . $fasilitas->image_path) }}"
                                          alt="{{ $fasilitas->nama ?? 'Fasilitas' }}"
-                                         class="img-thumbnail" style="height:100px; object-fit:cover; width:100%;">
+                                         class="img-thumbnail" style="max-width:100%; height:auto;">
                                 </div>
                                 @if ($fasilitas->nama)
                                     <p class="small text-muted mt-1 mb-1">{{ $fasilitas->nama }}</p>
@@ -338,7 +338,7 @@
                                 <div class="position-relative" style="display:inline-block;">
                                     <img src="{{ asset('storage/' . $gambar->image_path) }}"
                                          alt="{{ $gambar->caption ?? 'Gambar Konser' }}"
-                                         class="img-thumbnail" style="height:100px; object-fit:cover; width:100%;">
+                                         class="img-thumbnail" style="max-width:100%; height:auto;">
                                 </div>
                                 @if ($gambar->caption)
                                     <p class="small text-muted mt-1 mb-1">{{ $gambar->caption }}</p>
