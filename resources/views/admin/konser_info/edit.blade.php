@@ -24,8 +24,12 @@
 
         {{-- Card: Info Event --}}
         <div class="card card-outline card-info">
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-between align-items-center">
                 <h3 class="card-title"><i class="fas fa-calendar-alt mr-2"></i>Info Event Konser</h3>
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="status_tampil_konser" name="status_tampil_konser" value="1" {{ old('status_tampil_konser', $pengaturan->status_tampil_konser) ? 'checked' : '' }}>
+                    <label class="custom-control-label" for="status_tampil_konser">Aktifkan Section Konser</label>
+                </div>
             </div>
             <div class="card-body">
                 <div class="form-group">

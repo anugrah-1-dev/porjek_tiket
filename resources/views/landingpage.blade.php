@@ -347,6 +347,7 @@
     {{-- ====================================================================
          SECTION INFO KONSER — tepat di bawah Hero, sebelum Tentang Kami
          ==================================================================== --}}
+    @if ($pengaturanTiket->status_tampil_konser)
     <section class="konser-section" id="info-konser">
         <div class="container">
 
@@ -628,6 +629,7 @@
 
         </div>
     </section>
+    @endif
 
     {{-- ===== Konser Carousel + Countdown JavaScript ===== --}}
     <script>

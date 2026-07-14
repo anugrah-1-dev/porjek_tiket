@@ -54,6 +54,8 @@ class KonserInfoController extends Controller
             'harga_spesial'             => 'nullable|integer|min:0',
             'deskripsi_spesial'         => 'nullable|string|max:1000',
             'status_spesial'            => 'nullable|string|in:tersedia,sold_out,coming_soon',
+            
+            'status_tampil_konser'      => 'nullable|boolean',
         ]);
 
         $pengaturan = PengaturanTiket::get();
@@ -85,6 +87,8 @@ class KonserInfoController extends Controller
             'harga_spesial'             => $request->harga_spesial ?? 0,
             'deskripsi_spesial'         => $request->deskripsi_spesial ?? '',
             'status_spesial'            => $request->status_spesial ?? 'tersedia',
+            
+            'status_tampil_konser'      => $request->has('status_tampil_konser') ? true : false,
         ];
 
         // Upload gambar artis

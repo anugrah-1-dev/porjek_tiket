@@ -33,6 +33,7 @@ class PengaturanTiket extends Model
         'gambar_artis',
         'fasilitas_venue',
         'deskripsi_section_konser',
+        'status_tampil_konser',
     ];
 
     protected $casts = [
@@ -64,6 +65,8 @@ class PengaturanTiket extends Model
             'harga_spesial'         => 350000,
             'status_spesial'        => 'tersedia',
             'deskripsi_spesial'     => "Kaos Eksklusif (Briliant Kampung Inggris Pare Hari Ini)\nAir Mineral & Snack\nFast Track",
+            
+            'status_tampil_konser'  => true,
         ]);
     }
 
