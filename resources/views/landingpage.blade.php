@@ -651,7 +651,7 @@
                         <div class="col-md-3 col-6 mb-3">
                             <div class="fasilitas-img-wrapper" style="border-radius:12px; overflow:hidden; box-shadow:0 4px 15px rgba(0,0,0,0.3);">
                                 <img src="{{ asset('storage/' . $fasilitasGambar->image_path) }}" 
-                                     alt="Fasilitas" class="img-fluid w-100" style="height:150px; object-fit:cover; transition: transform 0.3s ease;">
+                                     alt="Fasilitas" class="img-fluid w-100" style="height:150px; object-fit:contain; transition: transform 0.3s ease;">
                             </div>
                         </div>
                         @endforeach
