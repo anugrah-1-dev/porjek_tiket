@@ -119,7 +119,13 @@
             <div class="card-body">
                 
                 {{-- ====== Kategori 1 (Umum / Presale 1) ====== --}}
-                <h6 class="text-muted border-bottom pb-1 mb-3 mt-2">Kategori 1</h6>
+                <div class="d-flex justify-content-between align-items-center border-bottom pb-1 mb-3 mt-2">
+                    <h6 class="text-muted mb-0">Kategori 1</h6>
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="tampil_umum" name="tampil_umum" value="1" {{ old('tampil_umum', $pengaturan->tampil_umum) ? 'checked' : '' }}>
+                        <label class="custom-control-label small" for="tampil_umum">Tampilkan</label>
+                    </div>
+                </div>
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="nama_kategori_umum" class="font-weight-bold">Nama Kategori</label>
@@ -148,7 +154,13 @@
                 </div>
 
                 {{-- ====== Kategori VIP ====== --}}
-                <h6 class="text-muted border-bottom pb-1 mb-3 mt-3">Kategori 2</h6>
+                <div class="d-flex justify-content-between align-items-center border-bottom pb-1 mb-3 mt-3">
+                    <h6 class="text-muted mb-0">Kategori 2</h6>
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="tampil_vip" name="tampil_vip" value="1" {{ old('tampil_vip', $pengaturan->tampil_vip) ? 'checked' : '' }}>
+                        <label class="custom-control-label small" for="tampil_vip">Tampilkan</label>
+                    </div>
+                </div>
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="nama_kategori_vip" class="font-weight-bold">Nama Kategori</label>
@@ -177,7 +189,13 @@
                 </div>
 
                 {{-- ====== Kategori Member ====== --}}
-                <h6 class="text-muted border-bottom pb-1 mb-3 mt-3">Kategori 3</h6>
+                <div class="d-flex justify-content-between align-items-center border-bottom pb-1 mb-3 mt-3">
+                    <h6 class="text-muted mb-0">Kategori 3</h6>
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="tampil_member" name="tampil_member" value="1" {{ old('tampil_member', $pengaturan->tampil_member) ? 'checked' : '' }}>
+                        <label class="custom-control-label small" for="tampil_member">Tampilkan</label>
+                    </div>
+                </div>
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="nama_kategori_member" class="font-weight-bold">Nama Kategori</label>
@@ -206,7 +224,13 @@
                 </div>
 
                 {{-- ====== Kategori Spesial ====== --}}
-                <h6 class="text-muted border-bottom pb-1 mb-3 mt-3">Kategori 4</h6>
+                <div class="d-flex justify-content-between align-items-center border-bottom pb-1 mb-3 mt-3">
+                    <h6 class="text-muted mb-0">Kategori 4</h6>
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="tampil_spesial" name="tampil_spesial" value="1" {{ old('tampil_spesial', $pengaturan->tampil_spesial) ? 'checked' : '' }}>
+                        <label class="custom-control-label small" for="tampil_spesial">Tampilkan</label>
+                    </div>
+                </div>
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="nama_kategori_spesial" class="font-weight-bold">Nama Kategori</label>

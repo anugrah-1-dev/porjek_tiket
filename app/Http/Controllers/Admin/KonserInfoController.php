@@ -56,6 +56,10 @@ class KonserInfoController extends Controller
             'status_spesial'            => 'nullable|string|in:tersedia,sold_out,coming_soon',
             
             'status_tampil_konser'      => 'nullable|boolean',
+            'tampil_umum'               => 'nullable|boolean',
+            'tampil_vip'                => 'nullable|boolean',
+            'tampil_member'             => 'nullable|boolean',
+            'tampil_spesial'            => 'nullable|boolean',
         ]);
 
         $pengaturan = PengaturanTiket::get();
@@ -72,21 +76,25 @@ class KonserInfoController extends Controller
             'nama_kategori_umum'        => $request->nama_kategori_umum ?? '',
             'deskripsi_umum'            => $request->deskripsi_umum ?? '',
             'status_umum'               => $request->status_umum ?? 'tersedia',
+            'tampil_umum'               => $request->has('tampil_umum') ? true : false,
             
             'harga_vip'                 => $request->harga_vip ?? 0,
             'nama_kategori_vip'         => $request->nama_kategori_vip ?? '',
             'deskripsi_vip'             => $request->deskripsi_vip ?? '',
             'status_vip'                => $request->status_vip ?? 'tersedia',
+            'tampil_vip'                => $request->has('tampil_vip') ? true : false,
             
             'nama_kategori_member'      => $request->nama_kategori_member ?? '',
             'harga_member'              => $request->harga_member ?? 0,
             'deskripsi_member'          => $request->deskripsi_member ?? '',
             'status_member'             => $request->status_member ?? 'tersedia',
+            'tampil_member'             => $request->has('tampil_member') ? true : false,
             
             'nama_kategori_spesial'     => $request->nama_kategori_spesial ?? '',
             'harga_spesial'             => $request->harga_spesial ?? 0,
             'deskripsi_spesial'         => $request->deskripsi_spesial ?? '',
             'status_spesial'            => $request->status_spesial ?? 'tersedia',
+            'tampil_spesial'            => $request->has('tampil_spesial') ? true : false,
             
             'status_tampil_konser'      => $request->has('status_tampil_konser') ? true : false,
         ];

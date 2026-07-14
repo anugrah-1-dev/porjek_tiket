@@ -263,6 +263,7 @@
         <div class="tiket-kategori-grid">
 
             {{-- Umum --}}
+            @if($pengaturanTiket->tampil_umum)
             <a href="{{ route('tiket-konser.create', ['kategori' => 'umum']) }}" class="tiket-kategori-card tiket-umum-card">
                 <div class="tiket-kat-icon">
                     <i class="fas fa-ticket-alt"></i>
@@ -273,8 +274,10 @@
                 </div>
                 <i class="fas fa-chevron-right tiket-kat-arrow"></i>
             </a>
+            @endif
 
             {{-- VIP --}}
+            @if($pengaturanTiket->tampil_vip)
             <a href="{{ route('tiket-konser.create', ['kategori' => 'vip']) }}" class="tiket-kategori-card tiket-vip-card">
                 <div class="tiket-kat-icon">
                     <i class="fas fa-crown"></i>
@@ -285,30 +288,35 @@
                 </div>
                 <i class="fas fa-chevron-right tiket-kat-arrow"></i>
             </a>
+            @endif
 
             {{-- Member --}}
+            @if($pengaturanTiket->tampil_member)
             <a href="{{ route('tiket-konser.create', ['kategori' => 'member']) }}" class="tiket-kategori-card tiket-member-card">
                 <div class="tiket-kat-icon">
                     <i class="fas fa-id-card"></i>
                 </div>
                 <div class="tiket-kat-info">
-                    <h4>Member Aktif Brilliant English Course &amp; BIE Plus</h4>
+                    <h4>{{ $pengaturanTiket->nama_kategori_member ?? 'Member Aktif Brilliant English Course & BIE Plus' }}</h4>
                     <span class="tiket-kat-harga">Rp {{ number_format($pengaturanTiket->harga_member, 0, ',', '.') }}</span>
                 </div>
                 <i class="fas fa-chevron-right tiket-kat-arrow"></i>
             </a>
+            @endif
 
             {{-- Spesial --}}
+            @if($pengaturanTiket->tampil_spesial)
             <a href="{{ route('tiket-konser.create', ['kategori' => 'spesial']) }}" class="tiket-kategori-card tiket-spesial-card">
                 <div class="tiket-kat-icon">
                     <i class="fas fa-star"></i>
                 </div>
                 <div class="tiket-kat-info">
-                    <h4>Spesial Member Brilliant English Course &amp; BIE Plus</h4>
+                    <h4>{{ $pengaturanTiket->nama_kategori_spesial ?? 'Spesial Member Brilliant English Course & BIE Plus' }}</h4>
                     <span class="tiket-kat-harga tiket-gratis-badge">GRATIS 🎉</span>
                 </div>
                 <i class="fas fa-chevron-right tiket-kat-arrow"></i>
             </a>
+            @endif
 
         </div>
     </div>
@@ -478,6 +486,7 @@
                 <div class="konser-tiket-grid">
 
                     {{-- 1. Umum (Presale 1) --}}
+                    @if($pengaturanTiket->tampil_umum)
                     <div class="konser-tiket-card kt-umum">
                         <div class="kt-accent"></div>
                         <div class="kt-header">
@@ -501,8 +510,10 @@
                             <div class="kt-btn kt-btn-umum" style="cursor:default; pointer-events:none; opacity:0.6;">Coming Soon</div>
                         @endif
                     </div>
+                    @endif
 
                     {{-- 2. Spesial (Presale 2) --}}
+                    @if($pengaturanTiket->tampil_spesial)
                     <div class="konser-tiket-card kt-spesial">
                         <div class="kt-accent"></div>
                         <div class="kt-header">
@@ -526,8 +537,10 @@
                             <div class="kt-btn kt-btn-spesial" style="cursor:default; pointer-events:none; opacity:0.6;">Coming Soon</div>
                         @endif
                     </div>
+                    @endif
 
                     {{-- 3. Member (Warga Pare) --}}
+                    @if($pengaturanTiket->tampil_member)
                     <div class="konser-tiket-card kt-member">
                         <div class="kt-accent"></div>
                         <div class="kt-header">
@@ -551,8 +564,10 @@
                             <div class="kt-btn kt-btn-member" style="cursor:default; pointer-events:none; opacity:0.6;">Coming Soon</div>
                         @endif
                     </div>
+                    @endif
 
                     {{-- 4. VIP --}}
+                    @if($pengaturanTiket->tampil_vip)
                     <div class="konser-tiket-card kt-vip">
                         <div class="kt-accent"></div>
                         <div class="kt-badge">POPULER</div>
@@ -577,6 +592,7 @@
                             <div class="kt-btn kt-btn-vip" style="cursor:default; pointer-events:none; opacity:0.6;">Coming Soon</div>
                         @endif
                     </div>
+                    @endif
 
                 </div>
             </div>
