@@ -152,14 +152,9 @@
                                 @if ($fasilitas->nama)
                                     <p class="small text-muted mt-1 mb-1">{{ $fasilitas->nama }}</p>
                                 @endif
-                                <form action="{{ route('admin.konser-info.delete-fasilitas', $fasilitas->id) }}"
-                                      method="POST" class="d-inline"
-                                      onsubmit="return confirm('Hapus gambar fasilitas ini?')">
-                                    @csrf
-                                    <button type="submit" class="btn btn-danger btn-xs">
-                                        <i class="fas fa-trash"></i> Hapus
-                                    </button>
-                                </form>
+                                <button type="submit" form="delete-fasilitas-{{ $fasilitas->id }}" class="btn btn-danger btn-xs" onclick="return confirm('Hapus gambar fasilitas ini?')">
+                                    <i class="fas fa-trash"></i> Hapus
+                                </button>
                             </div>
                         @endforeach
                     </div>
@@ -348,14 +343,9 @@
                                 @if ($gambar->caption)
                                     <p class="small text-muted mt-1 mb-1">{{ $gambar->caption }}</p>
                                 @endif
-                                <form action="{{ route('admin.konser-info.delete-gambar', $gambar->id) }}"
-                                      method="POST" class="d-inline"
-                                      onsubmit="return confirm('Hapus gambar ini?')">
-                                    @csrf
-                                    <button type="submit" class="btn btn-danger btn-xs">
-                                        <i class="fas fa-trash"></i> Hapus
-                                    </button>
-                                </form>
+                                <button type="submit" form="delete-gambar-{{ $gambar->id }}" class="btn btn-danger btn-xs" onclick="return confirm('Hapus gambar ini?')">
+                                    <i class="fas fa-trash"></i> Hapus
+                                </button>
                             </div>
                         @endforeach
                     </div>
@@ -384,4 +374,22 @@
 </div>
 
 </form>
+
+{{-- Delete Forms placed outside the main form to avoid nested form issues --}}
+@if ($pengaturan->fasilitasKonser)
+    @foreach ($pengaturan->fasilitasKonser as $fasilitas)
+        <form id="delete-fasilitas-{{ $fasilitas->id }}" action="{{ route('admin.konser-info.delete-fasilitas', $fasilitas->id) }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+    @endforeach
+@endif
+
+@if ($pengaturan->gambarKonser)
+    @foreach ($pengaturan->gambarKonser as $gambar)
+        <form id="delete-gambar-{{ $gambar->id }}" action="{{ route('admin.konser-info.delete-gambar', $gambar->id) }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+    @endforeach
+@endif
+
 @stop
