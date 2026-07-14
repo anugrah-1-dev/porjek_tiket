@@ -85,4 +85,12 @@ class PengaturanTiket extends Model
     {
         return $this->hasMany(GambarKonser::class, 'pengaturan_tiket_id')->orderBy('urutan');
     }
+
+    /**
+     * Relasi ke gambar fasilitas konser
+     */
+    public function fasilitasKonser()
+    {
+        return $this->hasMany(FasilitasKonser::class, 'pengaturan_tiket_id')->orderBy('urutan');
+    }
 }

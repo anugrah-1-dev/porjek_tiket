@@ -598,9 +598,11 @@
             </div>
 
             {{-- ===== BARIS 3: Fasilitas Venue ===== --}}
-            @if ($pengaturanTiket->fasilitas_venue)
+            @if ($pengaturanTiket->fasilitas_venue || ($pengaturanTiket->fasilitasKonser && $pengaturanTiket->fasilitasKonser->count() > 0))
             <div class="konser-fasilitas-section" data-aos="fade-up" data-aos-delay="300">
                 <h3 class="konser-sub-title"><i class="fas fa-concierge-bell"></i> FASILITAS VENUE</h3>
+                
+                @if ($pengaturanTiket->fasilitas_venue)
                 <div class="fasilitas-grid">
                     @php
                         $fasilitasIcons = [
@@ -640,6 +642,27 @@
                         @endif
                     @endforeach
                 </div>
+                @endif
+
+                @if ($pengaturanTiket->fasilitasKonser && $pengaturanTiket->fasilitasKonser->count() > 0)
+                <div class="konser-fasilitas-gallery mt-4">
+                    <div class="row">
+                        @foreach ($pengaturanTiket->fasilitasKonser as $fasilitasGambar)
+                        <div class="col-md-3 col-6 mb-3">
+                            <div class="fasilitas-img-wrapper" style="border-radius:12px; overflow:hidden; box-shadow:0 4px 15px rgba(0,0,0,0.3);">
+                                <img src="{{ asset('storage/' . $fasilitasGambar->image_path) }}" 
+                                     alt="Fasilitas" class="img-fluid w-100" style="height:150px; object-fit:cover; transition: transform 0.3s ease;">
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+                <style>
+                    .fasilitas-img-wrapper:hover img {
+                        transform: scale(1.05);
+                    }
+                </style>
+                @endif
             </div>
             @endif
 

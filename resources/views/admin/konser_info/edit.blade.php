@@ -133,6 +133,48 @@
                 </div>
             </div>
         </div>
+
+        {{-- Card: Gambar Fasilitas (Galeri Fasilitas) --}}
+        <div class="card card-outline card-info">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-images mr-2"></i>Galeri Gambar Fasilitas Venue</h3>
+            </div>
+            <div class="card-body">
+                @if ($pengaturan->fasilitasKonser && $pengaturan->fasilitasKonser->count() > 0)
+                    <div class="row mb-3">
+                        @foreach ($pengaturan->fasilitasKonser as $fasilitas)
+                            <div class="col-md-4 col-6 mb-3 text-center">
+                                <div class="position-relative" style="display:inline-block;">
+                                    <img src="{{ asset('storage/' . $fasilitas->image_path) }}"
+                                         alt="{{ $fasilitas->nama ?? 'Fasilitas' }}"
+                                         class="img-thumbnail" style="height:100px; object-fit:cover; width:100%;">
+                                </div>
+                                @if ($fasilitas->nama)
+                                    <p class="small text-muted mt-1 mb-1">{{ $fasilitas->nama }}</p>
+                                @endif
+                                <form action="{{ route('admin.konser-info.delete-fasilitas', $fasilitas->id) }}"
+                                      method="POST" class="d-inline"
+                                      onsubmit="return confirm('Hapus gambar fasilitas ini?')">
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger btn-xs">
+                                        <i class="fas fa-trash"></i> Hapus
+                                    </button>
+                                </form>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
+
+                <div class="form-group">
+                    <label for="gambar_fasilitas" class="font-weight-bold">Upload Gambar Fasilitas Baru <small class="text-muted">(bisa pilih beberapa sekaligus)</small></label>
+                    <input type="file" class="form-control-file @error('gambar_fasilitas') is-invalid @enderror"
+                           id="gambar_fasilitas" name="gambar_fasilitas[]" accept="image/*" multiple>
+                    <small class="text-muted">Format JPG/PNG/WEBP, maks 5MB per gambar.</small>
+                    @error('gambar_fasilitas')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
+                    @error('gambar_fasilitas.*')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
+                </div>
+            </div>
+        </div>
     </div>
 
     {{-- ==================== KOLOM KANAN ==================== --}}
@@ -310,7 +352,6 @@
                                       method="POST" class="d-inline"
                                       onsubmit="return confirm('Hapus gambar ini?')">
                                     @csrf
-                                    @method('DELETE')
                                     <button type="submit" class="btn btn-danger btn-xs">
                                         <i class="fas fa-trash"></i> Hapus
                                     </button>

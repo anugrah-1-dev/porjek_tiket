@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\PengaturanTiket;
 use App\Models\GambarKonser;
+use App\Models\FasilitasKonser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -13,7 +14,7 @@ class KonserInfoController extends Controller
     public function edit()
     {
         $pengaturan = PengaturanTiket::get();
-        $pengaturan->load('gambarKonser');
+        $pengaturan->load(['gambarKonser', 'fasilitasKonser']);
         return view('admin.konser_info.edit', compact('pengaturan'));
     }
 
@@ -35,6 +36,12 @@ class KonserInfoController extends Controller
             'gambar_konser.*'           => 'image|mimes:jpg,jpeg,png,webp|max:5120',
             'caption_konser'            => 'nullable|array',
             'caption_konser.*'          => 'nullable|string|max:255',
+            
+            // Gambar fasilitas (multiple)
+            'gambar_fasilitas'          => 'nullable|array|max:10',
+            'gambar_fasilitas.*'        => 'image|mimes:jpg,jpeg,png,webp|max:5120',
+            'nama_fasilitas'            => 'nullable|array',
+            'nama_fasilitas.*'          => 'nullable|string|max:255',
             
             // Kategori Tiket
             'harga_umum'                => 'nullable|integer|min:0',
@@ -144,6 +151,24 @@ class KonserInfoController extends Controller
             }
         }
 
+        // Upload gambar fasilitas (multiple)
+        if ($request->hasFile('gambar_fasilitas')) {
+            $namas = $request->nama_fasilitas ?? [];
+            $maxUrutan = $pengaturan->fasilitasKonser()->max('urutan') ?? 0;
+
+            foreach ($request->file('gambar_fasilitas') as $index => $file) {
+                $maxUrutan++;
+                $path = $file->store('gambar_fasilitas', 'public');
+
+                FasilitasKonser::create([
+                    'pengaturan_tiket_id' => $pengaturan->id,
+                    'image_path'          => $path,
+                    'nama'                => $namas[$index] ?? null,
+                    'urutan'              => $maxUrutan,
+                ]);
+            }
+        }
+
         return redirect()->route('admin.konser-info.edit')
             ->with('success', 'Data Konser Brilliant 2026 berhasil diperbarui.');
     }
@@ -155,6 +180,16 @@ class KonserInfoController extends Controller
         $gambar->delete();
 
         return redirect()->route('admin.konser-info.edit')
-            ->with('success', 'Gambar berhasil dihapus.');
+            ->with('success', 'Gambar konser berhasil dihapus.');
+    }
+
+    public function deleteFasilitas($id)
+    {
+        $fasilitas = FasilitasKonser::findOrFail($id);
+        Storage::disk('public')->delete($fasilitas->image_path);
+        $fasilitas->delete();
+
+        return redirect()->route('admin.konser-info.edit')
+            ->with('success', 'Gambar fasilitas berhasil dihapus.');
     }
 }

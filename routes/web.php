@@ -326,7 +326,8 @@ Route::middleware(['auth', 'role:admin|officer'])->prefix('admin')->name('admin.
     // ===== PENGATURAN INFO KONSER (ADMIN) =====
     Route::get('/konser-info', [KonserInfoController::class, 'edit'])->name('konser-info.edit');
     Route::put('/konser-info', [KonserInfoController::class, 'update'])->name('konser-info.update');
-    Route::delete('/konser-info/gambar/{id}', [KonserInfoController::class, 'deleteGambar'])->name('konser-info.delete-gambar');
+    Route::post('/konser-info/gambar/{id}/delete', [KonserInfoController::class, 'deleteGambar'])->name('konser-info.delete-gambar');
+    Route::post('/konser-info/fasilitas/{id}/delete', [KonserInfoController::class, 'deleteFasilitas'])->name('konser-info.delete-fasilitas');
 
 
 });
